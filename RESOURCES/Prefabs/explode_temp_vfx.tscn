@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dapg5iuhcypgi"]
+
+[ext_resource type="Texture2D" uid="uid://gqbbql1502c" path="res://ART/Particle/Circle_48px.png" id="1_wwqat"]
+[ext_resource type="Script" uid="uid://6nlsqg7oc2da" path="res://SCRIPTS/VFXHelper.gd" id="2_rn6m1"]
+
+[sub_resource type="Gradient" id="Gradient_qnbb4"]
+offsets = PackedFloat32Array(0, 0.65, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.81960785, 1, 1, 1, 0)
+
+[node name="Explode_TempVFX" type="CPUParticles2D" unique_id=1708061230 node_paths=PackedStringArray("Particles")]
+emitting = false
+texture = ExtResource("1_wwqat")
+lifetime = 0.75
+one_shot = true
+explosiveness = 0.95
+emission_shape = 1
+emission_sphere_radius = 32.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+color_ramp = SubResource("Gradient_qnbb4")
+script = ExtResource("2_rn6m1")
+Particles = [NodePath(".")]

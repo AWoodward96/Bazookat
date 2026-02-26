@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://2e8464r2nb31"]
+
+[ext_resource type="Script" uid="uid://vbktcwtp7svx" path="res://SCRIPTS/RocketBehavior.gd" id="1_pt1gv"]
+[ext_resource type="Texture2D" uid="uid://brmdrsqmwspmw" path="res://ART/Particle/Circle_8px.png" id="2_p2qtq"]
+[ext_resource type="PackedScene" uid="uid://dapg5iuhcypgi" path="res://RESOURCES/Prefabs/explode_temp_vfx.tscn" id="2_qnbb4"]
+
+[sub_resource type="Curve" id="Curve_pt1gv"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+metadata/_snap_count = 22
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7y4a1"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pt1gv"]
+radius = 48.0
+
+[node name="Rocket" type="Node2D" unique_id=596765188 node_paths=PackedStringArray("e_explosionCaster", "e_raycaster")]
+script = ExtResource("1_pt1gv")
+e_explosionCaster = NodePath("ShapeCast2D")
+e_explosionStrength = 200.0
+e_explosionFalloff = SubResource("Curve_pt1gv")
+e_lockoutDuration = 0.5
+e_explosionVFX = ExtResource("2_qnbb4")
+e_speed = 1000.0
+e_direction = Vector2(0, 1)
+e_raycaster = NodePath("RayCast2D")
+metadata/_custom_type_script = "uid://vbktcwtp7svx"
+
+[node name="Visual" type="Sprite2D" parent="." unique_id=1265567049]
+modulate = Color(1, 0.5882353, 0, 1)
+texture = ExtResource("2_p2qtq")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1668657059]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1207691705]
+shape = SubResource("CircleShape2D_7y4a1")
+
+[node name="Lifetime" type="Timer" parent="." unique_id=1152754547]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=614696891]
+enabled = false
+collision_mask = 2
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=214690678]
+enabled = false
+shape = SubResource("CircleShape2D_pt1gv")
+target_position = Vector2(0, 0)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Lifetime" to="." method="queue_free"]
