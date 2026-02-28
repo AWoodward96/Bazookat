@@ -4,16 +4,38 @@ class_name MainCamera
 
 @export var e_target : Node2D
 @export var e_lerpSpeed : float = 10
+@export var e_mouseTrackRadius : int = 32
+@export var e_velocityMultiplier : float = 0.25
+@export var e_velocityLerpSpeed : float = 1
+
+
 @export var e_debug : bool = false
 @export var e_mouseworldpositiondebugobject : Node2D
+
+
 var m_mousePosition : Vector2
 var m_mouseWorldPosition : Vector2
+var m_velocityLerp : Vector2
 
 
+func _process(_delta: float) -> void:
+	# This is happening in process instead of physics process because I need this to be AS up to date as possible
+	UpdateMousePosition()
 
 func _physics_process(_delta: float):
-	global_position = lerp(global_position, e_target.global_position, e_lerpSpeed * _delta)
-	UpdateMousePosition()
+	var desiredPosition = e_target.global_position
+
+	var mouseDST = m_mouseWorldPosition - global_position
+	if mouseDST.length() > e_mouseTrackRadius:
+		mouseDST = mouseDST.normalized() * e_mouseTrackRadius
+
+	#if e_target is PlayerController:
+		#m_velocityLerp = lerp(m_velocityLerp, e_target.velocity * e_velocityMultiplier, e_velocityLerpSpeed * _delta)
+		#desiredPosition += Vector2(m_velocityLerp.x, 0)
+
+	desiredPosition += mouseDST
+
+	global_position = lerp(global_position, desiredPosition, e_lerpSpeed * _delta)
 	pass
 
 func UpdateMousePosition():

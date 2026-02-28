@@ -2,11 +2,10 @@ extends CharacterBody2D
 ## Basically the player
 class_name PlayerController
 
-enum EExplosionType { Add, Set, MaxSet }
+enum ECardinalDirections8 { N, ne, E, se, S, sw, W, nw}
 
 @export var e_visual : Sprite2D
 @export var e_bazooka : BazookaBehavior
-@export var e_explosionType : EExplosionType = EExplosionType.Add
 
 @export_category("Running Information")
 @export var e_horizontalSpeed : float = 300
@@ -38,6 +37,13 @@ enum EExplosionType { Add, Set, MaxSet }
 @export var e_climbParticleParent : Node2D
 @export var e_climbParticle : CPUParticles2D
 
+@export_category("Rocket Jump Information")
+@export var e_rocketJumpDirectionData : Array[RocketForceHelper]
+@export var e_perfectRocketJumpWindow : float = 0.125
+@export var e_perfectRocketJumpYMult : float = 1.15
+@export var e_perfectRocketJumpGravityMultiplier : float = 0.5
+@export var e_perfectRocketJumpGravityDuration : float = 1
+
 
 var Gravity : float :
 	get:
@@ -65,9 +71,18 @@ var m_jumpCount : int # To prevent abuse of coyote time, and to track how many t
 
 var m_wallNormal : Vector2
 var m_horizontalLockoutTimer : float
+var m_verticalCutLockoutTimer : float
 var m_climbing : bool
 var m_climbingStamina : float
 var m_sliding : bool
+
+var m_perfectRocketJumpTimer : float
+var m_perfectRocketJumpSuccessTimer : float
+
+# DEBUG
+var db_jumpedWithLastRocket : bool = false
+var db_lastRocketJumpDirection : ECardinalDirections8
+var db_lastRocketJumpPerfect : bool
 
 
 func _physics_process(_delta: float):
@@ -76,16 +91,6 @@ func _physics_process(_delta: float):
 	HandleParticles()
 
 func HandleInput(_delta : float):
-	if Input.is_physical_key_pressed(KEY_TAB):
-		match e_explosionType:
-			EExplosionType.Add:
-				e_explosionType = EExplosionType.Set
-			EExplosionType.Set:
-				e_explosionType = EExplosionType.MaxSet
-			EExplosionType.MaxSet:
-				e_explosionType = EExplosionType.Add
-
-
 	# Horizontal Movement
 	m_horizontal = 0
 	if Input.is_action_pressed("left"):
@@ -140,6 +145,16 @@ func HandleInput(_delta : float):
 
 	if m_climbingStamina > 0 && m_climbing:
 		m_climbingStamina -= _delta
+
+	if m_perfectRocketJumpTimer > 0:
+		m_perfectRocketJumpTimer -= _delta
+
+	if m_perfectRocketJumpSuccessTimer > 0:
+		m_perfectRocketJumpSuccessTimer -= _delta
+
+	if m_verticalCutLockoutTimer > 0:
+		m_verticalCutLockoutTimer -= _delta
+
 	pass
 
 func HandlePhysics(_delta : float):
@@ -158,9 +173,12 @@ func HandlePhysics(_delta : float):
 					if abs(velocity.y) < e_extraHangThreshold:
 						gravityMult = e_extraHangMultiplier
 
+				if m_perfectRocketJumpSuccessTimer > 0:
+					gravityMult = e_perfectRocketJumpGravityMultiplier
+
 				velocity.y += Gravity * gravityMult * _delta
 
-			if !m_jumpHeld && velocity.y < 0 && m_horizontalLockoutTimer <= 0:
+			if !m_jumpHeld && velocity.y < 0 && m_verticalCutLockoutTimer <= 0 && m_perfectRocketJumpSuccessTimer <= 0:
 				velocity.y = velocity.y * e_jumpCutRatio
 		else:
 			# Climbing and sliding logic
@@ -178,6 +196,7 @@ func HandlePhysics(_delta : float):
 		velocity.y = -JumpForce
 		m_jumpCount += 1
 		m_jumpBuffer = 0
+		m_perfectRocketJumpTimer = e_perfectRocketJumpWindow
 
 	move_and_slide()
 
@@ -212,15 +231,82 @@ func HandleParticles():
 
 	pass
 
-func ApplyRocketExplosion(_force : Vector2, _disruptionDuration : float = 0.5):
-	match e_explosionType:
-		EExplosionType.Add:
-			velocity += _force
-		EExplosionType.Set:
-			velocity = _force
-		EExplosionType.MaxSet:
-			var xSign = sign(_force.x)
-			var ySign = sign(_force.y)
-			velocity = Vector2(xSign * max(abs(velocity.x), abs(_force.x)), ySign * max(abs(velocity.y), abs(_force.y)) )
-	m_horizontalLockoutTimer = _disruptionDuration
+
+func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
+	# Get the rotation of the rocket relative to the player
+	var dstFromRocket = _rocketPosition - global_position
+	var angle = rad_to_deg(dstFromRocket.angle())
+
+	# I don't like it when I've got negative angles or angles greater than 360. Simplify
+	if angle < 0:
+		angle += 360
+	elif angle > 360:
+		angle -= 360
+
+	print("hit: ", angle)
+	# THIS FEELS AMAZING YESSSSSSSSSSS
+	var direction = GetDirectionFromRocketJumpAngle(angle)
+	var index = e_rocketJumpDirectionData.find_custom(func(x : RocketForceHelper) : return x.e_direction == direction)
+	if index == -1:
+		# This should literally never happen but:
+		push_error("Could not find rocket jump information. Angle: ", str(angle), " Direction: ", PlayerController.ECardinalDirections8.find_key(direction))
+		return
+
+	var perfectMult : float = 1
+	if m_perfectRocketJumpTimer > 0:
+		print("Perfect!")
+		perfectMult = e_perfectRocketJumpYMult
+		m_perfectRocketJumpSuccessTimer = e_perfectRocketJumpGravityDuration
+
+	print("Jump Direction: ", PlayerController.ECardinalDirections8.find_key(direction))
+	var data = e_rocketJumpDirectionData[index]
+	if data.e_HasXForce:
+		velocity = Vector2(data.e_XDirection, data.e_YForceMultiplier * JumpForce * perfectMult)
+	else:
+		velocity = Vector2(velocity.x, data.e_YForceMultiplier * JumpForce * perfectMult)
+
+	m_horizontalLockoutTimer = data.e_horizontalLockoutDuration
+	m_verticalCutLockoutTimer = data.e_upwardCutLockoutDuration
+
+	db_lastRocketJumpDirection = direction
+	db_lastRocketJumpPerfect = perfectMult != 1
+	db_jumpedWithLastRocket = true
+
 	pass
+
+func GetDirectionFromRocketJumpAngle(_angle : float):
+	## This is complicated
+	## The whole S, SE, and SW angles are 50 degree arcs
+	## E and W are harder to hit, but are around 40 degree's, scewed slightly.
+	## The scewing is basically 15 degree's below the horizontal, and 25 degree's above the horizontal
+
+	## The N directions are basically 20 degree arcs simply because they're used way way less than the other angles
+
+	## Basically, perfect N and perfect S have angles of 50 degrees (IE South is 90 +- (50 /2))
+	## perfect E and perfect W are a bit harder to do, angles of 30 degress (IE West is 180 += (30 /2)
+	## The SE and SW angles are a bit easier to hit, coming out to be 50 degree's, but a bit more angled towards the horizontal than the vertical.
+	## We do this because we don't want a player on the ground, aiming for a SE/SW jump accidentally hitting a perfect EW jump
+
+	var ewAngle : float = 30.0
+	var sAngle : float = 60.0
+	var nAngle : float = 20
+	var halfS = sAngle / 2
+	var halfEW = ewAngle / 2
+	var halfN = nAngle / 2
+
+	if _angle > 360 - (halfEW + halfN) || _angle <= halfEW:
+		return ECardinalDirections8.E
+	elif _angle > halfEW && _angle <= 90 - halfS:
+		return ECardinalDirections8.se
+	elif _angle > 90 - halfS && _angle <= 90 + halfS:
+		return ECardinalDirections8.S
+	elif _angle > 90 + halfS && _angle <= 180 - halfEW:
+		return ECardinalDirections8.sw
+	elif _angle > 180 - halfEW && _angle <= 180 + (halfEW + halfN):
+		return ECardinalDirections8.W
+	elif _angle > 180 + (halfEW + halfN) && _angle <= 270 - halfN:
+		return ECardinalDirections8.nw
+	elif _angle > 270 - halfN && _angle <= 270 + halfN:
+		return ECardinalDirections8.N
+	else:
+		return ECardinalDirections8.ne

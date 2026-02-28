@@ -4,12 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://brmdrsqmwspmw" path="res://ART/Particle/Circle_8px.png" id="2_p2qtq"]
 [ext_resource type="PackedScene" uid="uid://dapg5iuhcypgi" path="res://RESOURCES/Prefabs/explode_temp_vfx.tscn" id="2_qnbb4"]
 
-[sub_resource type="Curve" id="Curve_pt1gv"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-metadata/_snap_enabled = true
-metadata/_snap_count = 22
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_7y4a1"]
 radius = 4.0
 
@@ -19,9 +13,7 @@ radius = 48.0
 [node name="Rocket" type="Node2D" unique_id=596765188 node_paths=PackedStringArray("e_explosionCaster", "e_raycaster")]
 script = ExtResource("1_pt1gv")
 e_explosionCaster = NodePath("ShapeCast2D")
-e_explosionStrength = 200.0
-e_explosionFalloff = SubResource("Curve_pt1gv")
-e_lockoutDuration = 0.5
+e_lockoutDuration = 0.66
 e_explosionVFX = ExtResource("2_qnbb4")
 e_speed = 1000.0
 e_direction = Vector2(0, 1)

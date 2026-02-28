@@ -13,6 +13,10 @@ func _physics_process(delta: float) -> void:
 
 
 func Fire(_origin : Vector2, _direction : Vector2):
+	if e_owner is PlayerController:
+		e_owner.db_jumpedWithLastRocket = false
+		e_owner.db_lastRocketJumpPerfect = false
+
 	var directionNormalized = _direction.normalized()
 	var bulletInstance = e_bulletPrefab.instantiate() as BulletBehavior
 	bulletInstance.e_direction = directionNormalized

@@ -22,6 +22,8 @@ window/size/viewport_height=320
 window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
+mouse_cursor/custom_image="uid://d1yrvmlx3w4d1"
+mouse_cursor/custom_image_hotspot=Vector2(32, 32)
 
 [global_group]
 
