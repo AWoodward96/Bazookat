@@ -4,7 +4,7 @@ class_name MainCamera
 
 @export var e_target : Node2D
 @export var e_lerpSpeed : float = 10
-@export var e_mouseTrackRadius : int = 32
+@export var e_mouseTrackRadius : Vector2 = Vector2(8, 48)
 @export var e_velocityMultiplier : float = 0.25
 @export var e_velocityLerpSpeed : float = 1
 
@@ -26,8 +26,13 @@ func _physics_process(_delta: float):
 	var desiredPosition = e_target.global_position
 
 	var mouseDST = m_mouseWorldPosition - global_position
-	if mouseDST.length() > e_mouseTrackRadius:
-		mouseDST = mouseDST.normalized() * e_mouseTrackRadius
+	var magnitude = mouseDST.length()
+	if magnitude > e_mouseTrackRadius.y:
+		mouseDST = mouseDST.normalized() * e_mouseTrackRadius.y
+	elif magnitude < e_mouseTrackRadius.x:
+		mouseDST = mouseDST.normalized() * e_mouseTrackRadius.x
+		
+	mouseDST.y = mouseDST.y * .5
 
 	#if e_target is PlayerController:
 		#m_velocityLerp = lerp(m_velocityLerp, e_target.velocity * e_velocityMultiplier, e_velocityLerpSpeed * _delta)
