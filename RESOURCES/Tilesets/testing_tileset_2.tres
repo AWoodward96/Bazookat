@@ -510,6 +510,7 @@ texture = ExtResource("1_eyulv")
 
 [resource]
 occlusion_layer_0/light_mask = 1
+occlusion_layer_0/sdf_collision = true
 physics_layer_0/collision_layer = 2
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Main"

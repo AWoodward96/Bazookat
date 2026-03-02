@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://dmtgtsv6v0nui"]
+
+[ext_resource type="Script" uid="uid://6nlsqg7oc2da" path="res://SCRIPTS/VFXHelper.gd" id="1_gn584"]
+[ext_resource type="Texture2D" uid="uid://gqbbql1502c" path="res://ART/Particle/Circle_48px.png" id="2_xnywh"]
+[ext_resource type="Texture2D" uid="uid://c6o5uvokhnke6" path="res://ART/Particle/Circle_4px.png" id="3_g2tol"]
+
+[sub_resource type="Gradient" id="Gradient_qnbb4"]
+offsets = PackedFloat32Array(0, 0.65, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.81960785, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_7asai"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9999999, 0), -3.1388354, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_bmxi4"]
+curve = SubResource("Curve_7asai")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2f1oo"]
+lifetime_randomness = 0.5
+particle_flag_damping_as_friction = true
+spread = 180.0
+initial_velocity_min = 500.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+damping_min = 0.3
+damping_max = 1.0
+alpha_curve = SubResource("CurveTexture_bmxi4")
+collision_mode = 1
+collision_friction = 0.3
+collision_bounce = 0.3
+
+[node name="VFX_BazookaExplosion" type="Node2D" unique_id=402950158 node_paths=PackedStringArray("Particles", "GPUParticles")]
+script = ExtResource("1_gn584")
+Particles = [NodePath("Explode_TempVFX")]
+GPUParticles = [NodePath("GPUParticles2D")]
+
+[node name="Explode_TempVFX" type="CPUParticles2D" parent="." unique_id=1736001309]
+emitting = false
+texture = ExtResource("2_xnywh")
+lifetime = 0.75
+one_shot = true
+explosiveness = 0.95
+emission_shape = 1
+emission_sphere_radius = 32.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+color_ramp = SubResource("Gradient_qnbb4")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1013959211]
+emitting = false
+amount = 32
+texture = ExtResource("3_g2tol")
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_2f1oo")
+
+[node name="Timer" type="Timer" parent="." unique_id=704682860]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="queue_free"]

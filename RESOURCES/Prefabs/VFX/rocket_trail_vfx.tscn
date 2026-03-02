@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bq8uflnilqu2i"]
+
+[ext_resource type="Script" uid="uid://6nlsqg7oc2da" path="res://SCRIPTS/VFXHelper.gd" id="1_0kxcj"]
+[ext_resource type="Texture2D" uid="uid://c6o5uvokhnke6" path="res://ART/Particle/Circle_4px.png" id="2_lpg3y"]
+
+[sub_resource type="Gradient" id="Gradient_j7dd5"]
+offsets = PackedFloat32Array(0, 0.9133574, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_udhn7"]
+colors = PackedColorArray(1, 1, 1, 1, 0.76, 0.76, 0.76, 1)
+
+[node name="RocketTrailVFX" type="Node2D" unique_id=2052265288 node_paths=PackedStringArray("Particles")]
+script = ExtResource("1_0kxcj")
+Particles = [NodePath("RocketTrail")]
+
+[node name="RocketTrail" type="CPUParticles2D" parent="." unique_id=1472765822]
+z_index = -1
+position = Vector2(-9, 0)
+rotation = -3.1415925
+amount = 128
+texture = ExtResource("2_lpg3y")
+lifetime = 0.25
+lifetime_randomness = 0.5
+emission_shape = 1
+emission_sphere_radius = 4.4
+spread = 90.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+color_ramp = SubResource("Gradient_j7dd5")
+color_initial_ramp = SubResource("Gradient_udhn7")

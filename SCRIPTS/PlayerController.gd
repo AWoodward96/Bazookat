@@ -83,6 +83,7 @@ var m_climbing : bool
 var m_climbingStamina : float
 var m_sliding : bool
 
+
 var m_perfectRocketJumpTimer : float
 var m_perfectRocketJumpSuccessTimer : float
 
@@ -94,7 +95,6 @@ var db_lastRocketJumpPerfect : bool
 
 func _physics_process(_delta: float):
 	HandleInput(_delta)
-	HandleAnimations()
 	HandlePhysics(_delta)
 	HandleParticles()
 
@@ -105,13 +105,13 @@ func HandleInput(_delta : float):
 		m_horizontal += -1
 	if Input.is_action_pressed("right"):
 		m_horizontal += 1
-	
+
 	if Input.is_action_pressed("sprint"):
 		m_sprinting = true
 		m_endSprintAnimTimer = e_exitSprintStateDuration
 	else:
 		m_sprinting = false
-	
+
 	m_downHeld = Input.is_action_pressed("down")
 	m_upHeld = Input.is_action_pressed("up")
 
@@ -149,7 +149,7 @@ func HandleInput(_delta : float):
 	# sliding and climbing logic
 	m_sliding = m_onWall && velocity.y > e_wallClingThreshold
 	m_climbing = m_onWall && m_upHeld && m_climbingStamina > 0 && (m_climbing || velocity.y > e_climbStartThreshold)
-	
+
 	m_inSprintAnimState = m_endSprintAnimTimer > 0
 
 	# Jump buffer deprecation
@@ -170,17 +170,12 @@ func HandleInput(_delta : float):
 
 	if m_verticalCutLockoutTimer > 0:
 		m_verticalCutLockoutTimer -= _delta
-	
+
 	if m_endSprintAnimTimer > 0:
 		m_endSprintAnimTimer -= _delta
 
 	pass
 
-func HandleAnimations():
-	#e_animationTree.set("parameters/conditions/grounded", m_onFloor)
-	#e_animationTree.set("parameters/Grounded/conditions/moving", velocity.x != 0)
-	
-	pass
 
 func HandlePhysics(_delta : float):
 	HandleHorizontal(_delta)
@@ -233,7 +228,6 @@ func HandlePhysics(_delta : float):
 	e_visual.flip_h = m_facingLeft
 
 func HandleHorizontal(_delta):
-
 	var horizontalVelocity = velocity.x
 
 	# Nerf the horizontal acceleration if you've done a walljump recently.
@@ -241,7 +235,7 @@ func HandleHorizontal(_delta):
 	var desiredAcceleration = e_horizontalAcceleration
 	if m_horizontalLockoutTimer > 0:
 		desiredAcceleration *= e_horizontalLockoutMultiplier
-		
+
 	horizontalVelocity = move_toward(horizontalVelocity, m_horizontal * GetHorizontalSpeed(), desiredAcceleration * _delta)
 
 	velocity = Vector2(horizontalVelocity, velocity.y)
@@ -253,8 +247,6 @@ func HandleParticles():
 
 	e_climbParticleParent.scale.x = -m_wallNormal.x
 	e_climbParticle.emitting = m_climbing
-
-	pass
 
 
 func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
@@ -268,7 +260,6 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 	elif angle > 360:
 		angle -= 360
 
-	print("hit: ", angle)
 	# THIS FEELS AMAZING YESSSSSSSSSSS
 	var direction = GetDirectionFromRocketJumpAngle(angle)
 	var index = e_rocketJumpDirectionData.find_custom(func(x : RocketForceHelper) : return x.e_direction == direction)
@@ -279,11 +270,9 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 
 	var perfectMult : float = 1
 	if m_perfectRocketJumpTimer > 0:
-		print("Perfect!")
 		perfectMult = e_perfectRocketJumpYMult
 		m_perfectRocketJumpSuccessTimer = e_perfectRocketJumpGravityDuration
 
-	print("Jump Direction: ", PlayerController.ECardinalDirections8.find_key(direction))
 	var data = e_rocketJumpDirectionData[index]
 	if data.e_HasXForce:
 		velocity = Vector2(data.e_XDirection, data.e_YForceMultiplier * JumpForce * perfectMult)
@@ -301,16 +290,14 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 
 func GetDirectionFromRocketJumpAngle(_angle : float):
 	## This is complicated
-	## The whole S, SE, and SW angles are 50 degree arcs
-	## E and W are harder to hit, but are around 40 degree's, scewed slightly.
-	## The scewing is basically 15 degree's below the horizontal, and 25 degree's above the horizontal
+	## S is a 60 degree arc
+	## SE and SW are a 45 degree arc
+	## W and E are both 40 degree's and are skewed slightly above the horizontal
+	## N is 20, while the NE and NW are both at 55
+	## I think in the future, NE and NW might want to be smaller, and W and E might want to be bigger but...
 
-	## The N directions are basically 20 degree arcs simply because they're used way way less than the other angles
-
-	## Basically, perfect N and perfect S have angles of 50 degrees (IE South is 90 +- (50 /2))
-	## perfect E and perfect W are a bit harder to do, angles of 30 degress (IE West is 180 += (30 /2)
-	## The SE and SW angles are a bit easier to hit, coming out to be 50 degree's, but a bit more angled towards the horizontal than the vertical.
 	## We do this because we don't want a player on the ground, aiming for a SE/SW jump accidentally hitting a perfect EW jump
+	## We also don't want to accidentally hit a NW and NE when we're going for an E or a W, so that's why all the angles are skewed
 
 	var ewAngle : float = 30.0
 	var sAngle : float = 60.0
@@ -320,28 +307,28 @@ func GetDirectionFromRocketJumpAngle(_angle : float):
 	var halfN = nAngle / 2
 
 	if _angle > 360 - (halfEW + halfN) || _angle <= halfEW:
-		return ECardinalDirections8.E
+		return ECardinalDirections8.E 							# 15 + (15 + 10) = 40
 	elif _angle > halfEW && _angle <= 90 - halfS:
-		return ECardinalDirections8.se
+		return ECardinalDirections8.se 							# 60 - 15 = 45
 	elif _angle > 90 - halfS && _angle <= 90 + halfS:
-		return ECardinalDirections8.S
+		return ECardinalDirections8.S 							# 60
 	elif _angle > 90 + halfS && _angle <= 180 - halfEW:
-		return ECardinalDirections8.sw
+		return ECardinalDirections8.sw 							# 165 - 120 = 45
 	elif _angle > 180 - halfEW && _angle <= 180 + (halfEW + halfN):
-		return ECardinalDirections8.W
+		return ECardinalDirections8.W 							# 205 - 165 = 40
 	elif _angle > 180 + (halfEW + halfN) && _angle <= 270 - halfN:
-		return ECardinalDirections8.nw
+		return ECardinalDirections8.nw 							# 260 - 205 = 55
 	elif _angle > 270 - halfN && _angle <= 270 + halfN:
-		return ECardinalDirections8.N
+		return ECardinalDirections8.N 							# 20
 	else:
-		return ECardinalDirections8.ne
+		return ECardinalDirections8.ne 							# 55
 
 func GetHorizontalSpeed():
 	var speed = e_horizontalSpeed
-	
+
 	if m_sprinting && m_onFloor:
 		speed = e_sprintSpeed
-		
+
 	if !m_onFloor:
 		speed += e_aerialExtraHorizontal
 	return speed

@@ -4,11 +4,36 @@ class_name BulletBehavior
 @export var e_speed : float = 10
 @export var e_direction : Vector2
 @export var e_raycaster : RayCast2D
+@export var e_visual : Node2D
+@export var e_rotateVisual : bool = true
+
+# Particles that disconect and reparent to the Root Node that auto destroy
+@export var e_autonomousParticleParent : Node2D
+@export var e_autonomousParticle : PackedScene
+@export var e_particleCleanup : float = 0.5
+@export var e_pool : bool = true
 
 var m_orign : Vector2
+var m_released : bool
+var m_createdParticle : Node2D
+
+func Instantiate(_direction : Vector2):
+	e_direction = _direction
+	m_released = false
+
+	CleanupParticle()
+	if e_autonomousParticleParent != null && e_autonomousParticle:
+		m_createdParticle = e_autonomousParticle.instantiate()
+		e_autonomousParticleParent.add_child(m_createdParticle)
+		m_createdParticle.position = Vector2.ZERO
 
 func _physics_process(_delta: float):
 	var movementVector = e_direction * e_speed * _delta
+
+	if e_rotateVisual && e_visual != null:
+		e_visual.rotation = e_direction.angle()
+
+
 	e_raycaster.target_position = movementVector
 	e_raycaster.force_raycast_update()
 	if e_raycaster.is_colliding():
@@ -23,5 +48,26 @@ func _physics_process(_delta: float):
 	global_position += movementVector
 
 
-func _on_area_2d_body_entered(body: Node2D):
-	queue_free()
+func _on_area_2d_body_entered(_body: Node2D):
+	Destroy.call_deferred()
+
+func Destroy():
+	if e_pool:
+		if !m_released:
+			m_released = true
+			if m_createdParticle != null:
+				m_createdParticle.reparent(get_tree().root)
+				var cleanup = get_tree().create_timer(e_particleCleanup)
+				cleanup.timeout.connect(CleanupParticle)
+
+			GameManager.ReturnToPool(self)
+	else:
+		queue_free()
+	pass
+
+func CleanupParticle():
+	if m_createdParticle != null:
+		m_createdParticle.queue_free()
+		m_createdParticle = null
+
+	pass

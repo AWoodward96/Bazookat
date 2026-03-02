@@ -7,11 +7,13 @@ class_name RocketBehavior
 
 var exploded : bool = false
 
-
+func Instantiate(_direction : Vector2):
+	super(_direction)
+	exploded = false
 
 func _on_area_2d_body_entered(_body: Node2D):
 	Explode()
-	queue_free()
+	Destroy.call_deferred()
 
 func Explode():
 	# Just to ensure no weird explosion duplication with simultanious on_area_2d_body_entered

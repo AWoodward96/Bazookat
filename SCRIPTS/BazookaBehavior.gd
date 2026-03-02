@@ -6,14 +6,20 @@ class_name BazookaBehavior
 @export var e_bulletPrefab : PackedScene
 var aimedDirection : Vector2
 
+var Camera : MainCamera :
+	get:
+		if Level.Current != null:
+			return Level.Current.Camera
+		else:
+			return get_viewport().get_camera_2d()
 
 func _ready():
 	# get the main camera
 	e_camera = get_viewport().get_camera_2d()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("fire"):
-		Fire(e_owner.global_position, e_camera.m_mouseWorldPosition - e_owner.global_position)
+		Fire(e_owner.global_position, Camera.m_mouseWorldPosition - e_owner.global_position)
 	pass
 
 
@@ -23,7 +29,7 @@ func Fire(_origin : Vector2, _direction : Vector2):
 		e_owner.db_lastRocketJumpPerfect = false
 
 	var directionNormalized = _direction.normalized()
-	var bulletInstance = e_bulletPrefab.instantiate() as BulletBehavior
-	bulletInstance.e_direction = directionNormalized
+	var bulletInstance = GameManager.GetFromPool(e_bulletPrefab) as BulletBehavior
+	bulletInstance.Instantiate(directionNormalized)
 	bulletInstance.global_position = _origin
 	get_tree().root.add_child(bulletInstance)

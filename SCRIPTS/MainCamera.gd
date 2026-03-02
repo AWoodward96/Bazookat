@@ -21,6 +21,7 @@ var m_velocityLerp : Vector2
 func _process(_delta: float) -> void:
 	# This is happening in process instead of physics process because I need this to be AS up to date as possible
 	UpdateMousePosition()
+	UpdateLimits()
 
 func _physics_process(_delta: float):
 	var desiredPosition = e_target.global_position
@@ -31,7 +32,7 @@ func _physics_process(_delta: float):
 		mouseDST = mouseDST.normalized() * e_mouseTrackRadius.y
 	elif magnitude < e_mouseTrackRadius.x:
 		mouseDST = mouseDST.normalized() * e_mouseTrackRadius.x
-		
+
 	mouseDST.y = mouseDST.y * .5
 
 	#if e_target is PlayerController:
@@ -46,8 +47,17 @@ func _physics_process(_delta: float):
 func UpdateMousePosition():
 	m_mousePosition = get_viewport().get_mouse_position()
 	var halfExtents = get_viewport_rect().size / 2
-	m_mouseWorldPosition = global_position + m_mousePosition - halfExtents
+	m_mouseWorldPosition = get_screen_center_position() + m_mousePosition - halfExtents
 
 	e_mouseworldpositiondebugobject.visible = e_debug
 	e_mouseworldpositiondebugobject.global_position = m_mouseWorldPosition
 	pass
+
+func UpdateLimits():
+	if Level.Current != null && Room.Current != null:
+		var extents = Room.Current.GetLocalizedExtents()
+		limit_left = extents.position.x
+		limit_right = extents.position.x + extents.size.x
+		limit_top = extents.position.y
+		limit_bottom = extents.position.y + extents.size.y
+		pass
