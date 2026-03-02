@@ -66,9 +66,9 @@ grow_vertical = 2
 custom_minimum_size = Vector2(40, 0)
 anchors_preset = 0
 offset_left = 50.0
-offset_top = 196.0
+offset_top = 346.0
 offset_right = 90.0
-offset_bottom = 236.0
+offset_bottom = 386.0
 script = ExtResource("4_ysadv")
 e_up = NodePath("up")
 e_down = NodePath("down")
@@ -91,9 +91,9 @@ texture = ExtResource("7_npf5m")
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 0
 offset_left = 6.0
-offset_top = 236.0
+offset_top = 386.0
 offset_right = 134.0
-offset_bottom = 276.0
+offset_bottom = 426.0
 
 [node name="buttonListernerA" type="Control" parent="WhatButtons/main/HBoxContainer" unique_id=348631300 node_paths=PackedStringArray("e_up", "e_down")]
 custom_minimum_size = Vector2(40, 0)
@@ -161,9 +161,9 @@ texture = ExtResource("8_twmd4")
 [node name="buttonListernerJump" type="Control" parent="WhatButtons/main" unique_id=1024899955 node_paths=PackedStringArray("e_up", "e_down")]
 anchors_preset = 0
 offset_left = 19.0
-offset_top = 276.0
+offset_top = 426.0
 offset_right = 59.0
-offset_bottom = 316.0
+offset_bottom = 466.0
 script = ExtResource("4_ysadv")
 e_up = NodePath("up")
 e_down = NodePath("down")
@@ -183,9 +183,9 @@ texture = ExtResource("10_8xtfd")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="WhatButtons" unique_id=1776692774]
 offset_left = 2.0
-offset_top = 282.0
+offset_top = 432.0
 offset_right = 202.0
-offset_bottom = 322.0
+offset_bottom = 472.0
 
 [node name="VelocityListener" type="Label" parent="WhatButtons/HBoxContainer" unique_id=597188530 node_paths=PackedStringArray("player")]
 custom_minimum_size = Vector2(100, 0)
@@ -194,10 +194,10 @@ script = ExtResource("20_y0f3f")
 player = NodePath("../../../Bazookat")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="WhatButtons" unique_id=139412619]
-offset_left = 281.0
-offset_top = 279.0
-offset_right = 481.0
-offset_bottom = 319.0
+offset_left = 434.0
+offset_top = 433.0
+offset_right = 634.0
+offset_bottom = 473.0
 alignment = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="WhatButtons/HBoxContainer2" unique_id=267126808]

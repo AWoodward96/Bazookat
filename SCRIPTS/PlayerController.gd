@@ -9,7 +9,10 @@ enum ECardinalDirections8 { N, ne, E, se, S, sw, W, nw}
 @export var e_animationTree : AnimationTree
 
 @export_category("Running Information")
-@export var e_horizontalSpeed : float = 300
+@export var e_horizontalSpeed : float = 200
+@export var e_sprintSpeed : float = 300
+@export var e_exitSprintStateDuration : float = 1
+@export var e_aerialExtraHorizontal : float = 75
 @export var e_horizontalAcceleration : float = 1500
 @export var e_horizontalLockoutMultiplier : float = 0.5
 
@@ -70,6 +73,9 @@ var m_coyoteTimer : float # Timer for tracking if we can do a valid coyote time 
 var m_coyoteJump : bool # Is true if we're coyote time jumping
 var m_jumpCount : int # To prevent abuse of coyote time, and to track how many times we've jumped
 
+var m_sprinting : bool
+var m_inSprintAnimState : bool
+var m_endSprintAnimTimer : float
 var m_wallNormal : Vector2
 var m_horizontalLockoutTimer : float
 var m_verticalCutLockoutTimer : float
@@ -99,7 +105,13 @@ func HandleInput(_delta : float):
 		m_horizontal += -1
 	if Input.is_action_pressed("right"):
 		m_horizontal += 1
-
+	
+	if Input.is_action_pressed("sprint"):
+		m_sprinting = true
+		m_endSprintAnimTimer = e_exitSprintStateDuration
+	else:
+		m_sprinting = false
+	
 	m_downHeld = Input.is_action_pressed("down")
 	m_upHeld = Input.is_action_pressed("up")
 
@@ -137,6 +149,8 @@ func HandleInput(_delta : float):
 	# sliding and climbing logic
 	m_sliding = m_onWall && velocity.y > e_wallClingThreshold
 	m_climbing = m_onWall && m_upHeld && m_climbingStamina > 0 && (m_climbing || velocity.y > e_climbStartThreshold)
+	
+	m_inSprintAnimState = m_endSprintAnimTimer > 0
 
 	# Jump buffer deprecation
 	if m_jumpBuffer > 0:
@@ -156,6 +170,9 @@ func HandleInput(_delta : float):
 
 	if m_verticalCutLockoutTimer > 0:
 		m_verticalCutLockoutTimer -= _delta
+	
+	if m_endSprintAnimTimer > 0:
+		m_endSprintAnimTimer -= _delta
 
 	pass
 
@@ -209,9 +226,9 @@ func HandlePhysics(_delta : float):
 	move_and_slide()
 
 	# flip the sprite based on the last direction we moved
-	if m_horizontal < 0:
+	if velocity.x < 0:
 		m_facingLeft = true
-	if m_horizontal > 0:
+	if velocity.x > 0:
 		m_facingLeft = false
 	e_visual.flip_h = m_facingLeft
 
@@ -224,8 +241,8 @@ func HandleHorizontal(_delta):
 	var desiredAcceleration = e_horizontalAcceleration
 	if m_horizontalLockoutTimer > 0:
 		desiredAcceleration *= e_horizontalLockoutMultiplier
-
-	horizontalVelocity = move_toward(horizontalVelocity, m_horizontal * e_horizontalSpeed, desiredAcceleration * _delta)
+		
+	horizontalVelocity = move_toward(horizontalVelocity, m_horizontal * GetHorizontalSpeed(), desiredAcceleration * _delta)
 
 	velocity = Vector2(horizontalVelocity, velocity.y)
 
@@ -318,3 +335,13 @@ func GetDirectionFromRocketJumpAngle(_angle : float):
 		return ECardinalDirections8.N
 	else:
 		return ECardinalDirections8.ne
+
+func GetHorizontalSpeed():
+	var speed = e_horizontalSpeed
+	
+	if m_sprinting && m_onFloor:
+		speed = e_sprintSpeed
+		
+	if !m_onFloor:
+		speed += e_aerialExtraHorizontal
+	return speed
