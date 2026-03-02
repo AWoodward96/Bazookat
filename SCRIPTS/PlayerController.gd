@@ -4,8 +4,9 @@ class_name PlayerController
 
 enum ECardinalDirections8 { N, ne, E, se, S, sw, W, nw}
 
-@export var e_visual : Sprite2D
+@export var e_visual : AnimatedSprite2D
 @export var e_bazooka : BazookaBehavior
+@export var e_animationTree : AnimationTree
 
 @export_category("Running Information")
 @export var e_horizontalSpeed : float = 300
@@ -87,6 +88,7 @@ var db_lastRocketJumpPerfect : bool
 
 func _physics_process(_delta: float):
 	HandleInput(_delta)
+	HandleAnimations()
 	HandlePhysics(_delta)
 	HandleParticles()
 
@@ -155,6 +157,12 @@ func HandleInput(_delta : float):
 	if m_verticalCutLockoutTimer > 0:
 		m_verticalCutLockoutTimer -= _delta
 
+	pass
+
+func HandleAnimations():
+	#e_animationTree.set("parameters/conditions/grounded", m_onFloor)
+	#e_animationTree.set("parameters/Grounded/conditions/moving", velocity.x != 0)
+	
 	pass
 
 func HandlePhysics(_delta : float):

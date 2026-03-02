@@ -6,6 +6,11 @@ class_name BazookaBehavior
 @export var e_bulletPrefab : PackedScene
 var aimedDirection : Vector2
 
+
+func _ready():
+	# get the main camera
+	e_camera = get_viewport().get_camera_2d()
+
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("fire"):
 		Fire(e_owner.global_position, e_camera.m_mouseWorldPosition - e_owner.global_position)
