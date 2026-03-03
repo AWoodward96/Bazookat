@@ -4,6 +4,10 @@ class_name BazookaBehavior
 @export var e_owner : Node2D
 @export var e_camera : MainCamera
 @export var e_bulletPrefab : PackedScene
+@export var e_visualParent : Node2D
+@export var e_visual : AnimatedSprite2D
+@export var e_emitterParent : Node2D
+
 var aimedDirection : Vector2
 
 var Camera : MainCamera :
@@ -13,13 +17,24 @@ var Camera : MainCamera :
 		else:
 			return get_viewport().get_camera_2d()
 
-func _ready():
-	# get the main camera
-	e_camera = get_viewport().get_camera_2d()
+func UpdateBazookaVisibility(_visible : bool):
+	e_visual.visible = _visible
 
 func _physics_process(_delta: float) -> void:
+	var dst = Camera.m_mouseWorldPosition - e_owner.global_position
+	if e_visualParent != null && e_visual != null:
+		var angle = dst.angle()
+		e_visualParent.rotation = angle
+		
+		var inDeg = rad_to_deg(angle)
+		if inDeg < 0:
+			inDeg += 360
+		elif inDeg > 360:
+			inDeg -= 360
+		e_visual.flip_v = inDeg > 90 && inDeg < 270
+	
 	if Input.is_action_just_pressed("fire"):
-		Fire(e_owner.global_position, Camera.m_mouseWorldPosition - e_owner.global_position)
+		Fire(e_emitterParent.global_position, dst)
 	pass
 
 

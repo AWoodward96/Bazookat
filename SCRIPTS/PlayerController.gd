@@ -60,6 +60,7 @@ var JumpForce : float :
 
 var m_horizontal : float
 var m_facingLeft : bool
+var m_backpedaling : bool
 var m_downHeld : bool
 var m_upHeld : bool
 
@@ -151,6 +152,10 @@ func HandleInput(_delta : float):
 	m_climbing = m_onWall && m_upHeld && m_climbingStamina > 0 && (m_climbing || velocity.y > e_climbStartThreshold)
 
 	m_inSprintAnimState = m_endSprintAnimTimer > 0
+	
+	e_bazooka.UpdateBazookaVisibility(!m_inSprintAnimState)
+	if Level.Current != null && Level.Camera != null:
+		m_backpedaling = (Level.Camera.m_mouseWorldPosition.x < global_position.x && !m_facingLeft) || (Level.Camera.m_mouseWorldPosition.x > global_position.x && m_facingLeft)
 
 	# Jump buffer deprecation
 	if m_jumpBuffer > 0:
