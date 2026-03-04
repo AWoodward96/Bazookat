@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://bbgaf2re2unco" path="res://SCRIPTS/GameManager.gd" id="1_1q78k"]
 [ext_resource type="PackedScene" uid="uid://b7w0w5q1xecy8" path="res://RESOURCES/Prefabs/bazookat.tscn" id="2_pdj24"]
 [ext_resource type="PackedScene" uid="uid://hyoc60qale8o" path="res://RESOURCES/Prefabs/main_camera.tscn" id="3_2bdge"]
+[ext_resource type="Resource" uid="uid://db5kq4g88v37p" path="res://RESOURCES/GameSettings.tres" id="4_skt2g"]
 
 [node name="GameManager" type="Node2D" unique_id=2035894882]
 script = ExtResource("1_1q78k")
 PlayerPrefab = ExtResource("2_pdj24")
 CameraPrefab = ExtResource("3_2bdge")
+GameData = ExtResource("4_skt2g")

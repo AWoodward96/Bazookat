@@ -4,6 +4,7 @@ const TILESIZE = 16
 
 @export var PlayerPrefab : PackedScene
 @export var CameraPrefab : PackedScene
+@export var GameData : GameSettings
 
 var pool_parent : Node2D
 var object_pool : Dictionary

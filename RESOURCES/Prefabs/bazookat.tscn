@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b20bb84wd4ibf" path="res://SCRIPTS/RocketForceHelper.gd" id="2_o0q0n"]
 [ext_resource type="Texture2D" uid="uid://cewdqnorv0lef" path="res://ART/Particle/Dust_Sheet.png" id="3_8dus5"]
 [ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="4_0334l"]
+[ext_resource type="Shader" uid="uid://c01bxacddng50" path="res://ART/Shaders/combatant_shader.gdshader" id="4_yqqkn"]
 [ext_resource type="Texture2D" uid="uid://bf37qqy65vav" path="res://ART/Characters/Main/bazooka_aerial.png" id="5_8dus5"]
 [ext_resource type="Texture2D" uid="uid://dad2dchrlcvja" path="res://ART/Characters/Main/bazookat_idle.png" id="5_o0q0n"]
 [ext_resource type="Texture2D" uid="uid://bpyi0f5e03rfd" path="res://ART/Characters/Main/bazooka_climb.png" id="6_aeidu"]
@@ -26,8 +27,9 @@ point_count = 2
 resource_name = "S"
 script = ExtResource("2_o0q0n")
 e_direction = 4
-e_YForceMultiplier = -1.25
+e_YForceMultiplier = -1.4
 e_horizontalLockoutDuration = 0.25
+e_perfectModifier = 1.1
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
 [sub_resource type="Resource" id="Resource_nh5kv"]
@@ -36,8 +38,7 @@ script = ExtResource("2_o0q0n")
 e_direction = 3
 e_HasXForce = true
 e_XDirection = -450.0
-e_YForceMultiplier = -0.8
-e_horizontalLockoutDuration = 0.75
+e_YForceMultiplier = -1.0
 e_upwardCutLockoutDuration = 0.75
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
@@ -47,8 +48,7 @@ script = ExtResource("2_o0q0n")
 e_direction = 5
 e_HasXForce = true
 e_XDirection = 450.0
-e_YForceMultiplier = -0.8
-e_horizontalLockoutDuration = 0.75
+e_YForceMultiplier = -1.0
 e_upwardCutLockoutDuration = 0.75
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
@@ -93,6 +93,9 @@ e_HasXForce = true
 e_XDirection = 300.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_yqqkn"]
+radius = 11.0
+
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7y4a1"]
 particles_animation = true
 particles_anim_h_frames = 7
@@ -104,8 +107,10 @@ offsets = PackedFloat32Array(0, 0.118892506, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2f1oo"]
-shader = ExtResource("4_0334l")
-shader_parameter/clr = Color(1, 1, 1, 1)
+shader = ExtResource("4_yqqkn")
+shader_parameter/use_color_override = 0.0
+shader_parameter/color_override = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/type = 1
 shader_parameter/thickness = 1.0
 
@@ -467,14 +472,14 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xfbtd"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hewad"]
-radius = 11.0
-height = 32.0
-
 [sub_resource type="Curve" id="Curve_7y4a1"]
 _limits = [0.0, 100.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9984663, 100), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_yqqkn"]
+offsets = PackedFloat32Array(0, 0.83728814, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8dus5"]
 animation = &"aerial_0"
@@ -770,6 +775,30 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["idle"]
 }
 
 [sub_resource type="Animation" id="Animation_y3fgl"]
@@ -1263,8 +1292,9 @@ _data = {
 &"wallslide_in": SubResource("Animation_meuh2")
 }
 
-[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle")]
+[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle")]
 collision_mask = 30
+platform_floor_layers = 4294967271
 script = ExtResource("1_letql")
 e_visual = NodePath("Visual")
 e_bazooka = NodePath("Bazooka")
@@ -1272,9 +1302,9 @@ e_animationTree = NodePath("AnimationTree")
 e_horizontalSpeed = 175.0
 e_sprintSpeed = 350.0
 e_horizontalLockoutMultiplier = 0.1
-e_jumpHeight = 48
 e_extraHangThreshold = 40.0
 e_extraHangMultiplier = 1.0
+e_pogoVerticalLockoutDuration = 0.25
 e_wallClingThreshold = 30.0
 e_climbingForce = 64.0
 e_climbingCurve = SubResource("Curve_npf5m")
@@ -1286,9 +1316,20 @@ e_climbParticleParent = NodePath("ClimbPartOffset")
 e_climbParticle = NodePath("ClimbPartOffset/ClimbParticle")
 e_rocketJumpDirectionData = Array[ExtResource("2_o0q0n")]([SubResource("Resource_7asai"), SubResource("Resource_nh5kv"), SubResource("Resource_l3moj"), SubResource("Resource_bmxi4"), SubResource("Resource_m3dc8"), SubResource("Resource_llfxf"), SubResource("Resource_2f1oo"), SubResource("Resource_g336n")])
 e_perfectRocketJumpWindow = 0.097
-e_perfectRocketJumpYMult = 1.25
 e_perfectRocketJumpGravityMultiplier = 0.85
 e_perfectRocketJumpGravityDuration = 0.5
+e_deathCast = NodePath("Raycasts/DeathCast")
+e_deathBounce = 100.0
+e_deathParticle = NodePath("DeathParticle")
+
+[node name="Raycasts" type="Node2D" parent="." unique_id=663161300]
+
+[node name="DeathCast" type="ShapeCast2D" parent="Raycasts" unique_id=1933329975]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_yqqkn")
+target_position = Vector2(0, 1)
+margin = 5.65
+collision_mask = 24
 
 [node name="WallSlideOffset" type="Node2D" parent="." unique_id=1703827426]
 
@@ -1313,7 +1354,7 @@ anim_offset_max = 1.0
 material = SubResource("ShaderMaterial_2f1oo")
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_o0q0n")
-animation = &""
+animation = &"idle"
 autoplay = "idle"
 
 [node name="Bazooka" type="Node2D" parent="." unique_id=1270862840 node_paths=PackedStringArray("e_owner", "e_visualParent", "e_visual", "e_emitterParent")]
@@ -1338,13 +1379,6 @@ position = Vector2(14, -2)
 position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_xfbtd")
 
-[node name="DeathShape" type="Area2D" parent="." unique_id=7135162]
-collision_mask = 16
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathShape" unique_id=1889162401]
-position = Vector2(0, -7)
-shape = SubResource("CapsuleShape2D_hewad")
-
 [node name="ClimbPartOffset" type="Node2D" parent="." unique_id=2117437113]
 
 [node name="ClimbParticle" type="CPUParticles2D" parent="ClimbPartOffset" unique_id=1287390913]
@@ -1367,6 +1401,22 @@ damping_curve = SubResource("Curve_7y4a1")
 scale_amount_min = 0.5
 color_ramp = SubResource("Gradient_a14sm")
 
+[node name="DeathParticle" type="CPUParticles2D" parent="." unique_id=1093986214]
+emitting = false
+texture = ExtResource("8_vap7r")
+one_shot = true
+explosiveness = 1.0
+emission_shape = 6
+emission_ring_inner_radius = 0.8
+emission_ring_radius = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 70.0
+initial_velocity_max = 70.0
+damping_min = 76.622
+damping_max = 88.05
+color_ramp = SubResource("Gradient_yqqkn")
+
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1243931910]
 tree_root = SubResource("AnimationNodeStateMachine_letql")
 advance_expression_base_node = NodePath("..")
@@ -1374,6 +1424,3 @@ anim_player = NodePath("../AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1960116950]
 libraries/ = SubResource("AnimationLibrary_0334l")
-
-[connection signal="area_entered" from="DeathShape" to="." method="_on_death_shape_area_entered"]
-[connection signal="body_entered" from="DeathShape" to="." method="_on_death_shape_body_entered"]

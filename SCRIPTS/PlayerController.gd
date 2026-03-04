@@ -3,10 +3,12 @@ extends CharacterBody2D
 class_name PlayerController
 
 enum ECardinalDirections8 { N, ne, E, se, S, sw, W, nw}
+enum EState { Normal, Death, Respawn }
 
 @export var e_visual : AnimatedSprite2D
 @export var e_bazooka : BazookaBehavior
 @export var e_animationTree : AnimationTree
+@export var e_state : EState = EState.Normal
 
 @export_category("Running Information")
 @export var e_horizontalSpeed : float = 200
@@ -17,8 +19,6 @@ enum ECardinalDirections8 { N, ne, E, se, S, sw, W, nw}
 @export var e_horizontalLockoutMultiplier : float = 0.5
 
 @export_category("Jump Information")
-@export var e_jumpHeight : int = 32
-@export var e_timeToJumpApex : float = 0.34
 @export var e_jumpCutRatio : float = 0.4
 @export var e_jumpBufferWindow : float = 0.1
 @export var e_coyoteTimeWindow : float = 0.14
@@ -26,6 +26,7 @@ enum ECardinalDirections8 { N, ne, E, se, S, sw, W, nw}
 @export var e_fastFallMultiplier : float = 2
 @export var e_extraHangThreshold : float = 1
 @export var e_extraHangMultiplier : float = 0.25
+@export var e_pogoVerticalLockoutDuration : float = 0.5
 
 @export_category("Climbing Information")
 @export var e_wallClingThreshold : float = 20
@@ -44,18 +45,24 @@ enum ECardinalDirections8 { N, ne, E, se, S, sw, W, nw}
 @export_category("Rocket Jump Information")
 @export var e_rocketJumpDirectionData : Array[RocketForceHelper]
 @export var e_perfectRocketJumpWindow : float = 0.125
-@export var e_perfectRocketJumpYMult : float = 1.15
 @export var e_perfectRocketJumpGravityMultiplier : float = 0.5
 @export var e_perfectRocketJumpGravityDuration : float = 1
+
+@export_category("Death")
+@export var e_deathCast : ShapeCast2D
+@export var e_deathDuration : float = 0.5
+@export var e_deathBounce : float = 10
+@export var e_deathVelocityDamp : float = 0.9
+@export var e_deathParticle : CPUParticles2D
 
 
 var Gravity : float :
 	get:
-		return (2 * e_jumpHeight) / pow(e_timeToJumpApex, 2)
+		return GameManager.GameData.Gravity
 
 var JumpForce : float :
 	get:
-		return Gravity * e_timeToJumpApex
+		return GameManager.GameData.JumpForce
 
 
 var m_horizontal : float
@@ -84,6 +91,9 @@ var m_climbing : bool
 var m_climbingStamina : float
 var m_sliding : bool
 
+var m_deathTimer : float
+var m_fallbackOriginalPosition : Vector2
+var m_deathTween : Tween
 
 var m_perfectRocketJumpTimer : float
 var m_perfectRocketJumpSuccessTimer : float
@@ -94,9 +104,18 @@ var db_lastRocketJumpDirection : ECardinalDirections8
 var db_lastRocketJumpPerfect : bool
 
 
+func _ready():
+	m_fallbackOriginalPosition = global_position
+
 func _physics_process(_delta: float):
-	HandleInput(_delta)
-	HandlePhysics(_delta)
+	match e_state:
+		EState.Normal:
+			HandleInput(_delta)
+			HandlePhysics(_delta)
+		EState.Death:
+			velocity *= e_deathVelocityDamp
+			move_and_slide()
+
 	HandleParticles()
 
 func HandleInput(_delta : float):
@@ -224,6 +243,8 @@ func HandlePhysics(_delta : float):
 		m_jumpBuffer = 0
 		m_perfectRocketJumpTimer = e_perfectRocketJumpWindow
 
+
+	CheckDeath()
 	move_and_slide()
 
 	# flip the sprite based on the last direction we moved
@@ -249,21 +270,11 @@ func HandleHorizontal(_delta):
 
 func HandleParticles():
 	e_wallslideParent.scale.x = -m_wallNormal.x
-	e_wallslideParticle.emitting = m_sliding
+	e_wallslideParticle.emitting = m_sliding && e_state == EState.Normal
 
 	e_climbParticleParent.scale.x = -m_wallNormal.x
-	e_climbParticle.emitting = m_climbing
+	e_climbParticle.emitting = m_climbing && e_state == EState.Normal
 
-#func HandleCollisions(_delta):
-	#for i in get_slide_collision_count():
-		#var collision = get_slide_collision(i)
-		#var collider = collision.get_collider()
-		#if collider is TileMapLayer:
-			#var rid = collider.rid
-			#var tile_coord = collider.get_coords_for_body_rid(collision.get_collider_rid())
-			#var tile = collider.get_cell_tile_data(tile_coord)
-			#if tile.get_collision_polygons_count(5) > 0:
-				#print("death")
 
 func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 	# Get the rotation of the rocket relative to the player
@@ -284,12 +295,12 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 		push_error("Could not find rocket jump information. Angle: ", str(angle), " Direction: ", PlayerController.ECardinalDirections8.find_key(direction))
 		return
 
+	var data = e_rocketJumpDirectionData[index]
 	var perfectMult : float = 1
 	if m_perfectRocketJumpTimer > 0:
-		perfectMult = e_perfectRocketJumpYMult
+		perfectMult = data.e_perfectModifier
 		m_perfectRocketJumpSuccessTimer = e_perfectRocketJumpGravityDuration
 
-	var data = e_rocketJumpDirectionData[index]
 	if data.e_HasXForce:
 		velocity = Vector2(data.e_XDirection, data.e_YForceMultiplier * JumpForce * perfectMult)
 	else:
@@ -306,38 +317,38 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 
 func GetDirectionFromRocketJumpAngle(_angle : float):
 	## This is complicated
-	## S is a 60 degree arc
-	## SE and SW are a 45 degree arc
-	## W and E are both 40 degree's and are skewed slightly above the horizontal
-	## N is 20, while the NE and NW are both at 55
+	## S is a 70 degree arc
+	## SE and SW are a 55 degree arc
+	## W and E are both 40 degree's and are skewed above the horizontal (IE if they're below the horizontal, they're SW and SE)
+	## N is 20, while the NE and NW are both at 50
 	## I think in the future, NE and NW might want to be smaller, and W and E might want to be bigger but...
 
 	## We do this because we don't want a player on the ground, aiming for a SE/SW jump accidentally hitting a perfect EW jump
 	## We also don't want to accidentally hit a NW and NE when we're going for an E or a W, so that's why all the angles are skewed
 
 	var ewAngle : float = 30.0
-	var sAngle : float = 60.0
+	var sAngle : float = 70.0
 	var nAngle : float = 20
 	var halfS = sAngle / 2
-	var halfEW = ewAngle / 2
 	var halfN = nAngle / 2
 
-	if _angle > 360 - (halfEW + halfN) || _angle <= halfEW:
-		return ECardinalDirections8.E 							# 15 + (15 + 10) = 40
-	elif _angle > halfEW && _angle <= 90 - halfS:
-		return ECardinalDirections8.se 							# 60 - 15 = 45
+	print("Angle: ", _angle)
+	if _angle > 360 - (ewAngle):
+		return ECardinalDirections8.E 							# 30
+	elif _angle > 0 && _angle <= 90 - halfS:
+		return ECardinalDirections8.se 							# 90 - 35 = 55
 	elif _angle > 90 - halfS && _angle <= 90 + halfS:
-		return ECardinalDirections8.S 							# 60
-	elif _angle > 90 + halfS && _angle <= 180 - halfEW:
-		return ECardinalDirections8.sw 							# 165 - 120 = 45
-	elif _angle > 180 - halfEW && _angle <= 180 + (halfEW + halfN):
-		return ECardinalDirections8.W 							# 205 - 165 = 40
-	elif _angle > 180 + (halfEW + halfN) && _angle <= 270 - halfN:
-		return ECardinalDirections8.nw 							# 260 - 205 = 55
+		return ECardinalDirections8.S 							# 70
+	elif _angle > 90 + halfS && _angle <= 180:
+		return ECardinalDirections8.sw 							# 55
+	elif _angle > 180 && _angle <= 180 + (ewAngle):
+		return ECardinalDirections8.W 							# 30
+	elif _angle > 180 + (ewAngle) && _angle <= 270 - halfN:
+		return ECardinalDirections8.nw 							# 260 - 210 = 50
 	elif _angle > 270 - halfN && _angle <= 270 + halfN:
 		return ECardinalDirections8.N 							# 20
 	else:
-		return ECardinalDirections8.ne 							# 55
+		return ECardinalDirections8.ne 							# 50
 
 func GetHorizontalSpeed():
 	var speed = e_horizontalSpeed
@@ -347,10 +358,74 @@ func GetHorizontalSpeed():
 
 	if !m_onFloor:
 		speed += e_aerialExtraHorizontal
+
 	return speed
 
+func Die(_normal : Vector2):
+	if e_state == EState.Normal:
+		velocity = _normal.normalized() * e_deathBounce
+		e_state = EState.Death
+		m_deathTimer = e_deathDuration
 
-func _on_death_shape_body_entered(_body: Node2D) -> void:
+		e_bazooka.UpdateBazookaVisibility(false)
+		e_visual.material.set_shader_parameter("color_override", Color.WHITE)
+		e_visual.material.set_shader_parameter("use_color_override", 1.0)
+
+		if !UIManager.OnFadeComplete.is_connected(OnDeathFadeOutComplete):
+			UIManager.OnFadeComplete.connect(OnDeathFadeOutComplete)
+		UIManager.FadeOut(e_deathDuration, e_deathDuration)
+	pass
+
+func OnDeathFadeOutComplete():
+	if UIManager.OnFadeComplete.is_connected(OnDeathFadeOutComplete):
+		UIManager.OnFadeComplete.disconnect(OnDeathFadeOutComplete)
+	UIManager.FadeIn(e_deathDuration)
+	Respawn()
+
+func SetOutlineParam(_value : float):
+	e_visual.material.set_shader_parameter("thickness", _value)
+
+func SetColorOverrideParam(_value : float):
+	e_visual.material.set_shader_parameter("use_color_override", _value)
+
+func Respawn():
+	e_state = EState.Respawn
+	var respawnPosition = m_fallbackOriginalPosition
 	if Room.Current != null:
-		velocity = Vector2.ZERO
-		global_position = Room.Current.m_currentRespawnPoint.global_position
+		var room = Room.Current
+		if room.m_currentRespawnPoint != null:
+			respawnPosition = room.m_currentRespawnPoint.e_respawnPoint.global_position
+		elif room.e_defaultRespawnPoint != null:
+			respawnPosition = room.e_defaultRespawnPoint.e_respawnPoint.global_position
+
+		room.ResetRoom()
+
+	m_deathTween = get_tree().create_tween()
+	m_deathTween.tween_method(SetOutlineParam, 15, 1, 0.5)
+	m_deathTween.tween_method(SetColorOverrideParam, 1, 0, 0.5)
+	m_deathTween.tween_callback(func() : e_state = EState.Normal)
+	m_deathTween.play()
+	global_position = respawnPosition
+	e_deathParticle.emitting = true
+
+func CheckDeath():
+	for index in e_deathCast.get_collision_count():
+		var collider = e_deathCast.get_collider(index)
+		if collider == null:
+			continue
+
+		if collider is TileMapLayer:
+			# this is just death. You've hit the death layer
+			Die(e_deathCast.get_collision_normal(index))
+		else:
+			var enemy = collider.get_collision_mask_value(3)
+			if enemy && collider is EnemyBase:
+				if velocity.y > 0:
+					# kill the enemy
+					velocity.y = -JumpForce
+					m_verticalCutLockoutTimer = e_pogoVerticalLockoutDuration
+					collider.Kill()
+					pass
+				else:
+					Die(e_deathCast.get_collision_normal(index))
+	pass

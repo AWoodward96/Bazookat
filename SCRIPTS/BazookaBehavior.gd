@@ -21,6 +21,9 @@ func UpdateBazookaVisibility(_visible : bool):
 	e_visual.visible = _visible
 
 func _physics_process(_delta: float) -> void:
+	if Camera == null:
+		return
+
 	var dst = Camera.m_mouseWorldPosition - e_owner.global_position
 	if e_visualParent != null && e_visual != null:
 		var angle = dst.angle()
@@ -36,6 +39,11 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("fire"):
 		Fire(e_emitterParent.global_position, dst)
 	pass
+
+func UpdateDisplay():
+	if Camera == null:
+		return
+
 
 
 func Fire(_origin : Vector2, _direction : Vector2):

@@ -4,22 +4,10 @@
 [ext_resource type="Script" uid="uid://cjugdejpk17fm" path="res://SCRIPTS/Level.gd" id="1_llfxf"]
 [ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="2_7asai"]
 [ext_resource type="Texture2D" uid="uid://dad2dchrlcvja" path="res://ART/Characters/Main/bazookat_idle.png" id="3_bmxi4"]
-[ext_resource type="Texture2D" uid="uid://bdxoh25ovb1lx" path="res://ART/UI/input_a.png" id="4_746ru"]
-[ext_resource type="Script" uid="uid://e2dofj1xs2yp" path="res://SCRIPTS/Helpers/button_listener_ui.gd" id="4_ysadv"]
-[ext_resource type="Texture2D" uid="uid://cgydlycwp8lcs" path="res://ART/UI/input_a_down.png" id="5_ysadv"]
-[ext_resource type="Texture2D" uid="uid://by4gkll30ctun" path="res://ART/UI/input_w.png" id="6_adoco"]
-[ext_resource type="Texture2D" uid="uid://e28qo1y40wkm" path="res://ART/UI/input_d.png" id="7_47v5y"]
-[ext_resource type="Texture2D" uid="uid://cpjf7saa1emsd" path="res://ART/UI/input_w_down.png" id="7_npf5m"]
-[ext_resource type="Texture2D" uid="uid://bwww3sj53d8td" path="res://ART/UI/input_d_down.png" id="8_twmd4"]
-[ext_resource type="Texture2D" uid="uid://becpp2ksarckd" path="res://ART/UI/input_space.png" id="9_rogw5"]
-[ext_resource type="Texture2D" uid="uid://co3y5jcwyp5b" path="res://ART/UI/input_s.png" id="10_7y4a1"]
-[ext_resource type="Texture2D" uid="uid://cc4lctd72v24k" path="res://ART/UI/input_space_down.png" id="10_8xtfd"]
-[ext_resource type="Texture2D" uid="uid://b14km0jlgu27k" path="res://ART/UI/input_s_down.png" id="11_a14sm"]
+[ext_resource type="PackedScene" uid="uid://dilee5tlwetad" path="res://RESOURCES/Prefabs/what_buttons.tscn" id="5_twmd4"]
 [ext_resource type="Script" uid="uid://dtgfmwdl8ikaw" path="res://SCRIPTS/Room.gd" id="20_m2fnr"]
-[ext_resource type="Script" uid="uid://ccph8id58tjko" path="res://SCRIPTS/Helpers/velocity_listener.gd" id="20_y0f3f"]
+[ext_resource type="Script" uid="uid://bnfar5mme0uoc" path="res://SCRIPTS/RespawnPoint.gd" id="21_llfxf"]
 [ext_resource type="PackedScene" uid="uid://dmtgtsv6v0nui" path="res://RESOURCES/Prefabs/VFX/vfx_bazooka_explosion.tscn" id="21_m2fnr"]
-[ext_resource type="Script" uid="uid://cdjbyh1rayb5d" path="res://SCRIPTS/Helpers/last_jump_direction_listener.gd" id="23_7asai"]
-[ext_resource type="Script" uid="uid://do48dx5ikjk1k" path="res://SCRIPTS/Helpers/last_jump_perfect_listener.gd" id="24_bmxi4"]
 [ext_resource type="Texture2D" uid="uid://cde17ex6qtqlu" path="res://ART/Environment/LightingAssets/8x8_bayer_circle_128px.png" id="25_m3dc8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m3dc8"]
@@ -28,9 +16,14 @@ shader_parameter/clr = Color(0.61, 1, 0.67499995, 1)
 shader_parameter/type = 2
 shader_parameter/thickness = 2.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_llfxf"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7asai"]
+size = Vector2(48, 48)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7asai"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bmxi4"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3dc8"]
+size = Vector2(48, 48)
 
 [node name="testing" type="Node2D" unique_id=607547518 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
 script = ExtResource("1_llfxf")
@@ -55,170 +48,7 @@ tile_set = ExtResource("1_7ribk")
 tile_map_data = PackedByteArray("AABSAC8AAAADAAUAAABTAC8AAAADAAUAAABUAC8AAAADAAUAAABVAC8AAAADAAUAAABWAC8AAAADAAUAAABXAC8AAAADAAUAAABYAC8AAAADAAUAAAA=")
 tile_set = ExtResource("1_7ribk")
 
-[node name="WhatButtons" type="CanvasLayer" parent="." unique_id=1733039137]
-
-[node name="main" type="Control" parent="WhatButtons" unique_id=685445505]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -18.0
-offset_bottom = -18.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="buttonListernerD2" type="Control" parent="WhatButtons/main" unique_id=1206695357 node_paths=PackedStringArray("e_up", "e_down")]
-custom_minimum_size = Vector2(40, 0)
-anchors_preset = 0
-offset_left = 50.0
-offset_top = 346.0
-offset_right = 90.0
-offset_bottom = 386.0
-script = ExtResource("4_ysadv")
-e_up = NodePath("up")
-e_down = NodePath("down")
-e_inputString = "up"
-
-[node name="up" type="TextureRect" parent="WhatButtons/main/buttonListernerD2" unique_id=287598050]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("6_adoco")
-
-[node name="down" type="TextureRect" parent="WhatButtons/main/buttonListernerD2" unique_id=1407136160]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("7_npf5m")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="WhatButtons/main" unique_id=1936950681]
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 0
-offset_left = 6.0
-offset_top = 386.0
-offset_right = 134.0
-offset_bottom = 426.0
-
-[node name="buttonListernerA" type="Control" parent="WhatButtons/main/HBoxContainer" unique_id=348631300 node_paths=PackedStringArray("e_up", "e_down")]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-script = ExtResource("4_ysadv")
-e_up = NodePath("up")
-e_down = NodePath("down")
-e_inputString = "left"
-
-[node name="up" type="TextureRect" parent="WhatButtons/main/HBoxContainer/buttonListernerA" unique_id=2039749772]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("4_746ru")
-
-[node name="down" type="TextureRect" parent="WhatButtons/main/HBoxContainer/buttonListernerA" unique_id=1420027077]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("5_ysadv")
-
-[node name="buttonListernerA2" type="Control" parent="WhatButtons/main/HBoxContainer" unique_id=889919388 node_paths=PackedStringArray("e_up", "e_down")]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-script = ExtResource("4_ysadv")
-e_up = NodePath("up")
-e_down = NodePath("down")
-e_inputString = "down"
-
-[node name="up" type="TextureRect" parent="WhatButtons/main/HBoxContainer/buttonListernerA2" unique_id=1246031200]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("10_7y4a1")
-
-[node name="down" type="TextureRect" parent="WhatButtons/main/HBoxContainer/buttonListernerA2" unique_id=54572958]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("11_a14sm")
-
-[node name="buttonListernerD" type="Control" parent="WhatButtons/main/HBoxContainer" unique_id=1920739819 node_paths=PackedStringArray("e_up", "e_down")]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-script = ExtResource("4_ysadv")
-e_up = NodePath("up")
-e_down = NodePath("down")
-e_inputString = "right"
-
-[node name="up" type="TextureRect" parent="WhatButtons/main/HBoxContainer/buttonListernerD" unique_id=87199209]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("7_47v5y")
-
-[node name="down" type="TextureRect" parent="WhatButtons/main/HBoxContainer/buttonListernerD" unique_id=1132871836]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("8_twmd4")
-
-[node name="buttonListernerJump" type="Control" parent="WhatButtons/main" unique_id=1024899955 node_paths=PackedStringArray("e_up", "e_down")]
-anchors_preset = 0
-offset_left = 19.0
-offset_top = 426.0
-offset_right = 59.0
-offset_bottom = 466.0
-script = ExtResource("4_ysadv")
-e_up = NodePath("up")
-e_down = NodePath("down")
-e_inputString = "jump"
-
-[node name="up" type="TextureRect" parent="WhatButtons/main/buttonListernerJump" unique_id=1908144394]
-layout_mode = 0
-offset_right = 96.0
-offset_bottom = 24.0
-texture = ExtResource("9_rogw5")
-
-[node name="down" type="TextureRect" parent="WhatButtons/main/buttonListernerJump" unique_id=177507304]
-layout_mode = 0
-offset_right = 96.0
-offset_bottom = 24.0
-texture = ExtResource("10_8xtfd")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="WhatButtons" unique_id=1776692774]
-offset_left = 2.0
-offset_top = 432.0
-offset_right = 202.0
-offset_bottom = 472.0
-
-[node name="VelocityListener" type="Label" parent="WhatButtons/HBoxContainer" unique_id=597188530]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-script = ExtResource("20_y0f3f")
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="WhatButtons" unique_id=139412619]
-offset_left = 434.0
-offset_top = 433.0
-offset_right = 634.0
-offset_bottom = 473.0
-alignment = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="WhatButtons/HBoxContainer2" unique_id=267126808]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_llfxf")
-
-[node name="LastJumpDirection" type="Label" parent="WhatButtons/HBoxContainer2/PanelContainer" unique_id=378252139]
-layout_mode = 2
-script = ExtResource("23_7asai")
-
-[node name="PanelContainer2" type="PanelContainer" parent="WhatButtons/HBoxContainer2" unique_id=680393989]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_7asai")
-
-[node name="LastJumpPerfectListener" type="Label" parent="WhatButtons/HBoxContainer2/PanelContainer2" unique_id=1261212877]
-layout_mode = 2
-script = ExtResource("24_bmxi4")
+[node name="WhatButtons" parent="." unique_id=455311945 instance=ExtResource("5_twmd4")]
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=511159174]
 position = Vector2(1370, 466)
@@ -230,10 +60,12 @@ position = Vector2(1493, 466)
 shadow_enabled = true
 texture = ExtResource("25_m3dc8")
 
-[node name="Room1" type="Node2D" parent="." unique_id=277075183 node_paths=PackedStringArray("m_editorParent", "m_editorLine")]
+[node name="Room1" type="Node2D" parent="." unique_id=277075183 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "m_editorParent", "m_editorLine")]
 position = Vector2(-336, -224)
 script = ExtResource("20_m2fnr")
 e_roomSize = Vector2i(94, 30)
+e_respawnPoints = [NodePath("DefaultRespawnPoint")]
+e_defaultRespawnPoint = NodePath("DefaultRespawnPoint")
 EditorColor = Color(1, 0.19999999, 0.19999999, 1)
 m_editorParent = NodePath("EDITOR")
 m_editorLine = NodePath("EDITOR/ROOMEXTENTS")
@@ -245,10 +77,25 @@ metadata/_custom_type_script = "uid://dtgfmwdl8ikaw"
 points = PackedVector2Array(0, 0, 1504, 0, 1504, 480, 0, 480, 0, 0)
 default_color = Color(1, 0.19999999, 0.19999999, 1)
 
-[node name="Room2" type="Node2D" parent="." unique_id=1667071420 node_paths=PackedStringArray("m_editorParent", "m_editorLine")]
+[node name="DefaultRespawnPoint" type="Area2D" parent="Room1" unique_id=1724029114 node_paths=PackedStringArray("e_shape", "e_respawnPoint")]
+script = ExtResource("21_llfxf")
+e_shape = NodePath("Shape")
+e_respawnPoint = NodePath("Point")
+
+[node name="Shape" type="CollisionShape2D" parent="Room1/DefaultRespawnPoint" unique_id=128658654]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_7asai")
+
+[node name="Point" type="Sprite2D" parent="Room1/DefaultRespawnPoint" unique_id=1913417260]
+position = Vector2(8, 16)
+texture = ExtResource("3_bmxi4")
+
+[node name="Room2" type="Node2D" parent="." unique_id=1667071420 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "m_editorParent", "m_editorLine")]
 position = Vector2(-224, 256)
 script = ExtResource("20_m2fnr")
 e_roomSize = Vector2i(90, 30)
+e_respawnPoints = [NodePath("DefaultRespawnPoint")]
+e_defaultRespawnPoint = NodePath("DefaultRespawnPoint")
 EditorColor = Color(0.80062795, 0.44128817, 0.42228752, 1)
 m_editorParent = NodePath("EDITOR")
 m_editorLine = NodePath("EDITOR/ROOMEXTENTS")
@@ -260,10 +107,25 @@ metadata/_custom_type_script = "uid://dtgfmwdl8ikaw"
 points = PackedVector2Array(0, 0, 1440, 0, 1440, 480, 0, 480, 0, 0)
 default_color = Color(0.80062795, 0.44128817, 0.42228752, 1)
 
-[node name="Room3" type="Node2D" parent="." unique_id=2095195281 node_paths=PackedStringArray("m_editorParent", "m_editorLine")]
+[node name="DefaultRespawnPoint" type="Area2D" parent="Room2" unique_id=720138651 node_paths=PackedStringArray("e_shape", "e_respawnPoint")]
+script = ExtResource("21_llfxf")
+e_shape = NodePath("Shape")
+e_respawnPoint = NodePath("Point")
+
+[node name="Shape" type="CollisionShape2D" parent="Room2/DefaultRespawnPoint" unique_id=182737475]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_bmxi4")
+
+[node name="Point" type="Sprite2D" parent="Room2/DefaultRespawnPoint" unique_id=1863341885]
+position = Vector2(8, 16)
+texture = ExtResource("3_bmxi4")
+
+[node name="Room3" type="Node2D" parent="." unique_id=2095195281 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "m_editorParent", "m_editorLine")]
 position = Vector2(1216, 320)
 script = ExtResource("20_m2fnr")
 e_roomSize = Vector2i(52, 38)
+e_respawnPoints = [NodePath("DefaultRespawnPoint")]
+e_defaultRespawnPoint = NodePath("DefaultRespawnPoint")
 EditorColor = Color(0.4339246, 0.62513477, 0.29204518, 1)
 m_editorParent = NodePath("EDITOR")
 m_editorLine = NodePath("EDITOR/ROOMEXTENTS")
@@ -274,6 +136,20 @@ metadata/_custom_type_script = "uid://dtgfmwdl8ikaw"
 [node name="ROOMEXTENTS" type="Line2D" parent="Room3/EDITOR" unique_id=1007815814]
 points = PackedVector2Array(0, 0, 832, 0, 832, 608, 0, 608, 0, 0)
 default_color = Color(0.4339246, 0.62513477, 0.29204518, 1)
+
+[node name="DefaultRespawnPoint" type="Area2D" parent="Room3" unique_id=1238390229 node_paths=PackedStringArray("e_shape", "e_respawnPoint")]
+position = Vector2(64, 304)
+script = ExtResource("21_llfxf")
+e_shape = NodePath("Shape")
+e_respawnPoint = NodePath("Point")
+
+[node name="Shape" type="CollisionShape2D" parent="Room3/DefaultRespawnPoint" unique_id=2114271974]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_m3dc8")
+
+[node name="Point" type="Sprite2D" parent="Room3/DefaultRespawnPoint" unique_id=1806250017]
+position = Vector2(8, 16)
+texture = ExtResource("3_bmxi4")
 
 [node name="VFX_BazookaExplosion" parent="." unique_id=402950158 instance=ExtResource("21_m2fnr")]
 visible = false

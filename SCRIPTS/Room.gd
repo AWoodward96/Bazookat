@@ -14,6 +14,7 @@ static var Current : Room
 
 @export var e_respawnPoints : Array[RespawnPoint]
 @export var e_defaultRespawnPoint : RespawnPoint
+@export var e_enemies : Array[EnemyBase]
 
 @export_category("Editor")
 @export var EditorColor : Color = Color.WHITE
@@ -46,6 +47,16 @@ func _process(_delta: float) -> void:
 			if Overlaps(Level.Player.global_position) && Current != self:
 				Level.Current.EnterRoom(self)
 
+func EnterRoom():
+	for e in e_enemies:
+		e.Activate(true)
+	pass
+
+func ExitRoom():
+	for e in e_enemies:
+		e.Activate(false)
+	pass
+
 
 func EDIT_UpdateEditor():
 	EDIT_CreateDebugParent()
@@ -58,9 +69,13 @@ func EDIT_UpdateEditor():
 		e_defaultRespawnPoint.owner = get_tree().edited_scene_root
 
 	e_respawnPoints.clear()
+	e_enemies.clear()
 	for c in get_children():
 		if c is RespawnPoint:
 			e_respawnPoints.append(c)
+
+		if c is EnemyBase:
+			e_enemies.append(c)
 
 	pass
 
@@ -79,6 +94,7 @@ func EDIT_CreateDebugParent():
 
 func EDIT_UpdateLineRenderer():
 	if m_editorLine != null:
+		m_editorLine.position = Vector2.ZERO
 		m_editorLine.clear_points()
 
 		m_editorLine.add_point(Vector2i.ZERO)
@@ -90,6 +106,10 @@ func EDIT_UpdateLineRenderer():
 		pass
 	pass
 
+func ResetRoom():
+	for e in e_enemies:
+		e.OnRoomReset()
+	pass
 
 func RegisterRespawnPoint(_respawnPoint : RespawnPoint):
 	m_currentRespawnPoint = _respawnPoint

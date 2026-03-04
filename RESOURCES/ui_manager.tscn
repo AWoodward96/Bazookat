@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://ce5vl4amnusnw"]
+
+[ext_resource type="Script" uid="uid://cuilt06rjkttd" path="res://SCRIPTS/UIManager.gd" id="1_wjyoi"]
+[ext_resource type="Shader" uid="uid://cihng0hmlchl7" path="res://ART/Shaders/Screenwipe_Shader.gdshader" id="2_q7lhw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6t2p4"]
+shader = ExtResource("2_q7lhw")
+shader_parameter/obscure = true
+shader_parameter/cutoff = 0.0
+shader_parameter/fade_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_q7lhw"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6t2p4"]
+gradient = SubResource("Gradient_q7lhw")
+fill_from = Vector2(0, 1)
+
+[node name="UIManager" type="Node2D" unique_id=1649814687 node_paths=PackedStringArray("e_obscureMask")]
+script = ExtResource("1_wjyoi")
+e_obscureMask = NodePath("MainCanvas/Obscure")
+metadata/_custom_type_script = "uid://cuilt06rjkttd"
+
+[node name="MainCanvas" type="CanvasLayer" parent="." unique_id=1753056403]
+layer = 2
+
+[node name="Obscure" type="TextureRect" parent="MainCanvas" unique_id=835534229]
+material = SubResource("ShaderMaterial_6t2p4")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_6t2p4")

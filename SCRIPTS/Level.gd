@@ -19,6 +19,7 @@ func _ready():
 		for r in e_rooms:
 			if r.Overlaps(e_startingPosition.global_position):
 				Room.Current = r
+				Room.Current.EnterRoom()
 				break
 
 		Camera = GameManager.CameraPrefab.instantiate() as MainCamera
@@ -30,5 +31,8 @@ func _ready():
 		e_startingPosition.visible = false
 
 func EnterRoom(_newRoom : Room):
+	if Room.Current != null:
+		Room.Current.ExitRoom()
 	Room.Current = _newRoom
+	Room.Current.EnterRoom()
 	pass
