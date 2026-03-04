@@ -25,14 +25,14 @@ func _physics_process(_delta: float) -> void:
 	if e_visualParent != null && e_visual != null:
 		var angle = dst.angle()
 		e_visualParent.rotation = angle
-		
+
 		var inDeg = rad_to_deg(angle)
 		if inDeg < 0:
 			inDeg += 360
 		elif inDeg > 360:
 			inDeg -= 360
 		e_visual.flip_v = inDeg > 90 && inDeg < 270
-	
+
 	if Input.is_action_just_pressed("fire"):
 		Fire(e_emitterParent.global_position, dst)
 	pass

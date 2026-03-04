@@ -467,6 +467,10 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xfbtd"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hewad"]
+radius = 11.0
+height = 32.0
+
 [sub_resource type="Curve" id="Curve_7y4a1"]
 _limits = [0.0, 100.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9984663, 100), 0.0, 0.0, 0, 0]
@@ -1260,7 +1264,7 @@ _data = {
 }
 
 [node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle")]
-collision_mask = 15
+collision_mask = 30
 script = ExtResource("1_letql")
 e_visual = NodePath("Visual")
 e_bazooka = NodePath("Bazooka")
@@ -1330,9 +1334,16 @@ sprite_frames = SubResource("SpriteFrames_w3m15")
 [node name="RocketEmitter" type="Node2D" parent="Bazooka/Offset/Bazooka_Visual" unique_id=1732480486]
 position = Vector2(14, -2)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=150271092]
+[node name="RigidShape" type="CollisionShape2D" parent="." unique_id=150271092]
 position = Vector2(0, -7)
 shape = SubResource("CapsuleShape2D_xfbtd")
+
+[node name="DeathShape" type="Area2D" parent="." unique_id=7135162]
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathShape" unique_id=1889162401]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_hewad")
 
 [node name="ClimbPartOffset" type="Node2D" parent="." unique_id=2117437113]
 
@@ -1363,3 +1374,6 @@ anim_player = NodePath("../AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1960116950]
 libraries/ = SubResource("AnimationLibrary_0334l")
+
+[connection signal="area_entered" from="DeathShape" to="." method="_on_death_shape_area_entered"]
+[connection signal="body_entered" from="DeathShape" to="." method="_on_death_shape_body_entered"]

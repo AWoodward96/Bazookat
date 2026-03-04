@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dmtgtsv6v0nui"]
 
-[ext_resource type="Script" uid="uid://6nlsqg7oc2da" path="res://SCRIPTS/VFXHelper.gd" id="1_gn584"]
+[ext_resource type="Script" uid="uid://6nlsqg7oc2da" path="res://SCRIPTS/Helpers/VFXHelper.gd" id="1_gn584"]
 [ext_resource type="Texture2D" uid="uid://gqbbql1502c" path="res://ART/Particle/Circle_48px.png" id="2_xnywh"]
 [ext_resource type="Texture2D" uid="uid://c6o5uvokhnke6" path="res://ART/Particle/Circle_4px.png" id="3_g2tol"]
 

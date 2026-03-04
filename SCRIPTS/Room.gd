@@ -4,13 +4,16 @@ class_name Room
 
 static var Current : Room
 
-@export var RoomSize : Vector2i = Vector2i(40, 30) :
+@export var e_roomSize : Vector2i = Vector2i(40, 30) :
 	set(_value):
 		if _value.x < 40:
 			_value.x = 40
 		if _value.y < 30:
 			_value.y = 30
-		RoomSize = _value
+		e_roomSize = _value
+
+@export var e_respawnPoints : Array[RespawnPoint]
+@export var e_defaultRespawnPoint : RespawnPoint
 
 @export_category("Editor")
 @export var EditorColor : Color = Color.WHITE
@@ -18,13 +21,16 @@ static var Current : Room
 @export var m_editorLine : Line2D
 
 
+var m_currentRespawnPoint : RespawnPoint
+
+
 func Overlaps(_position : Vector2):
-	return _position.x > global_position.x && _position.x < global_position.x + (RoomSize.x * GameManager.TILESIZE) && _position.y > global_position.y && _position.y < global_position.y + (RoomSize.y * GameManager.TILESIZE)
+	return _position.x > global_position.x && _position.x < global_position.x + (e_roomSize.x * GameManager.TILESIZE) && _position.y > global_position.y && _position.y < global_position.y + (e_roomSize.y * GameManager.TILESIZE)
 
 func GetLocalizedExtents():
 	var rect : Rect2
 	rect.position = global_position
-	rect.size = Vector2(RoomSize * GameManager.TILESIZE)
+	rect.size = Vector2(e_roomSize * GameManager.TILESIZE)
 	return rect
 
 func _ready() -> void:
@@ -44,6 +50,18 @@ func _process(_delta: float) -> void:
 func EDIT_UpdateEditor():
 	EDIT_CreateDebugParent()
 	EDIT_UpdateLineRenderer()
+
+	if e_defaultRespawnPoint == null:
+		e_defaultRespawnPoint = RespawnPoint.new()
+		e_defaultRespawnPoint.name = "DefaultRespawnPoint"
+		add_child(e_defaultRespawnPoint)
+		e_defaultRespawnPoint.owner = get_tree().edited_scene_root
+
+	e_respawnPoints.clear()
+	for c in get_children():
+		if c is RespawnPoint:
+			e_respawnPoints.append(c)
+
 	pass
 
 func EDIT_CreateDebugParent():
@@ -64,10 +82,14 @@ func EDIT_UpdateLineRenderer():
 		m_editorLine.clear_points()
 
 		m_editorLine.add_point(Vector2i.ZERO)
-		m_editorLine.add_point(Vector2i(RoomSize.x * GameManager.TILESIZE, 0))
-		m_editorLine.add_point(Vector2i(RoomSize.x * GameManager.TILESIZE, RoomSize.y * GameManager.TILESIZE))
-		m_editorLine.add_point(Vector2i(0, RoomSize.y * GameManager.TILESIZE))
+		m_editorLine.add_point(Vector2i(e_roomSize.x * GameManager.TILESIZE, 0))
+		m_editorLine.add_point(Vector2i(e_roomSize.x * GameManager.TILESIZE, e_roomSize.y * GameManager.TILESIZE))
+		m_editorLine.add_point(Vector2i(0, e_roomSize.y * GameManager.TILESIZE))
 		m_editorLine.add_point(Vector2i.ZERO)
 		m_editorLine.default_color = EditorColor
 		pass
 	pass
+
+
+func RegisterRespawnPoint(_respawnPoint : RespawnPoint):
+	m_currentRespawnPoint = _respawnPoint

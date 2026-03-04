@@ -152,8 +152,9 @@ func HandleInput(_delta : float):
 	m_climbing = m_onWall && m_upHeld && m_climbingStamina > 0 && (m_climbing || velocity.y > e_climbStartThreshold)
 
 	m_inSprintAnimState = m_endSprintAnimTimer > 0
-	
-	e_bazooka.UpdateBazookaVisibility(!m_inSprintAnimState)
+
+	var bazookaVisible = !m_inSprintAnimState && !m_sliding && !m_climbing
+	e_bazooka.UpdateBazookaVisibility(bazookaVisible)
 	if Level.Current != null && Level.Camera != null:
 		m_backpedaling = (Level.Camera.m_mouseWorldPosition.x < global_position.x && !m_facingLeft) || (Level.Camera.m_mouseWorldPosition.x > global_position.x && m_facingLeft)
 
@@ -253,6 +254,16 @@ func HandleParticles():
 	e_climbParticleParent.scale.x = -m_wallNormal.x
 	e_climbParticle.emitting = m_climbing
 
+#func HandleCollisions(_delta):
+	#for i in get_slide_collision_count():
+		#var collision = get_slide_collision(i)
+		#var collider = collision.get_collider()
+		#if collider is TileMapLayer:
+			#var rid = collider.rid
+			#var tile_coord = collider.get_coords_for_body_rid(collision.get_collider_rid())
+			#var tile = collider.get_cell_tile_data(tile_coord)
+			#if tile.get_collision_polygons_count(5) > 0:
+				#print("death")
 
 func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 	# Get the rotation of the rocket relative to the player
@@ -337,3 +348,9 @@ func GetHorizontalSpeed():
 	if !m_onFloor:
 		speed += e_aerialExtraHorizontal
 	return speed
+
+
+func _on_death_shape_body_entered(_body: Node2D) -> void:
+	if Room.Current != null:
+		velocity = Vector2.ZERO
+		global_position = Room.Current.m_currentRespawnPoint.global_position

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bq8uflnilqu2i"]
 
-[ext_resource type="Script" uid="uid://6nlsqg7oc2da" path="res://SCRIPTS/VFXHelper.gd" id="1_0kxcj"]
+[ext_resource type="Script" uid="uid://6nlsqg7oc2da" path="res://SCRIPTS/Helpers/VFXHelper.gd" id="1_0kxcj"]
 [ext_resource type="Texture2D" uid="uid://c6o5uvokhnke6" path="res://ART/Particle/Circle_4px.png" id="2_lpg3y"]
 
 [sub_resource type="Gradient" id="Gradient_j7dd5"]
