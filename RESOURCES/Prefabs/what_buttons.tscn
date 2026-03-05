@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://ccph8id58tjko" path="res://SCRIPTS/Helpers/velocity_listener.gd" id="12_p1o6f"]
 [ext_resource type="Script" uid="uid://cdjbyh1rayb5d" path="res://SCRIPTS/Helpers/last_jump_direction_listener.gd" id="13_4pu5m"]
 [ext_resource type="Script" uid="uid://do48dx5ikjk1k" path="res://SCRIPTS/Helpers/last_jump_perfect_listener.gd" id="14_4bexm"]
+[ext_resource type="Script" uid="uid://cqkmdvmyebc71" path="res://RESOURCES/Prefabs/current_angle_listener.gd" id="15_51gp5"]
+[ext_resource type="Script" uid="uid://hldlhcyj14ae" path="res://RESOURCES/Prefabs/last_angle_shot.gd" id="16_0xxco"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_llfxf"]
 
@@ -183,3 +185,27 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_7asai")
 [node name="LastJumpPerfectListener" type="Label" parent="HBoxContainer2/PanelContainer2" unique_id=273503573]
 layout_mode = 2
 script = ExtResource("14_4bexm")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="." unique_id=2115870777]
+offset_left = 432.0
+offset_top = 384.0
+offset_right = 632.0
+offset_bottom = 424.0
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer3" unique_id=264530648]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_llfxf")
+
+[node name="CurrentAngle" type="Label" parent="HBoxContainer3/PanelContainer" unique_id=27651144]
+layout_mode = 2
+script = ExtResource("15_51gp5")
+
+[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer3" unique_id=1289088152]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_7asai")
+
+[node name="LastAngle" type="Label" parent="HBoxContainer3/PanelContainer2" unique_id=1981375730]
+layout_mode = 2
+script = ExtResource("16_0xxco")

@@ -41,6 +41,8 @@ enum EState { Normal, Death, Respawn }
 @export var e_wallslideParticle : CPUParticles2D
 @export var e_climbParticleParent : Node2D
 @export var e_climbParticle : CPUParticles2D
+@export var e_rocketAngleParticleParent : Node2D
+@export var e_rocketAngleParticles : CPUParticles2D
 
 @export_category("Rocket Jump Information")
 @export var e_rocketJumpDirectionData : Array[RocketForceHelper]
@@ -102,6 +104,7 @@ var m_perfectRocketJumpSuccessTimer : float
 var db_jumpedWithLastRocket : bool = false
 var db_lastRocketJumpDirection : ECardinalDirections8
 var db_lastRocketJumpPerfect : bool
+var db_lastAngleShot : float
 
 
 func _ready():
@@ -168,7 +171,7 @@ func HandleInput(_delta : float):
 
 	# sliding and climbing logic
 	m_sliding = m_onWall && velocity.y > e_wallClingThreshold
-	m_climbing = m_onWall && m_upHeld && m_climbingStamina > 0 && (m_climbing || velocity.y > e_climbStartThreshold)
+	m_climbing = m_onWall && m_upHeld && m_climbingStamina > 0 && (m_climbing || velocity.y > e_climbStartThreshold) && m_verticalCutLockoutTimer <= 0
 
 	m_inSprintAnimState = m_endSprintAnimTimer > 0
 
@@ -287,6 +290,11 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 	elif angle > 360:
 		angle -= 360
 
+	if e_rocketAngleParticleParent != null:
+		e_rocketAngleParticleParent.rotation = deg_to_rad(angle)
+		e_rocketAngleParticles.emitting = true
+
+	db_lastAngleShot = angle
 	# THIS FEELS AMAZING YESSSSSSSSSSS
 	var direction = GetDirectionFromRocketJumpAngle(angle)
 	var index = e_rocketJumpDirectionData.find_custom(func(x : RocketForceHelper) : return x.e_direction == direction)
@@ -301,10 +309,13 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 		perfectMult = data.e_perfectModifier
 		m_perfectRocketJumpSuccessTimer = e_perfectRocketJumpGravityDuration
 
+	var desiredVelocity = velocity
 	if data.e_HasXForce:
-		velocity = Vector2(data.e_XDirection, data.e_YForceMultiplier * JumpForce * perfectMult)
+		desiredVelocity = Vector2(data.e_XDirection, data.e_YForceMultiplier * JumpForce * perfectMult)
 	else:
-		velocity = Vector2(velocity.x, data.e_YForceMultiplier * JumpForce * perfectMult)
+		desiredVelocity = Vector2(velocity.x, data.e_YForceMultiplier * JumpForce * perfectMult)
+
+	velocity = desiredVelocity
 
 	m_horizontalLockoutTimer = data.e_horizontalLockoutDuration
 	m_verticalCutLockoutTimer = data.e_upwardCutLockoutDuration
@@ -319,36 +330,35 @@ func GetDirectionFromRocketJumpAngle(_angle : float):
 	## This is complicated
 	## S is a 70 degree arc
 	## SE and SW are a 55 degree arc
-	## W and E are both 40 degree's and are skewed above the horizontal (IE if they're below the horizontal, they're SW and SE)
-	## N is 20, while the NE and NW are both at 50
+	## W and E are both 50 degree's and are skewed above the horizontal (IE if they're below the horizontal, they're SW and SE)
+	## N is 20, while the NE and NW are both at 30
 	## I think in the future, NE and NW might want to be smaller, and W and E might want to be bigger but...
 
 	## We do this because we don't want a player on the ground, aiming for a SE/SW jump accidentally hitting a perfect EW jump
 	## We also don't want to accidentally hit a NW and NE when we're going for an E or a W, so that's why all the angles are skewed
 
-	var ewAngle : float = 30.0
+	var ewAngle : float = 50
 	var sAngle : float = 70.0
 	var nAngle : float = 20
 	var halfS = sAngle / 2
 	var halfN = nAngle / 2
 
-	print("Angle: ", _angle)
 	if _angle > 360 - (ewAngle):
-		return ECardinalDirections8.E 							# 30
+		return ECardinalDirections8.E 							# 50
 	elif _angle > 0 && _angle <= 90 - halfS:
-		return ECardinalDirections8.se 							# 90 - 35 = 55
+		return ECardinalDirections8.se 							# 55
 	elif _angle > 90 - halfS && _angle <= 90 + halfS:
 		return ECardinalDirections8.S 							# 70
 	elif _angle > 90 + halfS && _angle <= 180:
 		return ECardinalDirections8.sw 							# 55
 	elif _angle > 180 && _angle <= 180 + (ewAngle):
-		return ECardinalDirections8.W 							# 30
+		return ECardinalDirections8.W 							# 50
 	elif _angle > 180 + (ewAngle) && _angle <= 270 - halfN:
-		return ECardinalDirections8.nw 							# 260 - 210 = 50
+		return ECardinalDirections8.nw 							# 30
 	elif _angle > 270 - halfN && _angle <= 270 + halfN:
 		return ECardinalDirections8.N 							# 20
 	else:
-		return ECardinalDirections8.ne 							# 50
+		return ECardinalDirections8.ne 							# 30
 
 func GetHorizontalSpeed():
 	var speed = e_horizontalSpeed
@@ -370,12 +380,12 @@ func Die(_normal : Vector2):
 		e_bazooka.UpdateBazookaVisibility(false)
 		e_visual.material.set_shader_parameter("color_override", Color.WHITE)
 		e_visual.material.set_shader_parameter("use_color_override", 1.0)
-		
-		
-		await get_tree().create_timer(0.5).timeout
+
+
+		await get_tree().create_timer(0.35).timeout
 		e_deathParticle.emitting = true
 		e_visual.visible = false
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.35).timeout
 
 		if !UIManager.OnFadeComplete.is_connected(OnDeathFadeOutComplete):
 			UIManager.OnFadeComplete.connect(OnDeathFadeOutComplete)
@@ -396,7 +406,7 @@ func SetColorOverrideParam(_value : float):
 
 func Respawn():
 	e_state = EState.Respawn
-	
+
 	e_visual.visible = true
 	var respawnPosition = m_fallbackOriginalPosition
 	if Room.Current != null:

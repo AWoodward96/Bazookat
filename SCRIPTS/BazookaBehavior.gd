@@ -9,6 +9,7 @@ class_name BazookaBehavior
 @export var e_emitterParent : Node2D
 
 var aimedDirection : Vector2
+var db_currentAngle : float
 
 var Camera : MainCamera :
 	get:
@@ -34,6 +35,8 @@ func _physics_process(_delta: float) -> void:
 			inDeg += 360
 		elif inDeg > 360:
 			inDeg -= 360
+
+		db_currentAngle = inDeg
 		e_visual.flip_v = inDeg > 90 && inDeg < 270
 
 	if Input.is_action_just_pressed("fire"):

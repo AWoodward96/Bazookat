@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bhwttcuydew5p" path="res://ART/Characters/Main/bazookat_inbetween.png" id="11_vap7r"]
 [ext_resource type="Texture2D" uid="uid://cnqf8kg2y0jgx" path="res://ART/Characters/Main/zooka_temp.png" id="15_lq7rl"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://c6iyu6hccn13w" path="res://ART/Characters/Main/AnimationStates/Aerial_Short.tres" id="20_hscwg"]
+[ext_resource type="Texture2D" uid="uid://c6o5uvokhnke6" path="res://ART/Particle/Circle_4px.png" id="21_gxwok"]
 
 [sub_resource type="Curve" id="Curve_npf5m"]
 _data = [Vector2(0, 1), 0.0, -2.3897083, 0, 0, Vector2(0.9793104, 0.03476405), -3.8139155, 0.0, 0, 0]
@@ -95,9 +96,6 @@ e_direction = 7
 e_HasXForce = true
 e_XDirection = 300.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_yqqkn"]
-radius = 11.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7y4a1"]
 particles_animation = true
@@ -591,6 +589,16 @@ animations = [{
 _limits = [0.0, 100.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9984663, 100), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Curve" id="Curve_v0kds"]
+_data = [Vector2(0, 2), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Gradient" id="Gradient_gfhta"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yqqkn"]
+radius = 8.0
 
 [sub_resource type="Gradient" id="Gradient_yqqkn"]
 offsets = PackedFloat32Array(0, 0.83728814, 1)
@@ -1732,15 +1740,6 @@ e_deathCast = NodePath("Raycasts/DeathCast")
 e_deathBounce = 100.0
 e_deathParticle = NodePath("DeathParticle")
 
-[node name="Raycasts" type="Node2D" parent="." unique_id=663161300]
-
-[node name="DeathCast" type="ShapeCast2D" parent="Raycasts" unique_id=1933329975]
-position = Vector2(0, -2)
-shape = SubResource("CircleShape2D_yqqkn")
-target_position = Vector2(0, 1)
-margin = 5.65
-collision_mask = 24
-
 [node name="WallSlideOffset" type="Node2D" parent="." unique_id=1703827426]
 
 [node name="WallSlideParticle" type="CPUParticles2D" parent="WallSlideOffset" unique_id=453795098]
@@ -1783,7 +1782,7 @@ material = SubResource("ShaderMaterial_hewad")
 sprite_frames = SubResource("SpriteFrames_w3m15")
 
 [node name="RocketEmitter" type="Node2D" parent="Bazooka/Offset/Bazooka_Visual" unique_id=1732480486]
-position = Vector2(14, -2)
+position = Vector2(7, -2)
 
 [node name="RigidShape" type="CollisionShape2D" parent="." unique_id=150271092]
 position = Vector2(0, -7)
@@ -1810,6 +1809,41 @@ damping_max = 25.0
 damping_curve = SubResource("Curve_7y4a1")
 scale_amount_min = 0.5
 color_ramp = SubResource("Gradient_a14sm")
+
+[node name="AngleParticleHelper" type="Node2D" parent="." unique_id=269201260]
+
+[node name="AngleHelperVFX" type="CPUParticles2D" parent="AngleParticleHelper" unique_id=807393211]
+position = Vector2(25, -0.9999962)
+rotation = -1.5707964
+emitting = false
+amount = 64
+texture = ExtResource("21_gxwok")
+explosiveness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(1, 24)
+particle_flag_align_y = true
+direction = Vector2(0, 1)
+spread = 10.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+damping_min = 40.0
+damping_max = 40.0
+scale_amount_min = 0.9
+scale_amount_max = 1.25
+split_scale = true
+scale_curve_x = null
+scale_curve_y = SubResource("Curve_v0kds")
+color_ramp = SubResource("Gradient_gfhta")
+
+[node name="Raycasts" type="Node2D" parent="." unique_id=663161300]
+
+[node name="DeathCast" type="ShapeCast2D" parent="Raycasts" unique_id=1933329975]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_yqqkn")
+target_position = Vector2(0, -10)
+margin = 5.65
+collision_mask = 24
 
 [node name="DeathParticle" type="CPUParticles2D" parent="." unique_id=1093986214]
 emitting = false
