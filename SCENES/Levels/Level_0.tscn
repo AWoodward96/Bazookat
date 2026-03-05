@@ -5,9 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dad2dchrlcvja" path="res://ART/Characters/Main/bazookat_idle.png" id="3_p2wjj"]
 [ext_resource type="TileSet" uid="uid://cvb46mtb5adhe" path="res://RESOURCES/Tilesets/testing_tileset_2.tres" id="4_3l1hn"]
 [ext_resource type="Script" uid="uid://bnfar5mme0uoc" path="res://SCRIPTS/RespawnPoint.gd" id="6_trpdq"]
-[ext_resource type="Script" uid="uid://c2efb7sbivhqb" path="res://SCRIPTS/Enemies/PillbugBehavior.gd" id="7_4wjh5"]
-[ext_resource type="Shader" uid="uid://c01bxacddng50" path="res://ART/Shaders/combatant_shader.gdshader" id="8_lssrh"]
-[ext_resource type="Texture2D" uid="uid://bteb3mn7wgenv" path="res://ART/Characters/bazooka.png" id="8_p4o4q"]
+[ext_resource type="PackedScene" uid="uid://c3gisy5ib8bw3" path="res://RESOURCES/Prefabs/Enemies/pillbug.tscn" id="7_4wjh5"]
 [ext_resource type="Script" uid="uid://dtgfmwdl8ikaw" path="res://SCRIPTS/Room.gd" id="20_acchu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m3dc8"]
@@ -33,33 +31,6 @@ size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aaw3j"]
 size = Vector2(48, 80)
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_trpdq"]
-radius = 8.0
-height = 24.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y82g1"]
-shader = ExtResource("8_lssrh")
-shader_parameter/use_color_override = 0.0
-shader_parameter/color_override = Color(1, 1, 1, 1)
-shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/type = 2
-shader_parameter/thickness = 1.0
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lssrh"]
-atlas = ExtResource("8_p4o4q")
-region = Rect2(0, 0, 24, 12)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_trpdq"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lssrh")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [node name="Level_0" type="Node2D" unique_id=607547518 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
 script = ExtResource("1_maxqb")
@@ -221,39 +192,5 @@ shape = SubResource("RectangleShape2D_aaw3j")
 position = Vector2(0, 48)
 texture = ExtResource("3_p2wjj")
 
-[node name="Pillbug" type="CharacterBody2D" parent="Room3" unique_id=491860377 node_paths=PackedStringArray("e_ledgeDetectorParent", "e_ledgeDetectorCast", "e_wallDetectorCast", "e_visual")]
-position = Vector2(336, 448)
-collision_layer = 8
-collision_mask = 6
-platform_floor_layers = 4294967287
-script = ExtResource("7_4wjh5")
-e_crawlSpeed = 50.0
-e_crawlAcceleration = 50.0
-e_ledgeDetectorParent = NodePath("LedgeDetector")
-e_ledgeDetectorCast = NodePath("LedgeDetector/Ledge")
-e_wallDetectorCast = NodePath("LedgeDetector/Wall")
-e_visual = NodePath("AnimatedSprite2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Room3/Pillbug" unique_id=190856010]
-position = Vector2(0, -8)
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_trpdq")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Room3/Pillbug" unique_id=415383320]
-material = SubResource("ShaderMaterial_y82g1")
-position = Vector2(0, -8)
-sprite_frames = SubResource("SpriteFrames_trpdq")
-
-[node name="LedgeDetector" type="Node2D" parent="Room3/Pillbug" unique_id=646288318]
-
-[node name="Ledge" type="RayCast2D" parent="Room3/Pillbug/LedgeDetector" unique_id=2095062193]
-position = Vector2(14, -16)
-enabled = false
-target_position = Vector2(0, 24)
-collision_mask = 2
-
-[node name="Wall" type="RayCast2D" parent="Room3/Pillbug/LedgeDetector" unique_id=648689346]
-position = Vector2(14, -8)
-enabled = false
-target_position = Vector2(4, 0)
-collision_mask = 2
+[node name="Pillbug" parent="Room3" unique_id=1297015022 instance=ExtResource("7_4wjh5")]
+position = Vector2(343, 447)

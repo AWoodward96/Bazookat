@@ -49,12 +49,14 @@ func _process(_delta: float) -> void:
 
 func EnterRoom():
 	for e in e_enemies:
-		e.Activate(true)
+		if e != null:
+			e.Activate(true)
 	pass
 
 func ExitRoom():
 	for e in e_enemies:
-		e.Activate(false)
+		if e != null:
+			e.Activate(false)
 	pass
 
 

@@ -20,13 +20,19 @@ func Fade(_duration : float, _delay : float = 0):
 		m_fadeTween.stop()
 		m_fadeTween = null
 
+	
 	e_obscureMask.material.set_shader_parameter("cutoff", 0)
 	m_fadeTween = get_tree().create_tween()
 	m_fadeTween.tween_interval(_delay)
-	m_fadeTween.tween_method(TweenObscure, 0.0, 1.0, _duration)
-	m_fadeTween.tween_callback(func() : OnFadeComplete.emit())
+	
+	# You're not halucinating. Go to 1.25. Yes, the cutoff should be at 1. No that doesn't work. 
+	# A tiny bit will still be left over and it will drive you insane
+	m_fadeTween.tween_method(TweenObscure, 0.0, 1.25, _duration)
+	m_fadeTween.tween_callback(FadeComplete)
 	m_fadeTween.play()
 
+func FadeComplete():
+	OnFadeComplete.emit()
 
 func TweenObscure(_value : float):
 	e_obscureMask.material.set_shader_parameter("cutoff", _value)

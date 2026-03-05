@@ -370,6 +370,12 @@ func Die(_normal : Vector2):
 		e_bazooka.UpdateBazookaVisibility(false)
 		e_visual.material.set_shader_parameter("color_override", Color.WHITE)
 		e_visual.material.set_shader_parameter("use_color_override", 1.0)
+		
+		
+		await get_tree().create_timer(0.5).timeout
+		e_deathParticle.emitting = true
+		e_visual.visible = false
+		await get_tree().create_timer(0.5).timeout
 
 		if !UIManager.OnFadeComplete.is_connected(OnDeathFadeOutComplete):
 			UIManager.OnFadeComplete.connect(OnDeathFadeOutComplete)
@@ -390,6 +396,8 @@ func SetColorOverrideParam(_value : float):
 
 func Respawn():
 	e_state = EState.Respawn
+	
+	e_visual.visible = true
 	var respawnPosition = m_fallbackOriginalPosition
 	if Room.Current != null:
 		var room = Room.Current
