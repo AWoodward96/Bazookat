@@ -177,6 +177,9 @@ func HandleInput(_delta : float):
 
 	var bazookaVisible = !m_inSprintAnimState && !m_sliding && !m_climbing
 	e_bazooka.UpdateBazookaVisibility(bazookaVisible)
+	if m_onFloor && !e_bazooka.HasAmmo:
+		e_bazooka.ForceReload()
+
 	if Level.Current != null && Level.Camera != null:
 		m_backpedaling = (Level.Camera.m_mouseWorldPosition.x < global_position.x && !m_facingLeft) || (Level.Camera.m_mouseWorldPosition.x > global_position.x && m_facingLeft)
 
@@ -306,8 +309,11 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 	var data = e_rocketJumpDirectionData[index]
 	var perfectMult : float = 1
 	if m_perfectRocketJumpTimer > 0:
+		# Perfect rocket jump
 		perfectMult = data.e_perfectModifier
 		m_perfectRocketJumpSuccessTimer = e_perfectRocketJumpGravityDuration
+		e_bazooka.ForceReload()
+
 
 	var desiredVelocity = velocity
 	if data.e_HasXForce:
@@ -316,6 +322,9 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 		desiredVelocity = Vector2(velocity.x, data.e_YForceMultiplier * JumpForce * perfectMult)
 
 	velocity = desiredVelocity
+
+	if Level.Camera != null:
+		Level.Camera.QueueScreenShake(GameManager.GameData.e_rocketJumpScreenShake)
 
 	m_horizontalLockoutTimer = data.e_horizontalLockoutDuration
 	m_verticalCutLockoutTimer = data.e_upwardCutLockoutDuration
@@ -442,7 +451,7 @@ func CheckDeath():
 					# kill the enemy
 					velocity.y = -JumpForce
 					m_verticalCutLockoutTimer = e_pogoVerticalLockoutDuration
-					collider.Kill()
+					collider.Kill(e_deathCast.get_collision_normal(index))
 					pass
 				else:
 					Die(e_deathCast.get_collision_normal(index))

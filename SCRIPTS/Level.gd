@@ -36,3 +36,7 @@ func EnterRoom(_newRoom : Room):
 	Room.Current = _newRoom
 	Room.Current.EnterRoom()
 	pass
+
+
+func _on_player_detector_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.

@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bre8cyv2a4kj0"]
+
+[ext_resource type="Texture2D" uid="uid://s21n6ttk1rex" path="res://ART/Environment/ReloadCrate.png" id="1_lgxp4"]
+[ext_resource type="Script" uid="uid://4boosjvw0c76" path="res://SCRIPTS/ReloadCrate.gd" id="1_xpx4y"]
+[ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="2_llr4o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ptnn"]
+shader = ExtResource("2_llr4o")
+shader_parameter/clr = Color(1, 1, 1, 1)
+shader_parameter/type = 1
+shader_parameter/thickness = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xpx4y"]
+size = Vector2(25, 25)
+
+[node name="ReloadCrate" type="Node2D" unique_id=1128002010 node_paths=PackedStringArray("e_visual", "e_respawnTimer")]
+script = ExtResource("1_xpx4y")
+e_visual = NodePath("Sprite2D")
+e_respawnTimer = NodePath("Timer")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=446043532]
+material = SubResource("ShaderMaterial_8ptnn")
+texture = ExtResource("1_lgxp4")
+
+[node name="CollisionShape2D" type="Area2D" parent="." unique_id=2086917154]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape2D" unique_id=1121165585]
+position = Vector2(-1.5, 0.5)
+shape = SubResource("RectangleShape2D_xpx4y")
+
+[node name="Timer" type="Timer" parent="." unique_id=1359741763]
+wait_time = 2.0
+
+[connection signal="body_entered" from="CollisionShape2D" to="." method="Reload"]
+[connection signal="timeout" from="Timer" to="." method="Respawn"]

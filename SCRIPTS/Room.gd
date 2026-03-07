@@ -15,6 +15,7 @@ static var Current : Room
 @export var e_respawnPoints : Array[RespawnPoint]
 @export var e_defaultRespawnPoint : RespawnPoint
 @export var e_enemies : Array[EnemyBase]
+@export var e_mcGuffins : Array[McGuffin]
 
 @export_category("Editor")
 @export var EditorColor : Color = Color.WHITE
@@ -70,6 +71,7 @@ func EDIT_UpdateEditor():
 		add_child(e_defaultRespawnPoint)
 		e_defaultRespawnPoint.owner = get_tree().edited_scene_root
 
+	e_mcGuffins.clear()
 	e_respawnPoints.clear()
 	e_enemies.clear()
 	for c in get_children():
@@ -78,6 +80,10 @@ func EDIT_UpdateEditor():
 
 		if c is EnemyBase:
 			e_enemies.append(c)
+
+		if c is McGuffin:
+			e_mcGuffins.append(c)
+
 
 	pass
 
@@ -110,7 +116,8 @@ func EDIT_UpdateLineRenderer():
 
 func ResetRoom():
 	for e in e_enemies:
-		e.OnRoomReset()
+		if e != null:
+			e.OnRoomReset()
 	pass
 
 func RegisterRespawnPoint(_respawnPoint : RespawnPoint):

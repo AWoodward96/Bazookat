@@ -7,15 +7,15 @@ class_name MainCamera
 @export var e_mouseTrackRadius : Vector2 = Vector2(8, 48)
 @export var e_velocityMultiplier : float = 0.25
 @export var e_velocityLerpSpeed : float = 1
-
+@export var e_rocketScreenShakeStrength : float = 10
 
 @export var e_debug : bool = false
 @export var e_mouseworldpositiondebugobject : Node2D
 
-
 var m_mousePosition : Vector2
 var m_mouseWorldPosition : Vector2
 var m_velocityLerp : Vector2
+var m_screenShakes : CameraShakeData
 
 
 func _process(_delta: float) -> void:
@@ -35,11 +35,15 @@ func _physics_process(_delta: float):
 
 	mouseDST.y = mouseDST.y * .5
 
-	#if e_target is PlayerController:
-		#m_velocityLerp = lerp(m_velocityLerp, e_target.velocity * e_velocityMultiplier, e_velocityLerpSpeed * _delta)
-		#desiredPosition += Vector2(m_velocityLerp.x, 0)
-
 	desiredPosition += mouseDST
+
+	if m_screenShakes != null:
+		if m_screenShakes.m_timer > 0:
+			offset = Vector2.from_angle(randf_range(0, 2 * PI)).normalized() * m_screenShakes.e_strength
+			m_screenShakes.m_timer -= _delta
+		else:
+			m_screenShakes = null
+			offset = Vector2.ZERO
 
 	global_position = lerp(global_position, desiredPosition, e_lerpSpeed * _delta)
 	pass
@@ -61,3 +65,14 @@ func UpdateLimits():
 		limit_top = extents.position.y
 		limit_bottom = extents.position.y + extents.size.y
 		pass
+
+func QueueScreenShake(_shakeData : CameraShakeData, _strength : float = 10, _duration : float = 1):
+	if _shakeData == null:
+		m_screenShakes = CameraShakeData.new()
+		m_screenShakes.e_strength = _strength
+		m_screenShakes.e_duration = _duration
+	else:
+		m_screenShakes = _shakeData
+
+	if m_screenShakes != null:
+		m_screenShakes.Start()

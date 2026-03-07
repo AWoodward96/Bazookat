@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://ciergtl1ksaba"]
+
+[ext_resource type="Script" uid="uid://6nlsqg7oc2da" path="res://SCRIPTS/Helpers/VFXHelper.gd" id="1_vl7tk"]
+[ext_resource type="Texture2D" uid="uid://brmdrsqmwspmw" path="res://ART/Particle/Circle_8px.png" id="2_pl8pl"]
+
+[sub_resource type="Gradient" id="Gradient_yqqkn"]
+offsets = PackedFloat32Array(0, 0.83728814, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Generic_Death" type="Node2D" unique_id=1170652854 node_paths=PackedStringArray("Particles")]
+script = ExtResource("1_vl7tk")
+Particles = [NodePath("DeathParticle")]
+
+[node name="DeathParticle" type="CPUParticles2D" parent="." unique_id=1999955551]
+emitting = false
+texture = ExtResource("2_pl8pl")
+one_shot = true
+explosiveness = 1.0
+emission_shape = 6
+emission_ring_inner_radius = 0.8
+emission_ring_radius = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 70.0
+initial_velocity_max = 70.0
+damping_min = 76.622
+damping_max = 88.05
+color_ramp = SubResource("Gradient_yqqkn")
+
+[node name="Timer" type="Timer" parent="." unique_id=1526014846]
+wait_time = 2.0
+
+[connection signal="timeout" from="Timer" to="." method="queue_free"]

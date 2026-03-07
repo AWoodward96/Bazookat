@@ -11,12 +11,24 @@ enum EWalkState { Moving, Turning }
 @export var e_ledgeDetectorParent : Node2D
 @export var e_ledgeDetectorCast : RayCast2D
 @export var e_wallDetectorCast : RayCast2D
+@export var e_startFacingLeft : bool
 
 var m_facingLeft : bool
 var m_turningTimer : float
 
+func _ready():
+	super()
+	m_facingLeft = e_startFacingLeft
 
 func _physics_process(_delta: float):
+	if !m_active:
+		return
+
+	if m_killed:
+		velocity = velocity * DEATHSPEEDDAMPENING
+		move_and_slide()
+		return
+
 	if m_facingLeft:
 		e_visual.flip_h = true
 		e_ledgeDetectorParent.scale.x = -1
@@ -56,8 +68,9 @@ func StartTurn():
 	velocity.x = 0
 	e_walkState = EWalkState.Turning
 
+
 func OnRoomReset():
 	super()
 	e_walkState = EWalkState.Moving
-	m_facingLeft = false
+	m_facingLeft = e_startFacingLeft
 	m_turningTimer = 0

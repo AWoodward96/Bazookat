@@ -56,16 +56,13 @@ e_speed = 600.0
 e_direction = Vector2(0, 1)
 e_raycaster = NodePath("RayCast2D")
 e_visual = NodePath("Visual")
-e_rotateVisual = null
 e_autonomousParticleParent = NodePath("Visual/Autonomy")
 e_autonomousParticle = ExtResource("3_qnbb4")
-e_particleCleanup = null
-e_pool = null
 metadata/_custom_type_script = "uid://vbktcwtp7svx"
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1668657059]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1207691705]
 shape = SubResource("CircleShape2D_7y4a1")
@@ -78,6 +75,7 @@ collision_mask = 2
 enabled = false
 shape = SubResource("CircleShape2D_pt1gv")
 target_position = Vector2(0, 0)
+collision_mask = 9
 
 [node name="Visual" type="AnimatedSprite2D" parent="." unique_id=661412556]
 position = Vector2(-1, 0)

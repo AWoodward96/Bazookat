@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://hyoc60qale8o"]
 
-[ext_resource type="Script" uid="uid://dwsl86uxaxhxy" path="res://SCRIPTS/MainCamera.gd" id="1_7o4al"]
+[ext_resource type="Script" uid="uid://dwsl86uxaxhxy" path="res://SCRIPTS/Camera/MainCamera.gd" id="1_7o4al"]
 [ext_resource type="Texture2D" uid="uid://brmdrsqmwspmw" path="res://ART/Particle/Circle_8px.png" id="2_ty6um"]
 
 [node name="MainCamera" type="Camera2D" unique_id=124358870 node_paths=PackedStringArray("e_mouseworldpositiondebugobject")]
 script = ExtResource("1_7o4al")
-e_mouseworldpositiondebugobject = NodePath("Sprite2D")
+e_mouseworldpositiondebugobject = NodePath("WhereIsMyCursorHelper")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1854565837]
+[node name="WhereIsMyCursorHelper" type="Sprite2D" parent="." unique_id=1854565837]
 modulate = Color(1, 0, 1, 1)
 position = Vector2(-240, -161)
 texture = ExtResource("2_ty6um")

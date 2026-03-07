@@ -8,7 +8,15 @@ class_name BazookaBehavior
 @export var e_visual : AnimatedSprite2D
 @export var e_emitterParent : Node2D
 
-var aimedDirection : Vector2
+@export var e_reloadSpeed : float = 1
+
+var HasAmmo : bool :
+	get:
+		return m_hardCD <= 0 && m_hasAmmo
+
+var m_hardCD : float
+var m_hasAmmo : bool
+
 var db_currentAngle : float
 
 var Camera : MainCamera :
@@ -39,17 +47,25 @@ func _physics_process(_delta: float) -> void:
 		db_currentAngle = inDeg
 		e_visual.flip_v = inDeg > 90 && inDeg < 270
 
-	if Input.is_action_just_pressed("fire"):
+	if Input.is_action_just_pressed("fire") && HasAmmo:
 		Fire(e_emitterParent.global_position, dst)
+
+	e_visual.material.set_shader_parameter("perform_color_swap", !m_hasAmmo)
+	if m_hardCD > 0:
+		m_hardCD -= _delta
 	pass
 
 func UpdateDisplay():
 	if Camera == null:
 		return
 
-
+func ForceReload():
+	m_hasAmmo = true
 
 func Fire(_origin : Vector2, _direction : Vector2):
+	m_hardCD = e_reloadSpeed
+	m_hasAmmo = false
+
 	if e_owner is PlayerController:
 		e_owner.db_jumpedWithLastRocket = false
 		e_owner.db_lastRocketJumpPerfect = false

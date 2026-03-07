@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://dtgfmwdl8ikaw" path="res://SCRIPTS/Room.gd" id="6_3gj3e"]
 [ext_resource type="Script" uid="uid://bnfar5mme0uoc" path="res://SCRIPTS/RespawnPoint.gd" id="7_617x3"]
 [ext_resource type="PackedScene" uid="uid://dilee5tlwetad" path="res://RESOURCES/Prefabs/what_buttons.tscn" id="7_p2b2c"]
+[ext_resource type="PackedScene" uid="uid://bre8cyv2a4kj0" path="res://RESOURCES/Prefabs/reload_crate.tscn" id="8_617x3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m3dc8"]
 shader = ExtResource("2_617x3")
@@ -42,7 +43,7 @@ e_startingPosition = NodePath("StartingPosition")
 
 [node name="StartingPosition" type="Sprite2D" parent="." unique_id=237606703]
 material = SubResource("ShaderMaterial_m3dc8")
-position = Vector2(1280, 1120)
+position = Vector2(256, 944)
 texture = ExtResource("3_072qe")
 
 [node name="FG" type="TileMapLayer" parent="." unique_id=89506019]
@@ -119,6 +120,12 @@ shape = SubResource("RectangleShape2D_617x3")
 position = Vector2(8, 16)
 texture = ExtResource("3_072qe")
 
+[node name="ReloadCrate" parent="Room" unique_id=1365964682 instance=ExtResource("8_617x3")]
+position = Vector2(880, 544)
+
+[node name="ReloadCrate2" parent="Room" unique_id=1128002010 instance=ExtResource("8_617x3")]
+position = Vector2(240, 144)
+
 [node name="Room2" type="Node2D" parent="." unique_id=89730270 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "m_editorParent", "m_editorLine")]
 position = Vector2(48, 608)
 script = ExtResource("6_3gj3e")
@@ -181,6 +188,9 @@ shape = SubResource("RectangleShape2D_h6x55")
 position = Vector2(8, 16)
 texture = ExtResource("3_072qe")
 
+[node name="ReloadCrate" parent="Room2" unique_id=1337827457 instance=ExtResource("8_617x3")]
+position = Vector2(608, 320)
+
 [node name="Room3" type="Node2D" parent="." unique_id=1967946404 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "m_editorParent", "m_editorLine")]
 position = Vector2(1168, 672)
 script = ExtResource("6_3gj3e")
@@ -211,3 +221,6 @@ shape = SubResource("RectangleShape2D_p2b2c")
 [node name="Point" type="Sprite2D" parent="Room3/DefaultRespawnPoint" unique_id=430998815]
 position = Vector2(8, 16)
 texture = ExtResource("3_072qe")
+
+[node name="ReloadCrate2" parent="Room3" unique_id=1635416414 instance=ExtResource("8_617x3")]
+position = Vector2(512, 336)

@@ -790,6 +790,9 @@ texture = ExtResource("1_eyulv")
 16:4/size_in_atlas = Vector2i(2, 2)
 16:4/0 = 0
 16:4/0/texture_origin = Vector2i(-8, -8)
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
 
 [resource]
 occlusion_layer_0/light_mask = 1

@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bf70kehn7omfl"]
+
+[ext_resource type="Script" uid="uid://dnh45r4l3otfe" path="res://SCRIPTS/OneWayPlatform.gd" id="1_torus"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_podgw"]
+size = Vector2(80, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ogom5"]
+size = Vector2(80, 48)
+
+[node name="OneWay" type="Node2D" unique_id=366256311 node_paths=PackedStringArray("e_rigidCollider", "e_playerDetectorCollider")]
+script = ExtResource("1_torus")
+e_rigidCollider = NodePath("Rigid")
+e_playerDetectorCollider = NodePath("PlayerDetector")
+
+[node name="Rigid" type="StaticBody2D" parent="." unique_id=1027819954]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rigid" unique_id=390951910]
+position = Vector2(40, 8)
+shape = SubResource("RectangleShape2D_podgw")
+
+[node name="PlayerDetector" type="Area2D" parent="." unique_id=2061349983]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=1003483534]
+position = Vector2(40, 24)
+shape = SubResource("RectangleShape2D_ogom5")
+
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]
