@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://cuv1k228gs24"]
+
+[ext_resource type="Texture2D" uid="uid://dvgbwcf7u78d6" path="res://ART/UI/TitleScreen/tiled_paneling_texture.png" id="1_kb1y1"]
+[ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="2_e00hp"]
+[ext_resource type="Texture2D" uid="uid://db4ral8djicuk" path="res://ART/UI/TitleScreen/TitleScreen.png" id="2_fge4v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6hrsw"]
+shader = ExtResource("2_e00hp")
+shader_parameter/clr = Color(1, 1, 1, 1)
+shader_parameter/type = 2
+shader_parameter/thickness = 4.0
+
+[sub_resource type="Animation" id="Animation_e00hp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BG:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6hrsw"]
+resource_name = "default"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BG:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-1344, -1472)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_efy3b"]
+_data = {
+&"RESET": SubResource("Animation_e00hp"),
+&"default": SubResource("Animation_6hrsw")
+}
+
+[node name="MainMenuUI" type="Control" unique_id=1986911149]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="TextureRect" parent="." unique_id=206341713]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1360.0
+offset_bottom = 1520.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kb1y1")
+stretch_mode = 1
+
+[node name="TextureRect2" type="Sprite2D" parent="." unique_id=1096711322]
+material = SubResource("ShaderMaterial_6hrsw")
+position = Vector2(375, 241)
+scale = Vector2(2, 2)
+texture = ExtResource("2_fge4v")
+
+[node name="BGAnimator" type="AnimationPlayer" parent="." unique_id=276553321]
+libraries/ = SubResource("AnimationLibrary_efy3b")
+autoplay = &"default"
