@@ -7,6 +7,6 @@
 
 [node name="GameManager" type="Node2D" unique_id=2035894882]
 script = ExtResource("1_1q78k")
-PlayerPrefab = ExtResource("2_pdj24")
-CameraPrefab = ExtResource("3_2bdge")
-GameData = ExtResource("4_skt2g")
+e_playerPrefab = ExtResource("2_pdj24")
+e_cameraPrefab = ExtResource("3_2bdge")
+e_gameData = ExtResource("4_skt2g")

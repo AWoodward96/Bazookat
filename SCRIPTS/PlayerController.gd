@@ -60,11 +60,11 @@ enum EState { Normal, Death, Respawn }
 
 var Gravity : float :
 	get:
-		return GameManager.GameData.Gravity
+		return GameManager.e_gameData.Gravity
 
 var JumpForce : float :
 	get:
-		return GameManager.GameData.JumpForce
+		return GameManager.e_gameData.JumpForce
 
 
 var m_horizontal : float
@@ -324,7 +324,7 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 	velocity = desiredVelocity
 
 	if Level.Camera != null:
-		Level.Camera.QueueScreenShake(GameManager.GameData.e_rocketJumpScreenShake)
+		Level.Camera.QueueScreenShake(GameManager.e_gameData.e_rocketJumpScreenShake)
 
 	m_horizontalLockoutTimer = data.e_horizontalLockoutDuration
 	m_verticalCutLockoutTimer = data.e_upwardCutLockoutDuration

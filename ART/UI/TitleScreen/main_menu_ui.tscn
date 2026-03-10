@@ -1,8 +1,12 @@
 [gd_scene format=3 uid="uid://cuv1k228gs24"]
 
+[ext_resource type="Theme" uid="uid://rjqdcaqr6lp6" path="res://ART/main_theme.tres" id="1_efy3b"]
 [ext_resource type="Texture2D" uid="uid://dvgbwcf7u78d6" path="res://ART/UI/TitleScreen/tiled_paneling_texture.png" id="1_kb1y1"]
+[ext_resource type="Script" uid="uid://bo7fq72oe2ndw" path="res://SCRIPTS/UI/MainMenuUI.gd" id="2_3xgrp"]
 [ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="2_e00hp"]
 [ext_resource type="Texture2D" uid="uid://db4ral8djicuk" path="res://ART/UI/TitleScreen/TitleScreen.png" id="2_fge4v"]
+[ext_resource type="FontFile" uid="uid://ckiuummr52qag" path="res://ART/Fonts/DisrespectfulTeenager.ttf" id="4_e00hp"]
+[ext_resource type="FontFile" uid="uid://jrj7xiaovm84" path="res://ART/Fonts/c64esque.ttf" id="5_6hrsw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6hrsw"]
 shader = ExtResource("2_e00hp")
@@ -48,6 +52,61 @@ _data = {
 &"default": SubResource("Animation_6hrsw")
 }
 
+[sub_resource type="Animation" id="Animation_efy3b"]
+resource_name = "Float"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(45, 12), Vector2(45, 20), Vector2(45, 12)]
+}
+
+[sub_resource type="Animation" id="Animation_3xgrp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(45, 6)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_610dk"]
+_data = {
+&"Float": SubResource("Animation_efy3b"),
+&"RESET": SubResource("Animation_3xgrp")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_6hrsw"]
+font = ExtResource("4_e00hp")
+font_size = 64
+font_color = Color(0.34509805, 0.3882353, 0.20784314, 1)
+outline_size = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_6hhit"]
+font = ExtResource("5_6hrsw")
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+outline_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_efy3b"]
+font = ExtResource("5_6hrsw")
+font_color = Color(0, 0, 0, 1)
+outline_size = 10
+
 [node name="MainMenuUI" type="Control" unique_id=1986911149]
 layout_mode = 3
 anchors_preset = 15
@@ -55,6 +114,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_efy3b")
+script = ExtResource("2_3xgrp")
 
 [node name="BG" type="TextureRect" parent="." unique_id=206341713]
 layout_mode = 1
@@ -77,3 +138,62 @@ texture = ExtResource("2_fge4v")
 [node name="BGAnimator" type="AnimationPlayer" parent="." unique_id=276553321]
 libraries/ = SubResource("AnimationLibrary_efy3b")
 autoplay = &"default"
+
+[node name="TextAnimator" type="AnimationPlayer" parent="." unique_id=569580636]
+libraries/ = SubResource("AnimationLibrary_610dk")
+autoplay = &"Float"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1261710142]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 6.0
+offset_right = 643.0
+offset_bottom = 141.0
+
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=165057013]
+layout_mode = 2
+text = "ui_game_title"
+label_settings = SubResource("LabelSettings_6hrsw")
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=44520040]
+layout_mode = 2
+text = "ui_prototype_subtitle"
+label_settings = SubResource("LabelSettings_6hhit")
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=1207666809]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 320.0
+offset_right = 217.0
+offset_bottom = 430.0
+theme_override_constants/separation = 16
+
+[node name="Play" type="Button" parent="VBoxContainer2" unique_id=471217467]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "ui_play_button"
+
+[node name="Settings" type="Button" parent="VBoxContainer2" unique_id=1332025869]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "ui_settings_button"
+
+[node name="Quit" type="Button" parent="VBoxContainer2" unique_id=1278630194]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "ui_quit_button"
+
+[node name="Label" type="Label" parent="." unique_id=87523539]
+layout_mode = 0
+offset_left = 402.0
+offset_top = 423.0
+offset_right = 624.0
+offset_bottom = 451.0
+text = "ui_joke_tagline_0"
+label_settings = SubResource("LabelSettings_efy3b")
+autowrap_mode = 2
+
+[connection signal="pressed" from="VBoxContainer2/Play" to="." method="OnPlay"]
+[connection signal="pressed" from="VBoxContainer2/Settings" to="." method="OnSettings"]
+[connection signal="pressed" from="VBoxContainer2/Quit" to="." method="OnQuit"]

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://yerdyldt41j7"]
+
+[ext_resource type="Script" uid="uid://6t041i6qlnw" path="res://SCRIPTS/Content/LevelManager.gd" id="1_4vav1"]
+
+[node name="LevelManager" type="Node2D" unique_id=340956812 node_paths=PackedStringArray("e_levelParent")]
+script = ExtResource("1_4vav1")
+e_levelParent = NodePath("OFFSET")
+
+[node name="OFFSET" type="Node2D" parent="." unique_id=1235922748]

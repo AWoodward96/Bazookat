@@ -37,7 +37,7 @@ func _physics_process(_delta: float):
 		e_ledgeDetectorParent.scale.x = 1
 
 	if !is_on_floor():
-		velocity.y += GameManager.GameData.Gravity * _delta
+		velocity.y += GameManager.e_gameData.Gravity * _delta
 
 	match e_walkState:
 		EWalkState.Moving:

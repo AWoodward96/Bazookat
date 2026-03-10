@@ -35,7 +35,7 @@ func Explode():
 
 
 		if !hit:
-			Level.Camera.QueueScreenShake(GameManager.GameData.e_rocketExplosionScreenShake)
+			Level.Camera.QueueScreenShake(GameManager.e_gameData.e_rocketExplosionScreenShake)
 
 		var fx = e_explosionVFX.instantiate()
 		fx.global_position = global_position

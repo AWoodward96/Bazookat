@@ -2,7 +2,9 @@ extends Node2D
 
 signal OnFadeComplete
 
+@export var e_mainCanvas : CanvasLayer
 @export var e_obscureMask : TextureRect
+@export var e_mainMenuUI : PackedScene
 
 var m_fadeTween : Tween
 
@@ -36,3 +38,10 @@ func FadeComplete():
 
 func TweenObscure(_value : float):
 	e_obscureMask.material.set_shader_parameter("cutoff", _value)
+
+func OpenUI(_packedScene : PackedScene):
+	if _packedScene == null:
+		return
+
+	var newUI = _packedScene.instantiate()
+	e_mainCanvas.add_child(newUI)

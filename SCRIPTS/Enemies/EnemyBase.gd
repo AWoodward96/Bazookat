@@ -37,7 +37,7 @@ func DeathAnimation():
 	pass
 
 func DeathAnimationComplete():
-	var deathParticle = GameManager.GameData.e_genericDeathParticle.instantiate()
+	var deathParticle = GameManager.e_gameData.e_genericDeathParticle.instantiate()
 	deathParticle.global_position = global_position
 	get_tree().root.add_child(deathParticle)
 

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WorldTemplate" format=3 uid="uid://cuknrm0v051a6"]
+
+[ext_resource type="PackedScene" uid="uid://cotjfw7u7pia3" path="res://SCENES/Levels/Level_0.tscn" id="1_fmm6x"]
+[ext_resource type="Script" uid="uid://di6xt467jwpcs" path="res://SCRIPTS/Content/WorldTemplate.gd" id="1_ntnkx"]
+[ext_resource type="PackedScene" uid="uid://d3j1cyjl4befu" path="res://SCENES/Levels/Level_1.tscn" id="2_jnw1q"]
+
+[resource]
+script = ExtResource("1_ntnkx")
+Levels = Array[PackedScene]([ExtResource("1_fmm6x"), ExtResource("2_jnw1q")])
+metadata/_custom_type_script = "uid://di6xt467jwpcs"

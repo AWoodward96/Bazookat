@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GameManager="*uid://htvfombsjd2q"
 UIManager="*uid://ce5vl4amnusnw"
+LevelManager="*uid://yerdyldt41j7"
 
 [display]
 
@@ -37,6 +38,7 @@ enabled=PackedStringArray("res://addons/AS2P/plugin.cfg")
 [global_group]
 
 Player=""
+MainScene="Used to detect weather or not we're running the main scene or not"
 
 [input]
 
@@ -88,6 +90,10 @@ sprint={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://RESOURCES/Localization/loc_sheet_test.en.translation")
 
 [layer_names]
 
