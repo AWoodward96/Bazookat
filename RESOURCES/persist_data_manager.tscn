@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://biy5b5a34qbfe"]
+
+[ext_resource type="Script" uid="uid://dy1n1cyk6f7um" path="res://SCRIPTS/PersistData/PersistDataManager.gd" id="1_8d0ye"]
+
+[node name="PersistDataManager" type="Node2D" unique_id=2048922469]
+script = ExtResource("1_8d0ye")

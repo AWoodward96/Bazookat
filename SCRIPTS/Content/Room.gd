@@ -52,6 +52,9 @@ func EnterRoom():
 	for e in e_enemies:
 		if e != null:
 			e.Activate(true)
+
+	for m in e_mcGuffins:
+		m.CheckCollected()
 	pass
 
 func ExitRoom():

@@ -8,6 +8,9 @@ enum EState { Normal, Death, Respawn }
 @export var e_visual : AnimatedSprite2D
 @export var e_bazooka : BazookaBehavior
 @export var e_animationTree : AnimationTree
+@export var e_standardAnimationSet : AnimationNodeStateMachine
+@export var e_noBazookaAnimationSet : AnimationNodeStateMachine
+@export var e_hasBazooka : bool
 @export var e_state : EState = EState.Normal
 
 @export_category("Running Information")
@@ -109,6 +112,10 @@ var db_lastAngleShot : float
 
 func _ready():
 	m_fallbackOriginalPosition = global_position
+
+	# I actually have to check this because the persist data manager might not have loaded this yet
+	SetBazookaState(PersistDataManager.PlayerPersist.m_pickedUpBazooka)
+
 
 func _physics_process(_delta: float):
 	match e_state:
@@ -455,4 +462,30 @@ func CheckDeath():
 					pass
 				else:
 					Die(e_deathCast.get_collision_normal(index))
+	pass
+
+func SetBazookaState(_state : bool):
+	e_hasBazooka = _state
+	if e_hasBazooka:
+		e_animationTree.tree_root = e_standardAnimationSet
+		e_bazooka.visible = true
+	else:
+		e_animationTree.tree_root = e_noBazookaAnimationSet
+		e_bazooka.visible = false
+
+func Launch(e_launchData : LaunchData):
+	if e_launchData == null:
+		return
+
+	var desiredVelocity = velocity
+	if e_launchData.e_affectsHorizontal:
+		desiredVelocity = e_launchData.e_velocity
+	else:
+		desiredVelocity = Vector2(desiredVelocity.x, e_launchData.e_velocity.y)
+
+	velocity = desiredVelocity
+
+	m_horizontalLockoutTimer = e_launchData.e_XLockout
+	m_verticalCutLockoutTimer = e_launchData.e_YLockout
+
 	pass

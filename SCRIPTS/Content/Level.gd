@@ -7,6 +7,7 @@ static var Player : PlayerController
 static var Camera : MainCamera
 
 @export var e_rooms : Array[Room]
+@export var e_forceBazooka : bool = false
 @export var e_startingPosition : Node2D
 @export var e_numMcGuffins : int = 0
 @export var db_rebuildTree : bool = false
@@ -18,6 +19,9 @@ func _ready():
 			Player = GameManager.e_playerPrefab.instantiate()
 			add_child(Player)
 			Player.position = e_startingPosition.global_position
+
+			if e_forceBazooka:
+				Player.SetBazookaState(true)
 
 			# set it here, so that we don't have a transition at the very start of the map
 			for r in e_rooms:

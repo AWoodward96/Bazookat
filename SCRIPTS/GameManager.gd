@@ -15,6 +15,8 @@ func _ready() -> void:
 	pool_parent.name = "GOPool"
 	add_child(pool_parent)
 
+	await PersistDataManager.Initialized
+
 	if RunningMainScene():
 		ReturnToMainMenu()
 

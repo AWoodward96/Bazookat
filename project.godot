@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Bazookat"
 run/main_scene="uid://bidiu3xivf1cn"
+config/use_custom_user_dir=true
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -20,6 +21,7 @@ config/icon="res://icon.svg"
 GameManager="*uid://htvfombsjd2q"
 UIManager="*uid://ce5vl4amnusnw"
 LevelManager="*uid://yerdyldt41j7"
+PersistDataManager="*uid://biy5b5a34qbfe"
 
 [display]
 

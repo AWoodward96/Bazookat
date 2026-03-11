@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://caovrv3vq3sl3"]
+
+[ext_resource type="Script" uid="uid://cd72wh3xyl3sr" path="res://SCENES/bazooka_pickup.gd" id="1_mru6b"]
+[ext_resource type="Texture2D" uid="uid://b6frrpy4vg0cr" path="res://ART/Particle/ShinySparkles_Sheet.png" id="2_io1o6"]
+[ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="3_x81re"]
+[ext_resource type="Texture2D" uid="uid://byrawyh87wcvt" path="res://ART/Characters/Main/zooka_pickup.png" id="4_ewmre"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_npf5m"]
+particles_animation = true
+particles_anim_h_frames = 6
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7y4a1"]
+shader = ExtResource("3_x81re")
+shader_parameter/clr = Color(1, 1, 1, 1)
+shader_parameter/type = 1
+shader_parameter/thickness = 1.0
+
+[sub_resource type="Animation" id="Animation_a14sm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_eaum3"]
+resource_name = "idle"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 6), Vector2(0, 0), Vector2(0, 6)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y0f3f"]
+_data = {
+&"RESET": SubResource("Animation_a14sm"),
+&"idle": SubResource("Animation_eaum3")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j45cf"]
+size = Vector2(32, 32)
+
+[node name="BazookaPickup" type="Node2D" unique_id=1386070381 node_paths=PackedStringArray("e_visual", "e_particleParent")]
+script = ExtResource("1_mru6b")
+e_visual = NodePath("Visual")
+e_particleParent = NodePath("ParticlesParent")
+
+[node name="ParticlesParent" type="Node2D" parent="." unique_id=38362657]
+
+[node name="sparkles" type="CPUParticles2D" parent="ParticlesParent" unique_id=751477834]
+material = SubResource("CanvasItemMaterial_npf5m")
+amount = 4
+texture = ExtResource("2_io1o6")
+emission_shape = 6
+emission_ring_inner_radius = 8.0
+emission_ring_radius = 16.0
+particle_flag_align_y = true
+direction = Vector2(-1, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+anim_speed_min = 2.0
+anim_speed_max = 2.0
+
+[node name="Visual" type="Sprite2D" parent="." unique_id=1803758777]
+material = SubResource("ShaderMaterial_7y4a1")
+texture = ExtResource("4_ewmre")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1641287841]
+libraries/ = SubResource("AnimationLibrary_y0f3f")
+autoplay = &"idle"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1469065056]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=563955062]
+shape = SubResource("RectangleShape2D_j45cf")
+
+[connection signal="body_entered" from="Area2D" to="." method="Pickup"]

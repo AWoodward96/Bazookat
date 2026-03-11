@@ -22,6 +22,7 @@ func CreateNextLevelSection():
 		m_currentWorldLevel.CleanUp()
 		m_currentWorldLevel.queue_free()
 
+	PersistDataManager.SaveAll()
 	m_currentWorldLevel = m_currentWorldTemplate.Levels[m_currentWorldLevelIndex].instantiate()
 	e_levelParent.add_child(m_currentWorldLevel)
 	m_mcGuffinsTotal += m_currentWorldLevel.e_numMcGuffins
@@ -50,8 +51,9 @@ func LevelSectionComplete():
 		if Level.Current != null:
 			UIManager.FadeOut(1, 0)
 			await UIManager.OnFadeComplete
+			var level = Level.Current
 			Level.Current.CleanUp()
-			Level.Current.queue_free()
+			level.queue_free()
 			GameManager.ReturnToMainMenu()
 
 	pass

@@ -1,8 +1,7 @@
 extends Node2D
 class_name BazookaBehavior
 
-@export var e_owner : Node2D
-@export var e_camera : MainCamera
+@export var e_owner : PlayerController
 @export var e_bulletPrefab : PackedScene
 @export var e_visualParent : Node2D
 @export var e_visual : AnimatedSprite2D
@@ -14,11 +13,6 @@ var HasAmmo : bool :
 	get:
 		return m_hardCD <= 0 && m_hasAmmo
 
-var m_hardCD : float
-var m_hasAmmo : bool
-
-var db_currentAngle : float
-
 var Camera : MainCamera :
 	get:
 		if Level.Current != null:
@@ -26,11 +20,17 @@ var Camera : MainCamera :
 		else:
 			return get_viewport().get_camera_2d()
 
+var m_hardCD : float
+var m_hasAmmo : bool
+
+var db_currentAngle : float
+
+
 func UpdateBazookaVisibility(_visible : bool):
 	e_visual.visible = _visible
 
 func _physics_process(_delta: float) -> void:
-	if Camera == null:
+	if Camera == null || !e_owner.e_hasBazooka:
 		return
 
 	var dst = Camera.m_mouseWorldPosition - e_owner.global_position
