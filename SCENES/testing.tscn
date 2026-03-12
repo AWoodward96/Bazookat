@@ -3,11 +3,11 @@
 [ext_resource type="TileSet" uid="uid://cvb46mtb5adhe" path="res://RESOURCES/Tilesets/testing_tileset_2.tres" id="1_7ribk"]
 [ext_resource type="Script" uid="uid://cjugdejpk17fm" path="res://SCRIPTS/Content/Level.gd" id="1_llfxf"]
 [ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="2_7asai"]
-[ext_resource type="Texture2D" uid="uid://dad2dchrlcvja" path="res://ART/Characters/Main/bazookat_idle.png" id="3_bmxi4"]
+[ext_resource type="Texture2D" uid="uid://dad2dchrlcvja" path="res://ART/Characters/Main/normal_cat.png" id="3_bmxi4"]
 [ext_resource type="PackedScene" uid="uid://dilee5tlwetad" path="res://RESOURCES/Prefabs/what_buttons.tscn" id="5_twmd4"]
+[ext_resource type="PackedScene" uid="uid://caovrv3vq3sl3" path="res://RESOURCES/Prefabs/bazooka_pickup.tscn" id="9_twmd4"]
 [ext_resource type="Script" uid="uid://dtgfmwdl8ikaw" path="res://SCRIPTS/Content/Room.gd" id="20_m2fnr"]
 [ext_resource type="Script" uid="uid://bnfar5mme0uoc" path="res://SCRIPTS/RespawnPoint.gd" id="21_llfxf"]
-[ext_resource type="PackedScene" uid="uid://dmtgtsv6v0nui" path="res://RESOURCES/Prefabs/VFX/vfx_bazooka_explosion.tscn" id="21_m2fnr"]
 [ext_resource type="Texture2D" uid="uid://cde17ex6qtqlu" path="res://ART/Environment/LightingAssets/8x8_bayer_circle_128px.png" id="25_m3dc8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m3dc8"]
@@ -151,6 +151,5 @@ shape = SubResource("RectangleShape2D_m3dc8")
 position = Vector2(8, 16)
 texture = ExtResource("3_bmxi4")
 
-[node name="VFX_BazookaExplosion" parent="." unique_id=402950158 instance=ExtResource("21_m2fnr")]
-visible = false
-position = Vector2(1440, 560)
+[node name="BazookaPickup" parent="." unique_id=1386070381 instance=ExtResource("9_twmd4")]
+position = Vector2(292, 560)

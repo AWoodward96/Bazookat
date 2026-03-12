@@ -3,10 +3,10 @@
 [ext_resource type="AnimationNodeStateMachine" uid="uid://c6iyu6hccn13w" path="res://ART/Characters/Main/AnimationStates/Aerial_Short.tres" id="1_c2l2i"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gfhta"]
-animation = &"tall_fast_jump_down"
+animation = &"2p_fast_jump_down"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6m0x7"]
-animation = &"tall_fast_jump_up"
+animation = &"2p_fast_jump_up"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nt17b"]
 advance_mode = 2
@@ -33,16 +33,16 @@ transitions = ["Start", "tall_fast_jump_up", SubResource("AnimationNodeStateMach
 graph_offset = Vector2(22, -89)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hscwg"]
-animation = &"tall_fast_jump_down_out"
+animation = &"2p_fast_jump_down_out"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v0kds"]
-animation = &"tall_fast_jump_up_out"
+animation = &"2p_fast_jump_up_out"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_meuh2"]
-animation = &"tall_jump_down"
+animation = &"2p_jump_down"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gxwok"]
-animation = &"tall_jump_up"
+animation = &"2p_jump_up"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nir2m"]
 advance_mode = 2
@@ -93,37 +93,37 @@ states/tall_jump_down/position = Vector2(498, 199)
 states/tall_jump_up/node = SubResource("AnimationNodeAnimation_gxwok")
 states/tall_jump_up/position = Vector2(498, 116)
 transitions = ["tall_jump_up", "tall_jump_down", SubResource("AnimationNodeStateMachineTransition_nir2m"), "tall_jump_down", "tall_jump_up", SubResource("AnimationNodeStateMachineTransition_5bf4q"), "tall_fast_jump_out", "tall_jump_up", SubResource("AnimationNodeStateMachineTransition_2rrq7"), "Start", "tall_jump_up", SubResource("AnimationNodeStateMachineTransition_grxya"), "Start", "FastX", SubResource("AnimationNodeStateMachineTransition_f5jcl"), "FastX", "tall_fast_jump_out", SubResource("AnimationNodeStateMachineTransition_5xmme"), "FastX", "tall_fast_jump_down_out", SubResource("AnimationNodeStateMachineTransition_m8lsg"), "tall_fast_jump_down_out", "tall_jump_down", SubResource("AnimationNodeStateMachineTransition_1l3lu"), "Start", "tall_jump_down", SubResource("AnimationNodeStateMachineTransition_ncdu0")]
-graph_offset = Vector2(-66, -3)
+graph_offset = Vector2(45, -72)
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7ey2p"]
 advance_mode = 2
 advance_expression = "!m_inSprintAnimState"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5hulq"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c2l2i"]
 advance_mode = 2
 advance_expression = "m_inSprintAnimState"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tyxxk"]
-advance_mode = 2
-advance_expression = "m_inSprintAnimState"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xt5ao"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_t3raa"]
 advance_mode = 2
 advance_expression = "!m_inSprintAnimState"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7caqp"]
+advance_mode = 2
+advance_expression = "m_inSprintAnimState"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_grxya"]
 states/Aerial_2p/node = SubResource("AnimationNodeStateMachine_2rrq7")
 states/Aerial_2p/position = Vector2(383, 118)
-states/Aerial_4p/node = ExtResource("1_c2l2i")
-states/Aerial_4p/position = Vector2(388, 219)
 states/Start/position = Vector2(183, 177)
-transitions = ["Start", "Aerial_2p", SubResource("AnimationNodeStateMachineTransition_7ey2p"), "Start", "Aerial_4p", SubResource("AnimationNodeStateMachineTransition_5hulq"), "Aerial_2p", "Aerial_4p", SubResource("AnimationNodeStateMachineTransition_tyxxk"), "Aerial_4p", "Aerial_2p", SubResource("AnimationNodeStateMachineTransition_xt5ao")]
+states/StateMachine/node = ExtResource("1_c2l2i")
+states/StateMachine/position = Vector2(383, 218)
+transitions = ["Start", "Aerial_2p", SubResource("AnimationNodeStateMachineTransition_7ey2p"), "Aerial_2p", "StateMachine", SubResource("AnimationNodeStateMachineTransition_c2l2i"), "StateMachine", "Aerial_2p", SubResource("AnimationNodeStateMachineTransition_t3raa"), "Start", "StateMachine", SubResource("AnimationNodeStateMachineTransition_7caqp")]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5bf4q"]
-animation = &"idle"
+animation = &"4p_idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_skwts"]
-animation = &"running"
+animation = &"4p_running"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mrh2i"]
 advance_mode = 2
@@ -150,13 +150,13 @@ states/running/position = Vector2(457, 190)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_mrh2i"), "idle", "running", SubResource("AnimationNodeStateMachineTransition_w3m15"), "running", "idle", SubResource("AnimationNodeStateMachineTransition_t8lsh"), "Start", "running", SubResource("AnimationNodeStateMachineTransition_q1kq5")]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bojvp"]
-animation = &"tall_backpedal"
+animation = &"2p_backpedal"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mrh2i"]
-animation = &"tall_idle"
+animation = &"2p_idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w3m15"]
-animation = &"tall_run"
+animation = &"2p_running"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6baq6"]
 advance_mode = 2
@@ -196,7 +196,7 @@ states/tall_backpedal/position = Vector2(557, 171)
 states/tall_idle/node = SubResource("AnimationNodeAnimation_mrh2i")
 states/tall_idle/position = Vector2(452, 44)
 states/tall_run/node = SubResource("AnimationNodeAnimation_w3m15")
-states/tall_run/position = Vector2(365, 171)
+states/tall_run/position = Vector2(366, 171)
 transitions = ["tall_idle", "tall_run", SubResource("AnimationNodeStateMachineTransition_6baq6"), "tall_run", "tall_idle", SubResource("AnimationNodeStateMachineTransition_45d8n"), "Start", "tall_run", SubResource("AnimationNodeStateMachineTransition_lh8nd"), "Start", "tall_idle", SubResource("AnimationNodeStateMachineTransition_ti8dy"), "tall_run", "tall_backpedal", SubResource("AnimationNodeStateMachineTransition_me8ab"), "tall_backpedal", "tall_idle", SubResource("AnimationNodeStateMachineTransition_2cjk5"), "tall_idle", "tall_backpedal", SubResource("AnimationNodeStateMachineTransition_8ys1s"), "tall_backpedal", "tall_run", SubResource("AnimationNodeStateMachineTransition_8sxat")]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yqqkn"]
@@ -235,9 +235,9 @@ advance_mode = 2
 states/Fours_Grounded/node = SubResource("AnimationNodeStateMachine_6baq6")
 states/Fours_Grounded/position = Vector2(457, 4)
 states/Twos_Grounded/node = SubResource("AnimationNodeStateMachine_45d8n")
-states/Twos_Grounded/position = Vector2(457, 156)
+states/Twos_Grounded/position = Vector2(457, 157)
 states/tall_to_short/node = SubResource("AnimationNodeAnimation_t8lsh")
-states/tall_to_short/position = Vector2(368, 78)
+states/tall_to_short/position = Vector2(368, 79)
 "states/tall_to_short 2/node" = SubResource("AnimationNodeAnimation_yqqkn")
 "states/tall_to_short 2/position" = Vector2(578, 84)
 transitions = ["Start", "Fours_Grounded", SubResource("AnimationNodeStateMachineTransition_meuh2"), "Start", "Twos_Grounded", SubResource("AnimationNodeStateMachineTransition_skwts"), "Twos_Grounded", "tall_to_short", SubResource("AnimationNodeStateMachineTransition_a7gjv"), "tall_to_short", "Fours_Grounded", SubResource("AnimationNodeStateMachineTransition_ph4h0"), "Fours_Grounded", "tall_to_short 2", SubResource("AnimationNodeStateMachineTransition_v0kds"), "tall_to_short 2", "Twos_Grounded", SubResource("AnimationNodeStateMachineTransition_gfhta")]
@@ -283,9 +283,9 @@ advance_expression = "!m_climbing"
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0334l"]
 states/Start/position = Vector2(186, 172)
 states/climb/node = SubResource("AnimationNodeAnimation_hewad")
-states/climb/position = Vector2(417, 238)
+states/climb/position = Vector2(418, 238)
 states/wallslide/node = SubResource("AnimationNodeAnimation_tyrya")
-states/wallslide/position = Vector2(567, 172)
+states/wallslide/position = Vector2(568, 172)
 states/wallslide_in/node = SubResource("AnimationNodeAnimation_0hinh")
 states/wallslide_in/position = Vector2(379, 118)
 transitions = ["Start", "wallslide_in", SubResource("AnimationNodeStateMachineTransition_bojvp"), "wallslide_in", "wallslide", SubResource("AnimationNodeStateMachineTransition_hscwg"), "wallslide", "wallslide_in", SubResource("AnimationNodeStateMachineTransition_gxwok"), "wallslide_in", "climb", SubResource("AnimationNodeStateMachineTransition_oo50v"), "wallslide", "climb", SubResource("AnimationNodeStateMachineTransition_4ou7c"), "Start", "climb", SubResource("AnimationNodeStateMachineTransition_5n6n6"), "climb", "wallslide", SubResource("AnimationNodeStateMachineTransition_ungg5")]

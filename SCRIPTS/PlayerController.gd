@@ -113,8 +113,11 @@ var db_lastAngleShot : float
 func _ready():
 	m_fallbackOriginalPosition = global_position
 
-	# I actually have to check this because the persist data manager might not have loaded this yet
-	SetBazookaState(PersistDataManager.PlayerPersist.m_pickedUpBazooka)
+	if PersistDataManager.PlayerPersist == null:
+		SetBazookaState(false)
+	else:
+		# I actually have to check this because the persist data manager might not have loaded this yet
+		SetBazookaState(PersistDataManager.PlayerPersist.m_pickedUpBazooka)
 
 
 func _physics_process(_delta: float):
@@ -184,6 +187,7 @@ func HandleInput(_delta : float):
 
 	var bazookaVisible = !m_inSprintAnimState && !m_sliding && !m_climbing
 	e_bazooka.UpdateBazookaVisibility(bazookaVisible)
+	e_visual.material.set_shader_parameter("perform_color_swap", !e_bazooka.HasAmmo)
 	if m_onFloor && !e_bazooka.HasAmmo:
 		e_bazooka.ForceReload()
 
@@ -287,6 +291,7 @@ func HandleParticles():
 
 	e_climbParticleParent.scale.x = -m_wallNormal.x
 	e_climbParticle.emitting = m_climbing && e_state == EState.Normal
+	
 
 
 func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf37qqy65vav"
-path="res://.godot/imported/bazooka_aerial.png-813a2fe0effea55c9469670d65050153.ctex"
+uid="uid://6k0y0iackcpt"
+path="res://.godot/imported/bzookat_wallslide_with_bazooka.png-e30820c2b111d85031fbb41d0f7fccef.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ART/Characters/Main/bazooka_aerial.png"
-dest_files=["res://.godot/imported/bazooka_aerial.png-813a2fe0effea55c9469670d65050153.ctex"]
+source_file="res://ART/Characters/Main/bzookat_wallslide_with_bazooka.png"
+dest_files=["res://.godot/imported/bzookat_wallslide_with_bazooka.png-e30820c2b111d85031fbb41d0f7fccef.ctex"]
 
 [params]
 

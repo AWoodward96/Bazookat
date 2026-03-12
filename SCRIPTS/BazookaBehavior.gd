@@ -50,7 +50,7 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("fire") && HasAmmo:
 		Fire(e_emitterParent.global_position, dst)
 
-	e_visual.material.set_shader_parameter("perform_color_swap", !m_hasAmmo)
+	e_visual.material.set_shader_parameter("perform_color_swap", !HasAmmo)
 	if m_hardCD > 0:
 		m_hardCD -= _delta
 	pass

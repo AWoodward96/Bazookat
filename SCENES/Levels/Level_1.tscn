@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cjugdejpk17fm" path="res://SCRIPTS/Content/Level.gd" id="1_m5mna"]
 [ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="2_iulb5"]
-[ext_resource type="Texture2D" uid="uid://dad2dchrlcvja" path="res://ART/Characters/Main/bazookat_idle.png" id="3_tpf8w"]
+[ext_resource type="Texture2D" uid="uid://dad2dchrlcvja" path="res://ART/Characters/Main/normal_cat.png" id="3_tpf8w"]
 [ext_resource type="TileSet" uid="uid://cvb46mtb5adhe" path="res://RESOURCES/Tilesets/testing_tileset_2.tres" id="4_g68hh"]
 [ext_resource type="Script" uid="uid://dtgfmwdl8ikaw" path="res://SCRIPTS/Content/Room.gd" id="5_2lnwn"]
 [ext_resource type="Script" uid="uid://bnfar5mme0uoc" path="res://SCRIPTS/RespawnPoint.gd" id="6_7cd4j"]

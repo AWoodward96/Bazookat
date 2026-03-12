@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dn2o8lidofkq4"
-path="res://.godot/imported/bazookat_idle.png-fdd28dbab2696b2a7ac9caf2b1cb405c.ctex"
+uid="uid://b5emuo1hocohj"
+path="res://.godot/imported/bazooka_climb_bazooka.png-f048469f0ac8424f3129be5b8922dec7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ART/Characters/Main/bazookat_idle.png"
-dest_files=["res://.godot/imported/bazookat_idle.png-fdd28dbab2696b2a7ac9caf2b1cb405c.ctex"]
+source_file="res://ART/Characters/Main/bazooka_climb_bazooka.png"
+dest_files=["res://.godot/imported/bazooka_climb_bazooka.png-f048469f0ac8424f3129be5b8922dec7.ctex"]
 
 [params]
 

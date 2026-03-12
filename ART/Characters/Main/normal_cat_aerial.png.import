@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dn2o8lidofkq4"
-path="res://.godot/imported/bazookat_idle.png-fdd28dbab2696b2a7ac9caf2b1cb405c.ctex"
+uid="uid://bf37qqy65vav"
+path="res://.godot/imported/normal_cat_aerial.png-7d54a0101fdff384768510bd85d6b705.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ART/Characters/Main/bazookat_idle.png"
-dest_files=["res://.godot/imported/bazookat_idle.png-fdd28dbab2696b2a7ac9caf2b1cb405c.ctex"]
+source_file="res://ART/Characters/Main/normal_cat_aerial.png"
+dest_files=["res://.godot/imported/normal_cat_aerial.png-7d54a0101fdff384768510bd85d6b705.ctex"]
 
 [params]
 

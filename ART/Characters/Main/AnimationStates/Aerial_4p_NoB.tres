@@ -1,19 +1,19 @@
-[gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://c6iyu6hccn13w"]
+[gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://cww04fvoun0g8"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8dus5"]
-animation = &"4p_aerial_0"
+animation = &"4pNB_aerial_0"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0334l"]
-animation = &"4p_aerial_1"
+animation = &"4pNB_aerial_1"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aeidu"]
-animation = &"4p_aerial_2"
+animation = &"4pNB_aerial_2"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vap7r"]
-animation = &"4p_aerial_3"
+animation = &"4pNB_aerial_3"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lq7rl"]
-animation = &"4p_aerial_4"
+animation = &"4pNB_aerial_4"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tyrya"]
 advance_mode = 2
@@ -69,8 +69,8 @@ states/aerial_1/position = Vector2(348, 46)
 states/aerial_2/node = SubResource("AnimationNodeAnimation_aeidu")
 states/aerial_2/position = Vector2(532, 17)
 states/aerial_3/node = SubResource("AnimationNodeAnimation_vap7r")
-states/aerial_3/position = Vector2(673, 46)
+states/aerial_3/position = Vector2(672, 46)
 states/aerial_4/node = SubResource("AnimationNodeAnimation_lq7rl")
-states/aerial_4/position = Vector2(780, 128)
+states/aerial_4/position = Vector2(781, 128)
 transitions = ["Start", "aerial_0", SubResource("AnimationNodeStateMachineTransition_tyrya"), "aerial_0", "aerial_1", SubResource("AnimationNodeStateMachineTransition_0hinh"), "aerial_1", "aerial_2", SubResource("AnimationNodeStateMachineTransition_vap7r"), "Start", "aerial_2", SubResource("AnimationNodeStateMachineTransition_y3fgl"), "Start", "aerial_1", SubResource("AnimationNodeStateMachineTransition_7ey2p"), "aerial_2", "aerial_3", SubResource("AnimationNodeStateMachineTransition_lq7rl"), "Start", "aerial_3", SubResource("AnimationNodeStateMachineTransition_5hulq"), "Start", "aerial_4", SubResource("AnimationNodeStateMachineTransition_tyxxk"), "aerial_3", "aerial_4", SubResource("AnimationNodeStateMachineTransition_xt5ao"), "aerial_4", "aerial_1", SubResource("AnimationNodeStateMachineTransition_nir2m"), "aerial_4", "aerial_0", SubResource("AnimationNodeStateMachineTransition_5bf4q")]
 graph_offset = Vector2(-7, -106)
