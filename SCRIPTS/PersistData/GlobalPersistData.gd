@@ -27,7 +27,7 @@ func GetLevelPersistData(_level : Level):
 
 	var newLevelPersist = LevelPersistData.CreateLevelPersistData(_level)
 	m_levelPersistData.append(newLevelPersist)
-	return m_levelPersistData
+	return newLevelPersist
 
 func Save():
 	var save_file = FileAccess.open(PersistDataManager.GLOBAL_FILE, FileAccess.WRITE)

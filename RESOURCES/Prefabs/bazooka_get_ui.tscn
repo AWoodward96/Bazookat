@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://twidwxyf6ur5"]
+
+[ext_resource type="FontFile" uid="uid://ckiuummr52qag" path="res://ART/Fonts/DisrespectfulTeenager.ttf" id="1_25wc2"]
+[ext_resource type="Script" uid="uid://cjroxr1bwsqr1" path="res://SCRIPTS/UI/BazookaGetUI.gd" id="1_gcg6n"]
+[ext_resource type="FontFile" uid="uid://jrj7xiaovm84" path="res://ART/Fonts/c64esque.ttf" id="2_gcg6n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gtlua"]
+font = ExtResource("1_25wc2")
+font_size = 32
+font_color = Color(0.34509805, 0.3882353, 0.20784314, 1)
+outline_size = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_rnpub"]
+font = ExtResource("2_gcg6n")
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+outline_size = 10
+
+[node name="BazookaGetUI" type="Control" unique_id=125562246 node_paths=PackedStringArray("e_title", "e_armed")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gcg6n")
+e_title = NodePath("MarginContainer/VBoxContainer/title")
+e_armed = NodePath("MarginContainer/VBoxContainer/armed")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=912660890]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 128
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 128
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=171664296]
+layout_mode = 2
+
+[node name="title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1341047259]
+layout_mode = 2
+text = "ui_bazooka_get"
+label_settings = SubResource("LabelSettings_gtlua")
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer" unique_id=1402136859]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="armed" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1256468603]
+layout_mode = 2
+text = "ui_hes_armed"
+label_settings = SubResource("LabelSettings_rnpub")
+horizontal_alignment = 1

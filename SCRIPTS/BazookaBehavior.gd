@@ -33,6 +33,11 @@ func _physics_process(_delta: float) -> void:
 	if Camera == null || !e_owner.e_hasBazooka:
 		return
 
+	if e_owner.e_state == PlayerController.EState.Cutscene:
+		e_visualParent.rotation = 0
+		e_visual.flip_v = false
+		return
+
 	var dst = Camera.m_mouseWorldPosition - e_owner.global_position
 	if e_visualParent != null && e_visual != null:
 		var angle = dst.angle()

@@ -4,6 +4,7 @@ class_name MainCamera
 
 @export var e_target : Node2D
 @export var e_lerpSpeed : float = 10
+@export var e_trackMouse : bool = true
 @export var e_mouseTrackRadius : Vector2 = Vector2(8, 48)
 @export var e_velocityMultiplier : float = 0.25
 @export var e_velocityLerpSpeed : float = 1
@@ -26,16 +27,17 @@ func _process(_delta: float) -> void:
 func _physics_process(_delta: float):
 	var desiredPosition = e_target.global_position
 
-	var mouseDST = m_mouseWorldPosition - global_position
-	var magnitude = mouseDST.length()
-	if magnitude > e_mouseTrackRadius.y:
-		mouseDST = mouseDST.normalized() * e_mouseTrackRadius.y
-	elif magnitude < e_mouseTrackRadius.x:
-		mouseDST = mouseDST.normalized() * e_mouseTrackRadius.x
+	if e_trackMouse:
+		var mouseDST = m_mouseWorldPosition - global_position
+		var magnitude = mouseDST.length()
+		if magnitude > e_mouseTrackRadius.y:
+			mouseDST = mouseDST.normalized() * e_mouseTrackRadius.y
+		elif magnitude < e_mouseTrackRadius.x:
+			mouseDST = mouseDST.normalized() * e_mouseTrackRadius.x
 
-	mouseDST.y = mouseDST.y * .5
+		mouseDST.y = mouseDST.y * .5
 
-	desiredPosition += mouseDST
+		desiredPosition += mouseDST
 
 	if m_screenShakes != null:
 		if m_screenShakes.m_timer > 0:

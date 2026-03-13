@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://cnqf8kg2y0jgx" path="res://ART/Characters/Main/zooka_temp.png" id="15_lq7rl"]
 [ext_resource type="Texture2D" uid="uid://mre8r7u0akpa" path="res://ART/Characters/Main/4p_run_bazooka.png" id="16_5hulq"]
 [ext_resource type="Texture2D" uid="uid://b5emuo1hocohj" path="res://ART/Characters/Main/bazooka_climb_bazooka.png" id="18_tyxxk"]
+[ext_resource type="Texture2D" uid="uid://3u2c5vcv3k4r" path="res://ART/Characters/Main/bazookat_item_get.png" id="21_5hulq"]
 [ext_resource type="Texture2D" uid="uid://c6o5uvokhnke6" path="res://ART/Particle/Circle_4px.png" id="21_gxwok"]
 [ext_resource type="AnimationNodeStateMachine" uid="uid://0uktacj84ajs" path="res://ART/AnimationStates/Bazookat_Standard.tres" id="21_meuh2"]
 [ext_resource type="Texture2D" uid="uid://6k0y0iackcpt" path="res://ART/Characters/Main/bzookat_wallslide_with_bazooka.png" id="22_7ey2p"]
@@ -135,7 +136,9 @@ offsets = PackedFloat32Array(0, 0.118892506, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2f1oo"]
+resource_local_to_scene = true
 shader = ExtResource("4_yqqkn")
+shader_parameter/alpha_modulate = 1.0
 shader_parameter/use_color_override = 0.0
 shader_parameter/color_override = Color(1, 1, 1, 1)
 shader_parameter/perform_color_swap = false
@@ -380,6 +383,18 @@ region = Rect2(56, 0, 56, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_dycqv"]
 atlas = ExtResource("7_meuh2")
 region = Rect2(0, 0, 56, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gnro"]
+atlas = ExtResource("21_5hulq")
+region = Rect2(0, 0, 56, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_acfyr"]
+atlas = ExtResource("21_5hulq")
+region = Rect2(56, 0, 56, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gcso"]
+atlas = ExtResource("21_5hulq")
+region = Rect2(112, 0, 56, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skwts"]
 atlas = ExtResource("11_vap7r")
@@ -743,6 +758,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_6gnro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acfyr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gcso")
+}],
+"loop": false,
+"name": &"item_get",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_skwts")
 }],
 "loop": false,
@@ -777,6 +806,7 @@ animations = [{
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hewad"]
 shader = ExtResource("4_yqqkn")
+shader_parameter/alpha_modulate = 1.0
 shader_parameter/use_color_override = 0.0
 shader_parameter/color_override = Color(1, 1, 1, 1)
 shader_parameter/perform_color_swap = false
@@ -1676,6 +1706,33 @@ tracks/1/keys = {
 "values": ["death"]
 }
 
+[sub_resource type="Animation" id="Animation_5hulq"]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["item_get"]
+}
+
 [sub_resource type="Animation" id="Animation_q1kq5"]
 length = 0.0625
 tracks/0/type = "value"
@@ -1791,18 +1848,20 @@ _data = {
 &"climb": SubResource("Animation_xt5ao"),
 &"dashing": SubResource("Animation_gfhta"),
 &"death": SubResource("Animation_nrcpc"),
+&"item_get": SubResource("Animation_5hulq"),
 &"tall_to_short": SubResource("Animation_q1kq5"),
 &"wallslide": SubResource("Animation_bojvp"),
 &"wallslide_in": SubResource("Animation_meuh2")
 }
 
-[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle")]
+[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle")]
 collision_mask = 30
 platform_floor_layers = 4294967271
 script = ExtResource("1_letql")
 e_visual = NodePath("Visual")
 e_bazooka = NodePath("Bazooka")
 e_animationTree = NodePath("AnimationTree")
+e_animationPlayer = NodePath("AnimationPlayer")
 e_standardAnimationSet = ExtResource("21_meuh2")
 e_noBazookaAnimationSet = ExtResource("3_gxwok")
 e_horizontalSpeed = 175.0

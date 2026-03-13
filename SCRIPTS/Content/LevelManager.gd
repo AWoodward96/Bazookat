@@ -30,17 +30,21 @@ func CreateNextLevelSection():
 
 func LevelSectionComplete():
 	if m_currentWorldTemplate != null:
+		Level.Current.Player.OnLevelComplete()
+		await get_tree().create_timer(0.25).timeout
+		var ui = UIManager.OpenUI(UIManager.e_resultsUI) as ResultsUI
+		ui.Show(Level.Current)
+		await ui.ResultsSequenceComplete
+		
+		UIManager.FadeOut(1, 0)
+		await UIManager.OnFadeComplete
+		
+		# has next level
 		if m_currentWorldLevelIndex + 1 < m_currentWorldTemplate.Levels.size():
-			UIManager.FadeOut(1, 0)
-			await UIManager.OnFadeComplete
 			m_currentWorldLevelIndex += 1
 			CreateNextLevelSection()
 			UIManager.FadeIn(1, 0)
-			pass
 		else:
-			# Show results, go back to title
-			UIManager.FadeOut(1, 0)
-			await UIManager.OnFadeComplete
 			m_currentWorldLevel.CleanUp()
 			m_currentWorldLevel.queue_free()
 			GameManager.ReturnToMainMenu()

@@ -1,5 +1,6 @@
 shader_type canvas_item;
 
+uniform float alpha_modulate = 1;
 uniform float use_color_override = 0;
 uniform vec4 color_override : source_color = vec4(1.0, 1.0, 1.0, 1.0);
 
@@ -52,6 +53,6 @@ void fragment() {
 	}
 	
 	newColor = mix(newColor, outline_color, check(TEXTURE, UV, TEXTURE_PIXEL_SIZE) * (1.0 - gtz(COLOR.a)) );
-	
+	newColor.a *= alpha_modulate;
 	COLOR = newColor;
 }

@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dn2o8lidofkq4" path="res://ART/Characters/Main/bazookat_idle.png" id="3_bmxi4"]
 [ext_resource type="PackedScene" uid="uid://dilee5tlwetad" path="res://RESOURCES/Prefabs/what_buttons.tscn" id="5_twmd4"]
 [ext_resource type="PackedScene" uid="uid://caovrv3vq3sl3" path="res://RESOURCES/Prefabs/bazooka_pickup.tscn" id="9_twmd4"]
+[ext_resource type="PackedScene" uid="uid://fr84jd00sjqo" path="res://RESOURCES/Prefabs/simple_launcher.tscn" id="10_rogw5"]
+[ext_resource type="Script" uid="uid://c85ycjpsqrwl0" path="res://SCRIPTS/Helpers/LaunchData.gd" id="11_8xtfd"]
 [ext_resource type="Script" uid="uid://dtgfmwdl8ikaw" path="res://SCRIPTS/Content/Room.gd" id="20_m2fnr"]
 [ext_resource type="Script" uid="uid://bnfar5mme0uoc" path="res://SCRIPTS/RespawnPoint.gd" id="21_llfxf"]
 [ext_resource type="Texture2D" uid="uid://cde17ex6qtqlu" path="res://ART/Environment/LightingAssets/8x8_bayer_circle_128px.png" id="25_m3dc8"]
@@ -24,6 +26,10 @@ size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3dc8"]
 size = Vector2(48, 48)
+
+[sub_resource type="Resource" id="Resource_j45cf"]
+script = ExtResource("11_8xtfd")
+metadata/_custom_type_script = "uid://c85ycjpsqrwl0"
 
 [node name="testing" type="Node2D" unique_id=607547518 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
 script = ExtResource("1_llfxf")
@@ -153,3 +159,7 @@ texture = ExtResource("3_bmxi4")
 
 [node name="BazookaPickup" parent="." unique_id=1386070381 instance=ExtResource("9_twmd4")]
 position = Vector2(292, 560)
+
+[node name="SimpleLauncher" parent="." unique_id=932212030 instance=ExtResource("10_rogw5")]
+position = Vector2(160, 575)
+e_launchData = SubResource("Resource_j45cf")

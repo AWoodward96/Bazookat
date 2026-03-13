@@ -26,3 +26,5 @@ ui_settings_joke_18,Back off.
 ui_level_complete_title,Level Complete!
 ui_mcguffins_found_title,McGuffins Found: {NUM}/{NUM2}
 ui_press_jump,Press Jump to continue
+ui_bazooka_get,Bazooka   Get
+ui_hes_armed,"Lord help us now he's armed"

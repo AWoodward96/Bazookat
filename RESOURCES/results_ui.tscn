@@ -23,7 +23,7 @@ font_size = 24
 font_color = Color(0, 0, 0, 1)
 outline_size = 5
 
-[node name="ResultsUI" type="Control" unique_id=998502910 node_paths=PackedStringArray("e_levelComplete", "e_mcGuffins", "e_pressAnything")]
+[node name="ResultsUI" type="Control" unique_id=998502910 node_paths=PackedStringArray("e_levelComplete", "e_mcGuffinsParent", "e_mcGuffins", "e_pressAnything")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,6 +32,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_b854g")
 e_levelComplete = NodePath("MarginContainer/VBoxContainer/LevelComplete")
+e_mcGuffinsParent = NodePath("MarginContainer/VBoxContainer/HBoxContainer")
 e_mcGuffins = NodePath("MarginContainer/VBoxContainer/HBoxContainer/McGuffins")
 e_pressAnything = NodePath("MarginContainer/VBoxContainer/JumpToContinue")
 

@@ -3,11 +3,12 @@ extends CharacterBody2D
 class_name PlayerController
 
 enum ERocketJumpDirections { N, ne, E, se, S, sw, W, nw, sse, ssw }
-enum EState { Normal, Death, Respawn }
+enum EState { Normal, Death, Respawn, LevelComplete, Cutscene }
 
 @export var e_visual : AnimatedSprite2D
 @export var e_bazooka : BazookaBehavior
 @export var e_animationTree : AnimationTree
+@export var e_animationPlayer : AnimationPlayer
 @export var e_standardAnimationSet : AnimationNodeStateMachine
 @export var e_noBazookaAnimationSet : AnimationNodeStateMachine
 @export var e_hasBazooka : bool
@@ -123,11 +124,16 @@ func _ready():
 func _physics_process(_delta: float):
 	match e_state:
 		EState.Normal:
+			e_animationTree.active = true
 			HandleInput(_delta)
 			HandlePhysics(_delta)
 		EState.Death:
+			e_animationTree.active = true
 			velocity *= e_deathVelocityDamp
 			move_and_slide()
+		EState.Cutscene:
+			e_animationTree.active = false
+			pass
 
 	HandleParticles()
 
@@ -265,10 +271,20 @@ func HandlePhysics(_delta : float):
 	move_and_slide()
 
 	# flip the sprite based on the last direction we moved
-	if velocity.x < 0:
-		m_facingLeft = true
-	if velocity.x > 0:
-		m_facingLeft = false
+	if !m_onWall:
+		if velocity.x < 0:
+			m_facingLeft = true
+		if velocity.x > 0:
+			m_facingLeft = false
+	else:
+		# On Walls are different, so take the input direclty instead of the velocity
+		# 'why not just use the input the whole time' because we dont want to make the player face the
+		# input for rocket jumping, it looks wrong
+		if m_horizontal < 0:
+			m_facingLeft = true
+		elif m_horizontal > 0:
+			m_facingLeft = false
+			
 	e_visual.flip_h = m_facingLeft
 
 func HandleHorizontal(_delta):
@@ -465,6 +481,18 @@ func Respawn():
 	m_horizontalLockoutTimer = 0
 	m_verticalCutLockoutTimer = 0
 
+
+func OnLevelComplete():
+	e_state = EState.LevelComplete
+	e_bazooka.UpdateBazookaVisibility(false)
+	
+	var tween = get_tree().create_tween()
+	tween.tween_interval(1)
+	tween.tween_method(FadeOut, 1.0, 0.0, 1)
+
+func FadeOut(_value : float):
+	e_visual.material.set_shader_parameter("alpha_modulate", _value)
+
 func CheckDeath():
 	for index in e_deathCast.get_collision_count():
 		var collider = e_deathCast.get_collider(index)
@@ -515,3 +543,21 @@ func Launch(e_launchData : LaunchData, _reload : bool = false):
 		e_bazooka.ForceReload()
 
 	pass
+
+func EnterCutscene(_defaultAnimation : String = "2p_idle"):
+	e_state = EState.Cutscene
+	e_animationTree.active = false
+	if Level.Camera != null:
+		Level.Camera.e_trackMouse = false
+	PlayAnimationWhileTreeIsDisabled(_defaultAnimation)
+
+func PlayAnimationWhileTreeIsDisabled(_animationName : String):
+	e_visual.play(_animationName)
+	e_animationPlayer.play(_animationName)
+
+func ExitCutscene():
+	e_state = EState.Normal
+	if Level.Camera != null:
+		Level.Camera.e_trackMouse = true
+	e_animationTree.active = true
+	

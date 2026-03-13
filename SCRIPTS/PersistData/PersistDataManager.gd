@@ -44,7 +44,7 @@ func SaveAll():
 	PlayerPersist.Save()
 
 func ClearSaveData():
-	GlobalPersist.m_mcGuffinsCollected.clear()
+	GlobalPersist.m_levelPersistData.clear()
 	PlayerPersist.m_pickedUpBazooka = false
 	SaveAll()
 
