@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://4rht6obvo8nw"]
+
+[ext_resource type="Script" uid="uid://tbyebc1rmxr" path="res://SCRIPTS/UI/ResultsUI.gd" id="1_b854g"]
+[ext_resource type="FontFile" uid="uid://ckiuummr52qag" path="res://ART/Fonts/DisrespectfulTeenager.ttf" id="1_bnb1r"]
+[ext_resource type="FontFile" uid="uid://jrj7xiaovm84" path="res://ART/Fonts/c64esque.ttf" id="2_dl6ig"]
+[ext_resource type="Texture2D" uid="uid://0uqi0t6qctmr" path="res://ART/Environment/DefinitelyNotAChaosEmerald.png" id="3_f0hhu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dl6ig"]
+font = ExtResource("1_bnb1r")
+font_size = 32
+font_color = Color(0.34509805, 0.3882353, 0.20784314, 1)
+outline_size = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_f0hhu"]
+font = ExtResource("2_dl6ig")
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+outline_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_b854g"]
+font = ExtResource("2_dl6ig")
+font_size = 24
+font_color = Color(0, 0, 0, 1)
+outline_size = 5
+
+[node name="ResultsUI" type="Control" unique_id=998502910 node_paths=PackedStringArray("e_levelComplete", "e_mcGuffins", "e_pressAnything")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b854g")
+e_levelComplete = NodePath("MarginContainer/VBoxContainer/LevelComplete")
+e_mcGuffins = NodePath("MarginContainer/VBoxContainer/HBoxContainer/McGuffins")
+e_pressAnything = NodePath("MarginContainer/VBoxContainer/JumpToContinue")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1523054809]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 128
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 128
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=975580644]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LevelComplete" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1870936034]
+layout_mode = 2
+text = "ui_level_complete_title"
+label_settings = SubResource("LabelSettings_dl6ig")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1248313707]
+layout_mode = 2
+alignment = 1
+
+[node name="McGuffins" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=271422868]
+layout_mode = 2
+text = "ui_mcguffins_found_title"
+label_settings = SubResource("LabelSettings_f0hhu")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1513504127]
+layout_mode = 2
+texture = ExtResource("3_f0hhu")
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer" unique_id=166198964]
+layout_mode = 2
+
+[node name="JumpToContinue" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1623100141]
+layout_mode = 2
+text = "ui_press_jump"
+label_settings = SubResource("LabelSettings_b854g")
+horizontal_alignment = 1

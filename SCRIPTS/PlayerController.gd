@@ -2,7 +2,7 @@ extends CharacterBody2D
 ## Basically the player
 class_name PlayerController
 
-enum ECardinalDirections8 { N, ne, E, se, S, sw, W, nw}
+enum ERocketJumpDirections { N, ne, E, se, S, sw, W, nw, sse, ssw }
 enum EState { Normal, Death, Respawn }
 
 @export var e_visual : AnimatedSprite2D
@@ -105,7 +105,7 @@ var m_perfectRocketJumpSuccessTimer : float
 
 # DEBUG
 var db_jumpedWithLastRocket : bool = false
-var db_lastRocketJumpDirection : ECardinalDirections8
+var db_lastRocketJumpDirection : ERocketJumpDirections
 var db_lastRocketJumpPerfect : bool
 var db_lastAngleShot : float
 
@@ -291,7 +291,7 @@ func HandleParticles():
 
 	e_climbParticleParent.scale.x = -m_wallNormal.x
 	e_climbParticle.emitting = m_climbing && e_state == EState.Normal
-	
+
 
 
 func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
@@ -315,7 +315,7 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 	var index = e_rocketJumpDirectionData.find_custom(func(x : RocketForceHelper) : return x.e_direction == direction)
 	if index == -1:
 		# This should literally never happen but:
-		push_error("Could not find rocket jump information. Angle: ", str(angle), " Direction: ", PlayerController.ECardinalDirections8.find_key(direction))
+		push_error("Could not find rocket jump information. Angle: ", str(angle), " Direction: ", PlayerController.ERocketJumpDirections.find_key(direction))
 		return
 
 	var data = e_rocketJumpDirectionData[index]
@@ -349,37 +349,52 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
 
 func GetDirectionFromRocketJumpAngle(_angle : float):
 	## This is complicated
-	## S is a 70 degree arc
-	## SE and SW are a 55 degree arc
+
+	## It's so complicated, I've rewritten this comment like 100 times
+	## Basically, if you use an evenly divided arc (say, each angle is the same size 360/8)\
+	## then the player will move in ways they're not expecting
+	## so you have to lie to them.
+	## Unless you aim above the horizontal, you will be hitting SW's or SE's
+	## The lower arc even has SSW and SSE to help you go up in upward jumps
+	## The angle's listed below are always changing as I get a feel for how the jumps should behave
+
+
+	## S is a 45 degree arc
+	## SE and SW are a 37.5 degree arcs
+	## There's an extra SSW and SSE definition, each at 30 degrees.
 	## W and E are both 50 degree's and are skewed above the horizontal (IE if they're below the horizontal, they're SW and SE)
 	## N is 20, while the NE and NW are both at 30
 	## I think in the future, NE and NW might want to be smaller, and W and E might want to be bigger but...
 
-	## We do this because we don't want a player on the ground, aiming for a SE/SW jump accidentally hitting a perfect EW jump
-	## We also don't want to accidentally hit a NW and NE when we're going for an E or a W, so that's why all the angles are skewed
-
 	var ewAngle : float = 50
-	var sAngle : float = 70.0
+	var sAngle : float = 45
 	var nAngle : float = 20
 	var halfS = sAngle / 2
 	var halfN = nAngle / 2
 
+	# We kinda need this. Going up is too hard
+	var sswAngle : float = 30
+
 	if _angle > 360 - (ewAngle):
-		return ECardinalDirections8.E 							# 50
-	elif _angle > 0 && _angle <= 90 - halfS:
-		return ECardinalDirections8.se 							# 55
+		return ERocketJumpDirections.E 							# 50
+	elif _angle > 0 && _angle <= 90 - (halfS + sswAngle):
+		return ERocketJumpDirections.se 						# 37.5
+	elif _angle > 90 - (halfS + sswAngle) && _angle <= 90 - (halfS):
+		return ERocketJumpDirections.sse						# 30
 	elif _angle > 90 - halfS && _angle <= 90 + halfS:
-		return ECardinalDirections8.S 							# 70
-	elif _angle > 90 + halfS && _angle <= 180:
-		return ECardinalDirections8.sw 							# 55
+		return ERocketJumpDirections.S 							# 45
+	elif _angle > 90 + halfS && _angle <= 90 + halfS + sswAngle:
+		return ERocketJumpDirections.ssw						# 30
+	elif _angle > 90 + halfS + sswAngle && _angle <= 180:
+		return ERocketJumpDirections.sw 						# 37.5
 	elif _angle > 180 && _angle <= 180 + (ewAngle):
-		return ECardinalDirections8.W 							# 50
+		return ERocketJumpDirections.W 							# 50
 	elif _angle > 180 + (ewAngle) && _angle <= 270 - halfN:
-		return ECardinalDirections8.nw 							# 30
+		return ERocketJumpDirections.nw 						# 30
 	elif _angle > 270 - halfN && _angle <= 270 + halfN:
-		return ECardinalDirections8.N 							# 20
+		return ERocketJumpDirections.N 							# 20
 	else:
-		return ECardinalDirections8.ne 							# 30
+		return ERocketJumpDirections.ne 						# 30
 
 func GetHorizontalSpeed():
 	var speed = e_horizontalSpeed
@@ -447,6 +462,9 @@ func Respawn():
 	global_position = respawnPosition
 	e_deathParticle.emitting = true
 
+	m_horizontalLockoutTimer = 0
+	m_verticalCutLockoutTimer = 0
+
 func CheckDeath():
 	for index in e_deathCast.get_collision_count():
 		var collider = e_deathCast.get_collider(index)
@@ -478,7 +496,7 @@ func SetBazookaState(_state : bool):
 		e_animationTree.tree_root = e_noBazookaAnimationSet
 		e_bazooka.visible = false
 
-func Launch(e_launchData : LaunchData):
+func Launch(e_launchData : LaunchData, _reload : bool = false):
 	if e_launchData == null:
 		return
 
@@ -492,5 +510,8 @@ func Launch(e_launchData : LaunchData):
 
 	m_horizontalLockoutTimer = e_launchData.e_XLockout
 	m_verticalCutLockoutTimer = e_launchData.e_YLockout
+
+	if _reload:
+		e_bazooka.ForceReload()
 
 	pass

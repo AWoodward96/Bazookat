@@ -3,8 +3,31 @@ class_name GlobalPersistData
 
 static var NODENAME = "GlobalPersistData"
 
-var m_mcGuffinsCollected : Dictionary = {}
+var m_levelPersistData : Array[LevelPersistData]
 
+func RegisterMcGuffinCollected(_level : Level, _mcGuffin : McGuffin):
+	if _mcGuffin == null:
+		return
+
+	var level = GetLevelPersistData(_level)
+	level.RegisterMcGuffinCollected(_mcGuffin)
+	Save()
+
+func GetMcGuffinColected(_level : Level, _mcGuffin : McGuffin):
+	for l : LevelPersistData in m_levelPersistData:
+		if l.m_levelID == _level.scene_file_path:
+			return l.m_mcGuffinsCollected.has(_mcGuffin)
+
+	return false
+
+func GetLevelPersistData(_level : Level):
+	for l : LevelPersistData in m_levelPersistData:
+		if l.m_levelID == _level.scene_file_path:
+			return l
+
+	var newLevelPersist = LevelPersistData.CreateLevelPersistData(_level)
+	m_levelPersistData.append(newLevelPersist)
+	return m_levelPersistData
 
 func Save():
 	var save_file = FileAccess.open(PersistDataManager.GLOBAL_FILE, FileAccess.WRITE)
@@ -14,23 +37,13 @@ func Save():
 
 func ToJSON():
 	var saveData = {
-		"m_mcGuffinsCollected" =  JSON.stringify(m_mcGuffinsCollected)
+		"m_levelPersistData" = PersistDataManager.ArrayToJSON(m_levelPersistData)
 	}
 	return saveData
 
 func FromJSON(_dict : Dictionary):
-	m_mcGuffinsCollected = JSON.parse_string(_dict["m_mcGuffinsCollected"])
-	pass
-
-func RegisterMcGuffinCollected(_mcGuffin : McGuffin):
-	if _mcGuffin == null:
-		return
-
-	# At some point this is going to need to become more complicated. Showing which levels have found which mcguffins, etc
-	# but for now this is all I care about
-	print("Adding McGuffin UID: ", _mcGuffin.e_uid)
-	m_mcGuffinsCollected[_mcGuffin.e_uid] = true
-	Save()
+	var returnedArray = PersistDataManager.JSONToArray(_dict["m_levelPersistData"], Callable.create(LevelPersistData, "FromJSON"))
+	m_levelPersistData.assign(returnedArray)
 
 
 static func CreateNewGlobalPersist():

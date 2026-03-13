@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://cww04fvoun0g8"]
+[gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://dk8boj0yflhg2"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8dus5"]
 animation = &"4pNB_aerial_0"

@@ -6,7 +6,6 @@
 [ext_resource type="AnimationNodeStateMachine" uid="uid://drwexi5vky4c0" path="res://ART/AnimationStates/Bazookat_NoBazooka.tres" id="3_gxwok"]
 [ext_resource type="Shader" uid="uid://c01bxacddng50" path="res://ART/Shaders/combatant_shader.gdshader" id="4_yqqkn"]
 [ext_resource type="Texture2D" uid="uid://bf37qqy65vav" path="res://ART/Characters/Main/normal_cat_aerial.png" id="5_8dus5"]
-[ext_resource type="Texture2D" uid="uid://dad2dchrlcvja" path="res://ART/Characters/Main/normal_cat.png" id="5_o0q0n"]
 [ext_resource type="Texture2D" uid="uid://bpyi0f5e03rfd" path="res://ART/Characters/Main/bazooka_climb.png" id="6_aeidu"]
 [ext_resource type="Texture2D" uid="uid://ckjayx1e1anm" path="res://ART/Characters/Main/bazookat_run1.png" id="6_o0q0n"]
 [ext_resource type="Script" uid="uid://dtmqo260lgcj3" path="res://SCRIPTS/BazookaBehavior.gd" id="6_tyrya"]
@@ -19,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bc6xujodvwvr5" path="res://ART/Characters/Main/bazookat_tallrunning.png" id="9_tyrya"]
 [ext_resource type="Texture2D" uid="uid://c40va27rj231a" path="res://ART/Characters/Main/bazooka_tallairborne.png" id="10_bojvp"]
 [ext_resource type="Texture2D" uid="uid://bhwttcuydew5p" path="res://ART/Characters/Main/bazookat_inbetween.png" id="11_vap7r"]
+[ext_resource type="Texture2D" uid="uid://de5xhkm1ndfbc" path="res://ART/Characters/Main/normal_cat.png" id="13_7ey2p"]
 [ext_resource type="Texture2D" uid="uid://dhuframpg6ur4" path="res://ART/Characters/Main/4p_aerial_bazooka.png" id="14_y3fgl"]
 [ext_resource type="Texture2D" uid="uid://dn2o8lidofkq4" path="res://ART/Characters/Main/bazookat_idle.png" id="15_7ey2p"]
 [ext_resource type="Texture2D" uid="uid://cnqf8kg2y0jgx" path="res://ART/Characters/Main/zooka_temp.png" id="15_lq7rl"]
@@ -41,6 +41,17 @@ e_horizontalLockoutDuration = 0.25
 e_perfectModifier = 1.1
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
+[sub_resource type="Resource" id="Resource_y3fgl"]
+resource_name = "sse"
+script = ExtResource("2_o0q0n")
+e_direction = 8
+e_HasXForce = true
+e_XDirection = -150.0
+e_YForceMultiplier = -1.4
+e_horizontalLockoutDuration = 0.15
+e_upwardCutLockoutDuration = 0.75
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
 [sub_resource type="Resource" id="Resource_nh5kv"]
 resource_name = "se"
 script = ExtResource("2_o0q0n")
@@ -48,6 +59,17 @@ e_direction = 3
 e_HasXForce = true
 e_XDirection = -450.0
 e_YForceMultiplier = -1.0
+e_upwardCutLockoutDuration = 0.75
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_7ey2p"]
+resource_name = "ssw"
+script = ExtResource("2_o0q0n")
+e_direction = 9
+e_HasXForce = true
+e_XDirection = 150.0
+e_YForceMultiplier = -1.4
+e_horizontalLockoutDuration = 0.15
 e_upwardCutLockoutDuration = 0.75
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
@@ -267,8 +289,8 @@ region = Rect2(168, 0, 56, 36)
 atlas = ExtResource("6_o0q0n")
 region = Rect2(224, 0, 56, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vap7r"]
-atlas = ExtResource("5_o0q0n")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynx3p"]
+atlas = ExtResource("13_7ey2p")
 region = Rect2(0, 0, 56, 36)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8dus5"]
@@ -570,7 +592,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vap7r")
+"texture": SubResource("AtlasTexture_ynx3p")
 }],
 "loop": true,
 "name": &"4pNB_idle",
@@ -1560,22 +1582,10 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Visual:frame")
+tracks/0/path = NodePath("Visual:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Visual:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -1810,7 +1820,7 @@ e_wallslideParent = NodePath("WallSlideOffset")
 e_wallslideParticle = NodePath("WallSlideOffset/WallSlideParticle")
 e_climbParticleParent = NodePath("ClimbPartOffset")
 e_climbParticle = NodePath("ClimbPartOffset/ClimbParticle")
-e_rocketJumpDirectionData = Array[ExtResource("2_o0q0n")]([SubResource("Resource_7asai"), SubResource("Resource_nh5kv"), SubResource("Resource_l3moj"), SubResource("Resource_bmxi4"), SubResource("Resource_m3dc8"), SubResource("Resource_llfxf"), SubResource("Resource_2f1oo"), SubResource("Resource_g336n")])
+e_rocketJumpDirectionData = Array[ExtResource("2_o0q0n")]([SubResource("Resource_7asai"), SubResource("Resource_y3fgl"), SubResource("Resource_nh5kv"), SubResource("Resource_7ey2p"), SubResource("Resource_l3moj"), SubResource("Resource_bmxi4"), SubResource("Resource_m3dc8"), SubResource("Resource_llfxf"), SubResource("Resource_2f1oo"), SubResource("Resource_g336n")])
 e_perfectRocketJumpWindow = 0.097
 e_perfectRocketJumpGravityMultiplier = 0.85
 e_perfectRocketJumpGravityDuration = 0.5

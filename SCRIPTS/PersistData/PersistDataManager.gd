@@ -43,10 +43,43 @@ func SaveAll():
 	GlobalPersist.Save()
 	PlayerPersist.Save()
 
+func ClearSaveData():
+	GlobalPersist.m_mcGuffinsCollected.clear()
+	PlayerPersist.m_pickedUpBazooka = false
+	SaveAll()
+
 func GetJSONFromTextFile(_path : String):
 	var save_file = FileAccess.open(_path, FileAccess.READ)
 	var fileText = save_file.get_as_text()
 	return JSON.parse_string(fileText)
+
+func ArrayToJSON(_array : Array[Variant]):
+	var arrayAsJSONString : Array[String]
+	for element in _array:
+		if element == null:
+			arrayAsJSONString.append("NULL")
+			continue
+
+		if element.has_method("ToJSON"):
+			var elementAfterToJSON = element.ToJSON()
+			if elementAfterToJSON is Dictionary:
+				arrayAsJSONString.append(JSON.stringify(elementAfterToJSON, "\t"))
+			elif elementAfterToJSON is String:
+				arrayAsJSONString.append(elementAfterToJSON)
+			else:
+				print("Could not figure out what the element after ToJSON was called. You should fix this. " + str(element))
+	return arrayAsJSONString
+
+func JSONToArray(_array, _callable : Callable):
+	var arrayAsVariant : Array[Variant]
+	for element in _array:
+		if element == "NULL":
+			arrayAsVariant.append(null)
+			continue
+
+		var elementAsDict = JSON.parse_string(element)
+		arrayAsVariant.append(_callable.call(elementAsDict))
+	return arrayAsVariant
 
 func LoadPlayer():
 	if !FileAccess.file_exists(PLAYER_FILE):

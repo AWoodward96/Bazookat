@@ -102,12 +102,17 @@ font_size = 32
 font_color = Color(0, 0, 0, 1)
 outline_size = 10
 
+[sub_resource type="LabelSettings" id="LabelSettings_3xgrp"]
+font = ExtResource("5_6hrsw")
+font_color = Color(0, 0, 0, 1)
+outline_size = 10
+
 [sub_resource type="LabelSettings" id="LabelSettings_efy3b"]
 font = ExtResource("5_6hrsw")
 font_color = Color(0, 0, 0, 1)
 outline_size = 10
 
-[node name="MainMenuUI" type="Control" unique_id=1986911149]
+[node name="MainMenuUI" type="Control" unique_id=1986911149 node_paths=PackedStringArray("e_harassSettings")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -116,6 +121,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_efy3b")
 script = ExtResource("2_3xgrp")
+e_harassSettings = NodePath("VBoxContainer2/Settings/Label")
+e_harassSettingsOptions = Array[String](["ui_settings_joke_1", "ui_settings_joke_2", "ui_settings_joke_3", "ui_settings_joke_4", "ui_settings_joke_5", "ui_settings_joke_6", "ui_settings_joke_7", "ui_settings_joke_8", "ui_settings_joke_9", "ui_settings_joke_10", "ui_settings_joke_11", "ui_settings_joke_12", "ui_settings_joke_13", "ui_settings_joke_14", "ui_settings_joke_15", "ui_settings_joke_16", "ui_settings_joke_17", "ui_settings_joke_18"])
 
 [node name="BG" type="TextureRect" parent="." unique_id=206341713]
 layout_mode = 1
@@ -178,6 +185,17 @@ text = "ui_play_button"
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "ui_settings_button"
+
+[node name="Label" type="Label" parent="VBoxContainer2/Settings" unique_id=416119348]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 206.0
+offset_top = -11.0
+offset_right = 341.0
+offset_bottom = 12.0
+text = "ui_settings_joke"
+label_settings = SubResource("LabelSettings_3xgrp")
+autowrap_mode = 2
 
 [node name="Quit" type="Button" parent="VBoxContainer2" unique_id=1278630194]
 custom_minimum_size = Vector2(200, 0)

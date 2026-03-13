@@ -1,8 +1,12 @@
 extends Control
 class_name MainMenuUI
 
+@export var e_harassSettings : Label
+@export var e_harassSettingsOptions : Array[String]
+
 var m_playSelected = false
 var m_quitting = false
+var m_jokeTween : Tween
 
 
 func OnPlay():
@@ -12,6 +16,11 @@ func OnPlay():
 
 		UIManager.FadeOut(1)
 		await UIManager.OnFadeComplete
+
+		# For now, Play will always put you in the first level.
+		# We want to remove the rocket launcher from them so everyone has the same experience
+		PersistDataManager.ClearSaveData()
+
 		LevelManager.StartNewWorld(GameManager.e_gameData.e_defaultWorld)
 		UIManager.FadeIn(1, 1)
 		queue_free()
@@ -19,7 +28,21 @@ func OnPlay():
 	pass
 
 func OnSettings():
+	if m_jokeTween != null:
+		m_jokeTween.stop()
 
+	m_jokeTween = get_tree().create_tween()
+	e_harassSettings.modulate = Color.WHITE
+	var rng = randi() % e_harassSettingsOptions.size()
+	# ensure different
+	if e_harassSettingsOptions[rng] == e_harassSettings.text:
+		rng += 1
+		rng = rng % e_harassSettingsOptions.size()
+
+	e_harassSettings.text = e_harassSettingsOptions[rng]
+
+	m_jokeTween.tween_interval(2)
+	m_jokeTween.tween_property(e_harassSettings, "modulate", Color(1,1,1,0), 2)
 	pass
 
 

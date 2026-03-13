@@ -615,6 +615,7 @@ texture = ExtResource("1_eyulv")
 2:6/0/terrain = 1
 2:6/0/physics_layer_1/polygon_0/points = PackedVector2Array(-4, -8, 8, -8, 8, 8, -4, 8)
 2:6/0/terrains_peering_bit/right_side = 1
+2:6/0/terrains_peering_bit/bottom_right_corner = 1
 2:6/0/terrains_peering_bit/bottom_side = 1
 2:6/0/terrains_peering_bit/top_side = 1
 2:6/0/terrains_peering_bit/top_right_corner = 1
@@ -800,7 +801,7 @@ texture = ExtResource("1_eyulv")
 11:7/0 = 0
 11:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 8, -8, -8, -8, -8, 8)
 10:7/0 = 0
-10:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, 0, 0)
+10:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [resource]
 occlusion_layer_0/light_mask = 1

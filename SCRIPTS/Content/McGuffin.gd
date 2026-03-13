@@ -10,7 +10,7 @@ class_name McGuffin
 var m_collected
 
 func CheckCollected():
-	if PersistDataManager.GlobalPersist.m_mcGuffinsCollected.has(str(e_uid)):
+	if PersistDataManager.GlobalPersist.GetMcGuffinColected(Level.Current, self):
 		m_collected = true
 		e_visual.visible = false
 
@@ -29,4 +29,4 @@ func Collect():
 	m_collected = true
 	e_visual.visible = false
 	e_collectionVFX.emitting = true
-	PersistDataManager.GlobalPersist.RegisterMcGuffinCollected(self)
+	PersistDataManager.GlobalPersist.RegisterMcGuffinCollected(Level.Current, self)

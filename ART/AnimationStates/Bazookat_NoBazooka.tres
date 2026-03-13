@@ -1,6 +1,6 @@
 [gd_resource type="AnimationNodeStateMachine" format=3 uid="uid://drwexi5vky4c0"]
 
-[ext_resource type="AnimationNodeStateMachine" uid="uid://cww04fvoun0g8" path="res://ART/Characters/Main/AnimationStates/Aerial_4p_NoB.tres" id="1_x8jna"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://dk8boj0yflhg2" path="res://ART/Characters/Main/AnimationStates/Aerial_4p_NoB.tres" id="1_x8jna"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5hulq"]
 advance_mode = 2
