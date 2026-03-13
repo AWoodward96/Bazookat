@@ -4,6 +4,7 @@ class_name RocketBehavior
 @export var e_explosionCaster : ShapeCast2D
 @export var e_lockoutDuration : float = 1
 @export var e_explosionVFX : PackedScene
+@export var e_lifetimeRaycastThreshold : float = 0.1
 
 var exploded : bool = false
 
@@ -26,7 +27,7 @@ func Explode():
 			for keypair in bodies:
 				if keypair.collider is PlayerController:
 					var player = keypair.collider as PlayerController
-					player.RocketJump(global_position, e_lockoutDuration)
+					player.RocketJump(global_position, e_lockoutDuration, m_lifetime < e_lifetimeRaycastThreshold)
 					hit = true
 
 				if keypair.collider is EnemyBase:

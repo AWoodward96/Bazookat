@@ -64,8 +64,10 @@ func UpdateDisplay():
 	if Camera == null:
 		return
 
-func ForceReload():
+func ForceReload(_overrideTimer : bool = false):
 	m_hasAmmo = true
+	if _overrideTimer:
+		m_hardCD = 0
 
 func Fire(_origin : Vector2, _direction : Vector2):
 	m_hardCD = e_reloadSpeed

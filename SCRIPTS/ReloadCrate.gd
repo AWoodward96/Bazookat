@@ -12,7 +12,9 @@ func Reload(_body : Node2D):
 
 	if Level.Current != null && Level.Player != null:
 		if Level.Player.e_bazooka != null:
-			Level.Player.e_bazooka.ForceReload()
+			Level.Player.e_bazooka.ForceReload(true)
+
+		Level.Player.m_climbingStamina = Level.Player.e_climbingMaxStamina
 
 	m_broken = true
 	e_visual.visible = false

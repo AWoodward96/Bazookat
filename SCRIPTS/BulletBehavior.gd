@@ -16,10 +16,12 @@ class_name BulletBehavior
 var m_orign : Vector2
 var m_released : bool
 var m_createdParticle : Node2D
+var m_lifetime : float
 
 func Instantiate(_direction : Vector2):
 	e_direction = _direction
 	m_released = false
+	m_lifetime = 0
 
 	CleanupParticle()
 	if e_autonomousParticleParent != null && e_autonomousParticle:
@@ -28,6 +30,7 @@ func Instantiate(_direction : Vector2):
 		m_createdParticle.position = Vector2.ZERO
 
 func _physics_process(_delta: float):
+	m_lifetime += _delta
 	var movementVector = e_direction * e_speed * _delta
 
 	if e_rotateVisual && e_visual != null:
@@ -56,6 +59,8 @@ func Destroy():
 		if !m_released:
 			m_released = true
 			if m_createdParticle != null:
+				# This needs to be fixed later. Based on how the particle gets created
+				# You can have the cleanupparticle go off after the object gets pooled and reinitialized
 				m_createdParticle.reparent(get_tree().root)
 				var cleanup = get_tree().create_timer(e_particleCleanup)
 				cleanup.timeout.connect(CleanupParticle)

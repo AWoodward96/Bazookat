@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dilee5tlwetad"]
 
 [ext_resource type="Script" uid="uid://e2dofj1xs2yp" path="res://SCRIPTS/Helpers/button_listener_ui.gd" id="1_dyvgw"]
+[ext_resource type="Script" uid="uid://f380k5gu4ccc" path="res://RESOURCES/Prefabs/csrui.gd" id="1_smhhq"]
 [ext_resource type="Texture2D" uid="uid://by4gkll30ctun" path="res://ART/UI/input_w.png" id="2_51gp5"]
 [ext_resource type="Texture2D" uid="uid://cpjf7saa1emsd" path="res://ART/UI/input_w_down.png" id="3_0xxco"]
 [ext_resource type="Texture2D" uid="uid://bdxoh25ovb1lx" path="res://ART/UI/input_a.png" id="4_smhhq"]
@@ -32,6 +33,7 @@ offset_top = -18.0
 offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_smhhq")
 
 [node name="buttonListernerD2" type="Control" parent="main" unique_id=739269210 node_paths=PackedStringArray("e_up", "e_down")]
 custom_minimum_size = Vector2(40, 0)
@@ -152,60 +154,63 @@ offset_right = 96.0
 offset_bottom = 24.0
 texture = ExtResource("11_6ltge")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=598037280]
+[node name="HBoxContainer2" type="HBoxContainer" parent="main" unique_id=598037280]
+layout_mode = 0
 offset_left = 2.0
-offset_top = 432.0
+offset_top = 450.0
 offset_right = 202.0
-offset_bottom = 472.0
+offset_bottom = 490.0
 
-[node name="VelocityListener" type="Label" parent="HBoxContainer" unique_id=991165620]
+[node name="VelocityListener" type="Label" parent="main/HBoxContainer2" unique_id=991165620]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 script = ExtResource("12_p1o6f")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1899730713]
+[node name="HBoxContainer3" type="HBoxContainer" parent="main" unique_id=1899730713]
+layout_mode = 0
 offset_left = 434.0
-offset_top = 433.0
+offset_top = 451.0
 offset_right = 634.0
-offset_bottom = 473.0
+offset_bottom = 491.0
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer2" unique_id=1650525]
+[node name="PanelContainer" type="PanelContainer" parent="main/HBoxContainer3" unique_id=1650525]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_llfxf")
 
-[node name="LastJumpDirection" type="Label" parent="HBoxContainer2/PanelContainer" unique_id=11874229]
+[node name="LastJumpDirection" type="Label" parent="main/HBoxContainer3/PanelContainer" unique_id=11874229]
 layout_mode = 2
 script = ExtResource("13_4pu5m")
 
-[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer2" unique_id=1740571526]
+[node name="PanelContainer2" type="PanelContainer" parent="main/HBoxContainer3" unique_id=1740571526]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_7asai")
 
-[node name="LastJumpPerfectListener" type="Label" parent="HBoxContainer2/PanelContainer2" unique_id=273503573]
+[node name="LastJumpPerfectListener" type="Label" parent="main/HBoxContainer3/PanelContainer2" unique_id=273503573]
 layout_mode = 2
 script = ExtResource("14_4bexm")
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="." unique_id=2115870777]
+[node name="HBoxContainer4" type="HBoxContainer" parent="main" unique_id=2115870777]
+layout_mode = 0
 offset_left = 432.0
-offset_top = 384.0
+offset_top = 402.0
 offset_right = 632.0
-offset_bottom = 424.0
+offset_bottom = 442.0
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer3" unique_id=264530648]
+[node name="PanelContainer" type="PanelContainer" parent="main/HBoxContainer4" unique_id=264530648]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_llfxf")
 
-[node name="CurrentAngle" type="Label" parent="HBoxContainer3/PanelContainer" unique_id=27651144]
+[node name="CurrentAngle" type="Label" parent="main/HBoxContainer4/PanelContainer" unique_id=27651144]
 layout_mode = 2
 script = ExtResource("15_51gp5")
 
-[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer3" unique_id=1289088152]
+[node name="PanelContainer2" type="PanelContainer" parent="main/HBoxContainer4" unique_id=1289088152]
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_7asai")
 
-[node name="LastAngle" type="Label" parent="HBoxContainer3/PanelContainer2" unique_id=1981375730]
+[node name="LastAngle" type="Label" parent="main/HBoxContainer4/PanelContainer2" unique_id=1981375730]
 layout_mode = 2
 script = ExtResource("16_0xxco")

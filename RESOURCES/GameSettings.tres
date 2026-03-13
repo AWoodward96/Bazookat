@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dirj1noep4sx6" path="res://SCRIPTS/GameSettings.gd" id="1_8t3ti"]
 [ext_resource type="PackedScene" uid="uid://ciergtl1ksaba" path="res://RESOURCES/Prefabs/VFX/vfx_generic_death.tscn" id="1_iq58r"]
 [ext_resource type="Resource" uid="uid://cuknrm0v051a6" path="res://RESOURCES/Worlds/World_0.tres" id="1_kwari"]
+[ext_resource type="Resource" uid="uid://dp0klmywuerv7" path="res://RESOURCES/Worlds/Challenge.tres" id="1_sesaw"]
 [ext_resource type="Script" uid="uid://daikj3dpt8w0o" path="res://SCRIPTS/Camera/CameraShakeData.gd" id="2_h1d8d"]
 
 [sub_resource type="Resource" id="Resource_kwari"]
@@ -21,6 +22,7 @@ metadata/_custom_type_script = "uid://daikj3dpt8w0o"
 script = ExtResource("1_8t3ti")
 e_genericDeathParticle = ExtResource("1_iq58r")
 e_defaultWorld = ExtResource("1_kwari")
+e_challengeWorld = ExtResource("1_sesaw")
 e_rocketJumpScreenShake = SubResource("Resource_sesaw")
 e_rocketExplosionScreenShake = SubResource("Resource_kwari")
 metadata/_custom_type_script = "uid://dirj1noep4sx6"

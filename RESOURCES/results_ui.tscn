@@ -23,7 +23,7 @@ font_size = 24
 font_color = Color(0, 0, 0, 1)
 outline_size = 5
 
-[node name="ResultsUI" type="Control" unique_id=998502910 node_paths=PackedStringArray("e_levelComplete", "e_mcGuffinsParent", "e_mcGuffins", "e_pressAnything")]
+[node name="ResultsUI" type="Control" unique_id=998502910 node_paths=PackedStringArray("e_levelComplete", "e_mcGuffinsParent", "e_mcGuffins", "e_pressAnything", "e_deathsLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,6 +35,7 @@ e_levelComplete = NodePath("MarginContainer/VBoxContainer/LevelComplete")
 e_mcGuffinsParent = NodePath("MarginContainer/VBoxContainer/HBoxContainer")
 e_mcGuffins = NodePath("MarginContainer/VBoxContainer/HBoxContainer/McGuffins")
 e_pressAnything = NodePath("MarginContainer/VBoxContainer/JumpToContinue")
+e_deathsLabel = NodePath("MarginContainer/VBoxContainer/Deaths")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1523054809]
 layout_mode = 1
@@ -71,6 +72,12 @@ horizontal_alignment = 1
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1513504127]
 layout_mode = 2
 texture = ExtResource("3_f0hhu")
+
+[node name="Deaths" type="Label" parent="MarginContainer/VBoxContainer" unique_id=228752604]
+layout_mode = 2
+text = "ui_death_count"
+label_settings = SubResource("LabelSettings_f0hhu")
+horizontal_alignment = 1
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer" unique_id=166198964]
 layout_mode = 2

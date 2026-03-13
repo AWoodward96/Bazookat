@@ -7,6 +7,7 @@ signal ResultsSequenceComplete
 @export var e_mcGuffinsParent : Control
 @export var e_mcGuffins : Label
 @export var e_pressAnything : Label
+@export var e_deathsLabel : Label
 
 var m_canContinue : bool
 
@@ -14,6 +15,7 @@ func Show(_level : Level):
 	e_levelComplete.visible = false
 	e_mcGuffinsParent.visible = false
 	e_pressAnything.visible = false
+	e_deathsLabel.visible = false
 	m_canContinue = false
 	var persist = PersistDataManager.GlobalPersist.GetLevelPersistData(_level) as LevelPersistData
 
@@ -23,6 +25,10 @@ func Show(_level : Level):
 
 	e_mcGuffins.text = tr("ui_mcguffins_found_title").format({"NUM" = persist.m_mcGuffinCount, "NUM2" = _level.e_numMcGuffins})
 	e_mcGuffinsParent.visible = true
+	await get_tree().create_timer(1).timeout
+
+	e_deathsLabel.text = tr("ui_deaths").format([_level.m_deathCount])
+	e_deathsLabel.visible = true
 
 	await get_tree().create_timer(1.5).timeout
 

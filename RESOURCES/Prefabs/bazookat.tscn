@@ -831,7 +831,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xfbtd"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hulq"]
+size = Vector2(18, 20)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5hulq"]
+radius = 9.0
 
 [sub_resource type="Curve" id="Curve_7y4a1"]
 _limits = [0.0, 100.0, 0.0, 1.0]
@@ -1856,6 +1860,7 @@ _data = {
 
 [node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle")]
 collision_mask = 30
+floor_stop_on_slope = false
 platform_floor_layers = 4294967271
 script = ExtResource("1_letql")
 e_visual = NodePath("Visual")
@@ -1933,9 +1938,14 @@ sprite_frames = SubResource("SpriteFrames_w3m15")
 [node name="RocketEmitter" type="Node2D" parent="Bazooka/Offset/Bazooka_Visual" unique_id=1732480486]
 position = Vector2(7, -2)
 
-[node name="RigidShape" type="CollisionShape2D" parent="." unique_id=150271092]
-position = Vector2(0, -7)
-shape = SubResource("CapsuleShape2D_xfbtd")
+[node name="RigidSquare" type="CollisionShape2D" parent="." unique_id=150271092]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_5hulq")
+
+[node name="RigidCapsule" type="CollisionShape2D" parent="." unique_id=1677742997]
+position = Vector2(0, -6.9999995)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("CapsuleShape2D_5hulq")
 
 [node name="ClimbPartOffset" type="Node2D" parent="." unique_id=2117437113]
 

@@ -202,6 +202,21 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "ui_quit_button"
 
+[node name="Control" type="Control" parent="VBoxContainer2" unique_id=1480429057]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="VBoxContainer2" unique_id=831447878]
+layout_mode = 2
+
+[node name="Control3" type="Control" parent="VBoxContainer2" unique_id=1555579991]
+layout_mode = 2
+
+[node name="Challenge" type="Button" parent="VBoxContainer2" unique_id=1414238377]
+self_modulate = Color(1, 0.39, 0.4001665, 1)
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "ui_challenge_button"
+
 [node name="Label" type="Label" parent="." unique_id=87523539]
 layout_mode = 0
 offset_left = 402.0
@@ -215,3 +230,4 @@ autowrap_mode = 2
 [connection signal="pressed" from="VBoxContainer2/Play" to="." method="OnPlay"]
 [connection signal="pressed" from="VBoxContainer2/Settings" to="." method="OnSettings"]
 [connection signal="pressed" from="VBoxContainer2/Quit" to="." method="OnQuit"]
+[connection signal="pressed" from="VBoxContainer2/Challenge" to="." method="Challenge"]

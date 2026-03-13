@@ -12,6 +12,8 @@ static var Camera : MainCamera
 @export var e_numMcGuffins : int = 0
 @export var db_rebuildTree : bool = false
 
+var m_deathCount : int = 0
+
 func _ready():
 	if !Engine.is_editor_hint():
 		if Current == null:

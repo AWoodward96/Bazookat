@@ -28,3 +28,5 @@ ui_mcguffins_found_title,McGuffins Found: {NUM}/{NUM2}
 ui_press_jump,Press Jump to continue
 ui_bazooka_get,Bazooka   Get
 ui_hes_armed,"Lord help us now he's armed"
+ui_challenge_button,I want a challenge!
+ui_deaths,Deaths: {0}

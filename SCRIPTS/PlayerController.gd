@@ -194,7 +194,7 @@ func HandleInput(_delta : float):
 	var bazookaVisible = !m_inSprintAnimState && !m_sliding && !m_climbing
 	e_bazooka.UpdateBazookaVisibility(bazookaVisible)
 	e_visual.material.set_shader_parameter("perform_color_swap", !e_bazooka.HasAmmo)
-	if m_onFloor && !e_bazooka.HasAmmo:
+	if m_onFloor && !e_bazooka.HasAmmo && e_bazooka.m_hardCD <= 0:
 		e_bazooka.ForceReload()
 
 	if Level.Current != null && Level.Camera != null:
@@ -284,7 +284,7 @@ func HandlePhysics(_delta : float):
 			m_facingLeft = true
 		elif m_horizontal > 0:
 			m_facingLeft = false
-			
+
 	e_visual.flip_h = m_facingLeft
 
 func HandleHorizontal(_delta):
@@ -310,9 +310,15 @@ func HandleParticles():
 
 
 
-func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float):
+func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float, _useRaycast : bool):
 	# Get the rotation of the rocket relative to the player
-	var dstFromRocket = _rocketPosition - global_position
+	var dstFromRocket
+	if _useRaycast:
+		# 90% of the time, this is gonna be true
+		dstFromRocket = Level.Camera.m_mouseWorldPosition - global_position
+	else:
+		dstFromRocket = _rocketPosition - global_position
+
 	var angle = rad_to_deg(dstFromRocket.angle())
 
 	# I don't like it when I've got negative angles or angles greater than 360. Simplify
@@ -425,6 +431,9 @@ func GetHorizontalSpeed():
 
 func Die(_normal : Vector2):
 	if e_state == EState.Normal:
+		if Level.Current != null:
+			Level.Current.m_deathCount += 1
+
 		velocity = _normal.normalized() * e_deathBounce
 		e_state = EState.Death
 		m_deathTimer = e_deathDuration
@@ -485,7 +494,7 @@ func Respawn():
 func OnLevelComplete():
 	e_state = EState.LevelComplete
 	e_bazooka.UpdateBazookaVisibility(false)
-	
+
 	var tween = get_tree().create_tween()
 	tween.tween_interval(1)
 	tween.tween_method(FadeOut, 1.0, 0.0, 1)
@@ -505,7 +514,16 @@ func CheckDeath():
 		else:
 			var enemy = collider.get_collision_mask_value(3)
 			if enemy && collider is EnemyBase:
-				if velocity.y > 0:
+				var killEnemy = false
+				if m_onFloor:
+					var normal = e_deathCast.get_collision_normal(index)
+					if normal.y < -0.5:
+						killEnemy = true
+
+				elif velocity.y > -100: # instead of 0, we'll let the player have slightly more leway
+					killEnemy = true
+
+				if killEnemy:
 					# kill the enemy
 					velocity.y = -JumpForce
 					m_verticalCutLockoutTimer = e_pogoVerticalLockoutDuration
@@ -560,4 +578,3 @@ func ExitCutscene():
 	if Level.Camera != null:
 		Level.Camera.e_trackMouse = true
 	e_animationTree.active = true
-	

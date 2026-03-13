@@ -16,15 +16,17 @@ func ToJSON():
 	return saveData
 
 func RegisterMcGuffinCollected(_mcGuffin : McGuffin):
-	if !m_mcGuffinsCollected.has(_mcGuffin.e_uid):
+	# Convert the uid to string because it's gonna be read from json later
+	if !m_mcGuffinsCollected.has(str(_mcGuffin.e_uid)):
 		m_mcGuffinCount += 1
-		m_mcGuffinsCollected[_mcGuffin.e_uid] = true
+		m_mcGuffinsCollected[str(_mcGuffin.e_uid)] = true
 
 
-func FromJSON(_dict : Dictionary):
-	m_levelID = _dict["m_levelID"]
-	m_mcGuffinsCollected = JSON.parse_string(_dict["m_mcGuffinsCollected"])
-	pass
+static func FromJSON(_dict : Dictionary):
+	var levelPersist = LevelPersistData.new()
+	levelPersist.m_levelID = _dict["m_levelID"]
+	levelPersist.m_mcGuffinsCollected = JSON.parse_string(_dict["m_mcGuffinsCollected"])
+	return levelPersist
 
 static func CreateLevelPersistData(_level : Level):
 	var levelData = LevelPersistData.new()

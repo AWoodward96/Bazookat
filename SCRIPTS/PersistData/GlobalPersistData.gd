@@ -16,7 +16,7 @@ func RegisterMcGuffinCollected(_level : Level, _mcGuffin : McGuffin):
 func GetMcGuffinColected(_level : Level, _mcGuffin : McGuffin):
 	for l : LevelPersistData in m_levelPersistData:
 		if l.m_levelID == _level.scene_file_path:
-			return l.m_mcGuffinsCollected.has(_mcGuffin)
+			return l.m_mcGuffinsCollected.has(str(_mcGuffin.e_uid))
 
 	return false
 

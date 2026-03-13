@@ -13,19 +13,31 @@ func OnPlay():
 	# double press protection
 	if !m_playSelected && !m_quitting:
 		m_playSelected = true
-
-		UIManager.FadeOut(1)
-		await UIManager.OnFadeComplete
-
-		# For now, Play will always put you in the first level.
-		# We want to remove the rocket launcher from them so everyone has the same experience
-		PersistDataManager.ClearSaveData()
-
-		LevelManager.StartNewWorld(GameManager.e_gameData.e_defaultWorld)
-		UIManager.FadeIn(1, 1)
-		queue_free()
+		StartWorld(GameManager.e_gameData.e_defaultWorld)
 
 	pass
+
+
+func Challenge():
+	# double press protection
+	if !m_playSelected && !m_quitting:
+		m_playSelected = true
+		StartWorld(GameManager.e_gameData.e_challengeWorld)
+
+	pass
+
+func StartWorld(_world : WorldTemplate):
+	UIManager.FadeOut(1)
+	await UIManager.OnFadeComplete
+
+	# For now, Play will always put you in the first level.
+	# We want to remove the rocket launcher from them so everyone has the same experience
+	PersistDataManager.ClearSaveData()
+
+	LevelManager.StartNewWorld(_world)
+	UIManager.FadeIn(1, 1)
+	queue_free()
+
 
 func OnSettings():
 	if m_jokeTween != null:

@@ -35,10 +35,10 @@ func LevelSectionComplete():
 		var ui = UIManager.OpenUI(UIManager.e_resultsUI) as ResultsUI
 		ui.Show(Level.Current)
 		await ui.ResultsSequenceComplete
-		
+
 		UIManager.FadeOut(1, 0)
 		await UIManager.OnFadeComplete
-		
+
 		# has next level
 		if m_currentWorldLevelIndex + 1 < m_currentWorldTemplate.Levels.size():
 			m_currentWorldLevelIndex += 1
