@@ -30,3 +30,4 @@ ui_bazooka_get,Bazooka   Get
 ui_hes_armed,"Lord help us now he's armed"
 ui_challenge_button,I want a challenge!
 ui_deaths,Deaths: {0}
+ui_feedback_button,Feedback

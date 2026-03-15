@@ -53,6 +53,9 @@ e_velocity = Vector2(0, -1000)
 e_YLockout = 2.0
 metadata/_custom_type_script = "uid://c85ycjpsqrwl0"
 
+[sub_resource type="LabelSettings" id="LabelSettings_p2b2c"]
+font_size = 12
+
 [node name="LimitTesting" type="Node2D" unique_id=607547518 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
 script = ExtResource("1_3gj3e")
 e_rooms = [NodePath("Room"), NodePath("Room2"), NodePath("Room3"), NodePath("FallingWithStyle")]
@@ -319,3 +322,20 @@ e_launchData = SubResource("Resource_ahiau")
 
 [node name="ExitDoor" parent="." unique_id=1588654396 instance=ExtResource("13_p2b2c")]
 position = Vector2(3312, 1360)
+
+[node name="Label" type="Label" parent="." unique_id=2011953232]
+offset_left = -36.0
+offset_top = -156.0
+offset_right = 307.0
+offset_bottom = 54.0
+text = "Jump and Rocket yourself within .1
+seconds to perform a \"perfect\" rocket
+jump.
+By performing a \"perfect\" rocket jump
+you can shoot again without landing,
+and you'll gain additional height on the
+jump.
+As of right now, the only way to determine if you
+hit a perfect jump is the ui in the bottom right.
+If this UI is in the way, you can hide it with F3."
+label_settings = SubResource("LabelSettings_p2b2c")
