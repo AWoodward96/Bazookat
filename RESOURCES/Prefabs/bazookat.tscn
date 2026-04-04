@@ -883,6 +883,23 @@ tracks/1/keys = {
 "update": 1,
 "values": ["2p_backpedal"]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFX/SFX_Footsteps2P")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3333),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_one_shot"
+}, {
+"args": [],
+"method": &"play_one_shot"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_be4t0"]
 length = 0.4
@@ -1106,6 +1123,23 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["2p_running"]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFX/SFX_Footsteps2P")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_one_shot"
+}, {
+"args": [],
+"method": &"play_one_shot"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_sao0b"]
@@ -1331,6 +1365,20 @@ tracks/1/keys = {
 "update": 1,
 "values": ["4pNB_running"]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFX/SFX_Footsteps4P")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_one_shot"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_6m0x7"]
 length = 0.2
@@ -1526,6 +1574,20 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["4p_running"]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFX/SFX_Footsteps4P")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_one_shot"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_a8212"]
@@ -1858,7 +1920,7 @@ _data = {
 &"wallslide_in": SubResource("Animation_meuh2")
 }
 
-[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle")]
+[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle", "e_footsteps2P", "e_footsteps4P", "e_jumpSFX", "e_landSFX", "e_climbingLoop", "e_slidingLoop", "e_perfectStaccatto")]
 collision_mask = 30
 floor_stop_on_slope = false
 platform_floor_layers = 4294967271
@@ -1891,6 +1953,13 @@ e_perfectRocketJumpGravityDuration = 0.5
 e_deathCast = NodePath("Raycasts/DeathCast")
 e_deathBounce = 100.0
 e_deathParticle = NodePath("DeathParticle")
+e_footsteps2P = NodePath("SFX/SFX_Footsteps2P")
+e_footsteps4P = NodePath("SFX/SFX_Footsteps4P")
+e_jumpSFX = NodePath("SFX/SFX_Jump")
+e_landSFX = NodePath("SFX/SFX_Land")
+e_climbingLoop = NodePath("SFX/SFX_Climbing")
+e_slidingLoop = NodePath("SFX/SFX_Sliding")
+e_perfectStaccatto = NodePath("SFX/SFX_PerfectStaccatto")
 
 [node name="WallSlideOffset" type="Node2D" parent="." unique_id=1703827426]
 
@@ -1915,10 +1984,10 @@ anim_offset_max = 1.0
 material = SubResource("ShaderMaterial_2f1oo")
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_o0q0n")
-animation = &"4pNB_idle"
+animation = &"4p_running"
 autoplay = "4pNB_idle"
 
-[node name="Bazooka" type="Node2D" parent="." unique_id=1270862840 node_paths=PackedStringArray("e_owner", "e_visualParent", "e_visual", "e_emitterParent")]
+[node name="Bazooka" type="Node2D" parent="." unique_id=1270862840 node_paths=PackedStringArray("e_owner", "e_visualParent", "e_visual", "e_emitterParent", "e_shootRocketSFX", "e_noAmmoSFX")]
 position = Vector2(0, -11)
 script = ExtResource("6_tyrya")
 e_owner = NodePath("..")
@@ -1927,6 +1996,8 @@ e_visualParent = NodePath("Offset")
 e_visual = NodePath("Offset/Bazooka_Visual")
 e_emitterParent = NodePath("Offset/Bazooka_Visual/RocketEmitter")
 e_reloadSpeed = 0.35
+e_shootRocketSFX = NodePath("SFX_ShootRocket")
+e_noAmmoSFX = NodePath("SFX_NoAmmo")
 
 [node name="Offset" type="Node2D" parent="Bazooka" unique_id=208384274]
 position = Vector2(0, 4)
@@ -1937,6 +2008,14 @@ sprite_frames = SubResource("SpriteFrames_w3m15")
 
 [node name="RocketEmitter" type="Node2D" parent="Bazooka/Offset/Bazooka_Visual" unique_id=1732480486]
 position = Vector2(7, -2)
+
+[node name="SFX_ShootRocket" type="FmodEventEmitter2D" parent="Bazooka" unique_id=908329078]
+event_name = "event:/SFX/Rocket/Rocket_Shoot_2"
+event_guid = "{49b95373-3af6-4178-94cd-5aa981eaac04}"
+
+[node name="SFX_NoAmmo" type="FmodEventEmitter2D" parent="Bazooka" unique_id=1144087621]
+event_name = "event:/SFX/Rocket/Rocket_NoAmmo"
+event_guid = "{df588933-f1f0-419a-980c-ed674f7bc314}"
 
 [node name="RigidSquare" type="CollisionShape2D" parent="." unique_id=150271092]
 position = Vector2(0, -2)
@@ -2021,6 +2100,7 @@ damping_max = 88.05
 color_ramp = SubResource("Gradient_yqqkn")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1243931910]
+active = false
 tree_root = ExtResource("3_gxwok")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
@@ -2028,3 +2108,35 @@ anim_player = NodePath("../AnimationPlayer")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1960116950]
 active = false
 libraries/ = SubResource("AnimationLibrary_0334l")
+
+[node name="SFX" type="Node2D" parent="." unique_id=409068884]
+
+[node name="SFX_Jump" type="FmodEventEmitter2D" parent="SFX" unique_id=231487573]
+event_name = "event:/SFX/Player/Player_Jump"
+event_guid = "{25f00b6c-eb3a-451f-aee7-377270bad56f}"
+
+[node name="SFX_Land" type="FmodEventEmitter2D" parent="SFX" unique_id=1543913812]
+event_name = "event:/SFX/Player/Player_Land"
+event_guid = "{9946788e-3586-4399-bdf3-e0a9e2a51dd2}"
+
+[node name="SFX_Climbing" type="FmodEventEmitter2D" parent="SFX" unique_id=2047901284]
+event_name = "event:/SFX/Player/Player_Climb"
+event_guid = "{d121fd76-eae1-430d-bb89-9b995eaf6aef}"
+
+[node name="SFX_Sliding" type="FmodEventEmitter2D" parent="SFX" unique_id=189212489]
+event_name = "event:/SFX/Player/Player_Slide"
+event_guid = "{0700e7ae-8fcd-4e8a-89c8-ec63240e2d45}"
+
+[node name="SFX_PerfectStaccatto" type="FmodEventEmitter2D" parent="SFX" unique_id=478369845]
+event_name = "event:/SFX/Rocket/Rocket_Perfect"
+event_guid = "{483fb041-2656-4a9a-a80f-3e9fb8e6b673}"
+
+[node name="SFX_Footsteps2P" type="FmodEventEmitter2D" parent="SFX" unique_id=258533238]
+event_name = "event:/SFX/Player/Player_Walk_2P"
+event_guid = "{1f7dd84a-1ea0-4dae-9b74-71134a8b4677}"
+
+[node name="SFX_Footsteps4P" type="FmodEventEmitter2D" parent="SFX" unique_id=571197571]
+event_name = "event:/SFX/Player/Player_Walk_4P"
+event_guid = "{68be8d66-866f-4ed6-8113-0bedd9f30a13}"
+
+[node name="FmodListener2D" type="FmodListener2D" parent="." unique_id=1169763407]

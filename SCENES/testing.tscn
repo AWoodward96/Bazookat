@@ -37,6 +37,7 @@ metadata/_custom_type_script = "uid://c85ycjpsqrwl0"
 [node name="testing" type="Node2D" unique_id=607547518 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
 script = ExtResource("1_llfxf")
 e_rooms = [NodePath("Room1"), NodePath("Room2"), NodePath("Room3")]
+e_forceBazooka = true
 e_startingPosition = NodePath("StartingPosition")
 
 [node name="StartingPosition" type="Sprite2D" parent="." unique_id=237606703]

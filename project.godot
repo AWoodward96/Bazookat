@@ -8,6 +8,10 @@
 
 config_version=5
 
+[Fmod]
+
+General/banks_path="res://AUDIO/Desktop"
+
 [application]
 
 config/name="Bazookat"
@@ -22,12 +26,13 @@ GameManager="*uid://htvfombsjd2q"
 UIManager="*uid://ce5vl4amnusnw"
 LevelManager="*uid://yerdyldt41j7"
 PersistDataManager="*uid://biy5b5a34qbfe"
+FmodManager="*uid://cds10pm7hwn3p"
+AudioManager="*uid://c2qdtvd2rynak"
 
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=480
-window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
 mouse_cursor/custom_image="uid://d1yrvmlx3w4d1"
@@ -35,7 +40,7 @@ mouse_cursor/custom_image_hotspot=Vector2(32, 32)
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/AS2P/plugin.cfg")
+enabled=PackedStringArray("res://addons/AS2P/plugin.cfg", "res://addons/fmod/plugin.cfg")
 
 [global_group]
 

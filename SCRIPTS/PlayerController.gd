@@ -62,6 +62,17 @@ enum EState { Normal, Death, Respawn, LevelComplete, Cutscene }
 @export var e_deathParticle : CPUParticles2D
 
 
+@export_category("SFX")
+@export var e_footsteps2P :FmodEventEmitter2D
+@export var e_footsteps4P :FmodEventEmitter2D
+@export var e_jumpSFX : FmodEventEmitter2D
+@export var e_landSFXThreshold : float = 100 # What the y velocity has to be greater than in order for the land sfx to be played
+@export var e_landSFX : FmodEventEmitter2D
+@export var e_climbingLoop :FmodEventEmitter2D
+@export var e_slidingLoop :FmodEventEmitter2D
+@export var e_perfectStaccatto :FmodEventEmitter2D
+
+
 var Gravity : float :
 	get:
 		return GameManager.e_gameData.Gravity
@@ -94,8 +105,12 @@ var m_wallNormal : Vector2
 var m_horizontalLockoutTimer : float
 var m_verticalCutLockoutTimer : float
 var m_climbing : bool
+var m_climbingSFXLoopPlaying : bool = false # Fucking HATE that I have to do it like this sheesh
 var m_climbingStamina : float
 var m_sliding : bool
+var m_slidingSFXLoopPlaying : bool = false
+var m_footsteps2PPlaying : bool = false
+var m_footsteps4PPlaying : bool = false
 
 var m_deathTimer : float
 var m_fallbackOriginalPosition : Vector2
@@ -103,6 +118,8 @@ var m_deathTween : Tween
 
 var m_perfectRocketJumpTimer : float
 var m_perfectRocketJumpSuccessTimer : float
+
+var m_prevVelocity : Vector2
 
 # DEBUG
 var db_jumpedWithLastRocket : bool = false
@@ -126,6 +143,7 @@ func _physics_process(_delta: float):
 		EState.Normal:
 			e_animationTree.active = true
 			HandleInput(_delta)
+			HandleAudio()
 			HandlePhysics(_delta)
 		EState.Death:
 			e_animationTree.active = true
@@ -155,11 +173,15 @@ func HandleInput(_delta : float):
 	m_upHeld = Input.is_action_pressed("up")
 
 	# Wall and floor checks
-	m_onFloor = is_on_floor()
+	var localOnFloor = is_on_floor() # only here to check for landing
+	if localOnFloor && !m_onFloor && m_prevVelocity.y >= e_landSFXThreshold:
+		e_landSFX.play()
+		
+	m_onFloor = localOnFloor
 	if is_on_wall():
 		m_wallNormal = get_wall_normal()
 		if m_wallNormal.x < 0:
-			# on the left wall
+		 	# on the left wall
 			m_onWall = m_horizontal > 0
 		elif m_wallNormal.x > 0:
 			# on the right wall
@@ -188,6 +210,7 @@ func HandleInput(_delta : float):
 	# sliding and climbing logic
 	m_sliding = m_onWall && velocity.y > e_wallClingThreshold
 	m_climbing = m_onWall && m_upHeld && m_climbingStamina > 0 && (m_climbing || velocity.y > e_climbStartThreshold) && m_verticalCutLockoutTimer <= 0
+
 
 	m_inSprintAnimState = m_endSprintAnimTimer > 0
 
@@ -224,6 +247,64 @@ func HandleInput(_delta : float):
 
 	pass
 
+func HandleAudio():
+	if m_climbing:
+		if !m_climbingSFXLoopPlaying:
+			m_climbingSFXLoopPlaying = true
+			e_climbingLoop.play()
+	else:
+		if m_climbingSFXLoopPlaying: 
+			m_climbingSFXLoopPlaying = false
+			e_climbingLoop.stop()
+	
+	if m_sliding:
+		if !m_slidingSFXLoopPlaying:
+			m_slidingSFXLoopPlaying = true
+			e_slidingLoop.play()
+	else:
+		if m_slidingSFXLoopPlaying:
+			m_slidingSFXLoopPlaying = false
+			e_slidingLoop.stop()
+	
+	#var playFootsteps = abs(velocity.x) > 10 && m_onFloor
+	#if e_hasBazooka:
+		#if !m_inSprintAnimState:
+			#if m_footsteps4PPlaying:
+				#m_footsteps4PPlaying = false
+				#e_footsteps4P.stop()
+			#
+			#if !m_footsteps2PPlaying && playFootsteps:
+				#m_footsteps2PPlaying = true
+				#e_footsteps2P.play()
+			#
+			#if m_footsteps2PPlaying && !playFootsteps:
+				#m_footsteps2PPlaying = false
+				#e_footsteps2P.stop()
+		#else:
+			#if m_footsteps2PPlaying:
+				#m_footsteps2PPlaying = false
+				#e_footsteps2P.stop()
+			#
+			#if !m_footsteps4PPlaying && playFootsteps:
+				#m_footsteps4PPlaying = true
+				#e_footsteps4P.play()
+			#
+			#if m_footsteps4PPlaying && !playFootsteps:
+				#m_footsteps4PPlaying = false
+				#e_footsteps4P.stop()
+		#pass
+	#else:
+		#if !m_footsteps4PPlaying && playFootsteps:
+			#m_footsteps4PPlaying = true
+			#e_footsteps4P.play()
+			#
+		#if m_footsteps4PPlaying && !playFootsteps:
+			#m_footsteps4PPlaying = false
+			#e_footsteps4P.stop()
+			#
+			
+
+	pass
 
 func HandlePhysics(_delta : float):
 	HandleHorizontal(_delta)
@@ -265,9 +346,12 @@ func HandlePhysics(_delta : float):
 		m_jumpCount += 1
 		m_jumpBuffer = 0
 		m_perfectRocketJumpTimer = e_perfectRocketJumpWindow
+		e_jumpSFX.play()
 
 
 	CheckDeath()
+	
+	m_prevVelocity = velocity
 	move_and_slide()
 
 	# flip the sprite based on the last direction we moved
@@ -344,6 +428,7 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float, _useRayc
 	var perfectMult : float = 1
 	if m_perfectRocketJumpTimer > 0:
 		# Perfect rocket jump
+		e_perfectStaccatto.play()
 		perfectMult = data.e_perfectModifier
 		m_perfectRocketJumpSuccessTimer = e_perfectRocketJumpGravityDuration
 		e_bazooka.ForceReload()
@@ -479,11 +564,13 @@ func Respawn():
 
 		room.ResetRoom()
 
+
 	m_deathTween = get_tree().create_tween()
 	m_deathTween.tween_method(SetOutlineParam, 15, 1, 0.5)
 	m_deathTween.tween_method(SetColorOverrideParam, 1, 0, 0.5)
 	m_deathTween.tween_callback(func() : e_state = EState.Normal)
 	m_deathTween.play()
+	
 	global_position = respawnPosition
 	e_deathParticle.emitting = true
 
@@ -564,10 +651,17 @@ func Launch(e_launchData : LaunchData, _reload : bool = false):
 
 func EnterCutscene(_defaultAnimation : String = "2p_idle"):
 	e_state = EState.Cutscene
+	StopFootsteps()
 	e_animationTree.active = false
 	if Level.Camera != null:
 		Level.Camera.e_trackMouse = false
 	PlayAnimationWhileTreeIsDisabled(_defaultAnimation)
+
+func StopFootsteps():
+	m_footsteps2PPlaying = false
+	m_footsteps4PPlaying = false
+	e_footsteps2P.stop()
+	e_footsteps4P.stop()
 
 func PlayAnimationWhileTreeIsDisabled(_animationName : String):
 	e_visual.play(_animationName)

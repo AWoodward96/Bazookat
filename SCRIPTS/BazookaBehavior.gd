@@ -9,6 +9,9 @@ class_name BazookaBehavior
 
 @export var e_reloadSpeed : float = 1
 
+@export var e_shootRocketSFX : FmodEventEmitter2D 
+@export var e_noAmmoSFX : FmodEventEmitter2D
+
 var HasAmmo : bool :
 	get:
 		return m_hardCD <= 0 && m_hasAmmo
@@ -52,8 +55,11 @@ func _physics_process(_delta: float) -> void:
 		db_currentAngle = inDeg
 		e_visual.flip_v = inDeg > 90 && inDeg < 270
 
-	if Input.is_action_just_pressed("fire") && HasAmmo:
-		Fire(e_emitterParent.global_position, dst)
+	if Input.is_action_just_pressed("fire"):
+		if HasAmmo:
+			Fire(e_emitterParent.global_position, dst)
+		else:
+			e_noAmmoSFX.play()
 
 	e_visual.material.set_shader_parameter("perform_color_swap", !HasAmmo)
 	if m_hardCD > 0:
@@ -70,6 +76,8 @@ func ForceReload(_overrideTimer : bool = false):
 		m_hardCD = 0
 
 func Fire(_origin : Vector2, _direction : Vector2):
+	e_shootRocketSFX.play()
+	
 	m_hardCD = e_reloadSpeed
 	m_hasAmmo = false
 
