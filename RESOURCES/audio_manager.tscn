@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://c7gt55l1we7m0" path="res://SCRIPTS/AudioManager.gd" id="1_kxoec"]
 
-[node name="AudioManager" type="Node2D" unique_id=1266939428]
+[node name="AudioManager" type="Node2D" unique_id=1266939428 node_paths=PackedStringArray("e_fModBanks")]
 script = ExtResource("1_kxoec")
+e_fModBanks = NodePath("FmodBankLoader")
 
 [node name="FmodBankLoader" type="FmodBankLoader" parent="." unique_id=622155625]
 bank_paths = ["res://AUDIO/Desktop/Master.bank", "res://AUDIO/Desktop/MUSIC.bank", "res://AUDIO/Desktop/SFX.bank", "res://AUDIO/Desktop/UI.bank"]

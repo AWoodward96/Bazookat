@@ -176,7 +176,7 @@ func HandleInput(_delta : float):
 	var localOnFloor = is_on_floor() # only here to check for landing
 	if localOnFloor && !m_onFloor && m_prevVelocity.y >= e_landSFXThreshold:
 		e_landSFX.play()
-		
+
 	m_onFloor = localOnFloor
 	if is_on_wall():
 		m_wallNormal = get_wall_normal()
@@ -253,10 +253,10 @@ func HandleAudio():
 			m_climbingSFXLoopPlaying = true
 			e_climbingLoop.play()
 	else:
-		if m_climbingSFXLoopPlaying: 
+		if m_climbingSFXLoopPlaying:
 			m_climbingSFXLoopPlaying = false
 			e_climbingLoop.stop()
-	
+
 	if m_sliding:
 		if !m_slidingSFXLoopPlaying:
 			m_slidingSFXLoopPlaying = true
@@ -265,7 +265,7 @@ func HandleAudio():
 		if m_slidingSFXLoopPlaying:
 			m_slidingSFXLoopPlaying = false
 			e_slidingLoop.stop()
-	
+
 	#var playFootsteps = abs(velocity.x) > 10 && m_onFloor
 	#if e_hasBazooka:
 		#if !m_inSprintAnimState:
@@ -302,7 +302,7 @@ func HandleAudio():
 			#m_footsteps4PPlaying = false
 			#e_footsteps4P.stop()
 			#
-			
+
 
 	pass
 
@@ -350,7 +350,7 @@ func HandlePhysics(_delta : float):
 
 
 	CheckDeath()
-	
+
 	m_prevVelocity = velocity
 	move_and_slide()
 
@@ -570,7 +570,7 @@ func Respawn():
 	m_deathTween.tween_method(SetColorOverrideParam, 1, 0, 0.5)
 	m_deathTween.tween_callback(func() : e_state = EState.Normal)
 	m_deathTween.play()
-	
+
 	global_position = respawnPosition
 	e_deathParticle.emitting = true
 

@@ -5,6 +5,7 @@ signal OnFadeComplete
 @export var e_mainCanvas : CanvasLayer
 @export var e_obscureMask : TextureRect
 @export var e_mainMenuUI : PackedScene
+@export var e_settingsUI : PackedScene
 @export var e_resultsUI : PackedScene
 @export var e_bazookaGetUI : PackedScene
 

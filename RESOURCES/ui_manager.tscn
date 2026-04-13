@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cuilt06rjkttd" path="res://SCRIPTS/UIManager.gd" id="1_wjyoi"]
 [ext_resource type="PackedScene" uid="uid://cuv1k228gs24" path="res://ART/UI/TitleScreen/main_menu_ui.tscn" id="2_6t2p4"]
 [ext_resource type="Shader" uid="uid://cihng0hmlchl7" path="res://ART/Shaders/Screenwipe_Shader.gdshader" id="2_q7lhw"]
+[ext_resource type="PackedScene" uid="uid://dxpekeo10jh5i" path="res://RESOURCES/settings_ui.tscn" id="3_kgwo2"]
 [ext_resource type="PackedScene" uid="uid://4rht6obvo8nw" path="res://RESOURCES/results_ui.tscn" id="3_qsodu"]
 [ext_resource type="PackedScene" uid="uid://twidwxyf6ur5" path="res://RESOURCES/Prefabs/bazooka_get_ui.tscn" id="4_n4o3n"]
 
@@ -23,6 +24,7 @@ script = ExtResource("1_wjyoi")
 e_mainCanvas = NodePath("MainCanvas")
 e_obscureMask = NodePath("MainCanvas/Obscure")
 e_mainMenuUI = ExtResource("2_6t2p4")
+e_settingsUI = ExtResource("3_kgwo2")
 e_resultsUI = ExtResource("3_qsodu")
 e_bazookaGetUI = ExtResource("4_n4o3n")
 metadata/_custom_type_script = "uid://cuilt06rjkttd"

@@ -9,7 +9,7 @@ class_name BazookaBehavior
 
 @export var e_reloadSpeed : float = 1
 
-@export var e_shootRocketSFX : FmodEventEmitter2D 
+@export var e_shootRocketSFX : FmodEventEmitter2D
 @export var e_noAmmoSFX : FmodEventEmitter2D
 
 var HasAmmo : bool :
@@ -77,7 +77,7 @@ func ForceReload(_overrideTimer : bool = false):
 
 func Fire(_origin : Vector2, _direction : Vector2):
 	e_shootRocketSFX.play()
-	
+
 	m_hardCD = e_reloadSpeed
 	m_hasAmmo = false
 

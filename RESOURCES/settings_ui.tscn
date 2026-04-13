@@ -1,0 +1,278 @@
+[gd_scene format=3 uid="uid://dxpekeo10jh5i"]
+
+[ext_resource type="FontFile" uid="uid://jrj7xiaovm84" path="res://ART/Fonts/c64esque.ttf" id="1_6nhan"]
+[ext_resource type="Theme" uid="uid://rjqdcaqr6lp6" path="res://ART/main_theme.tres" id="1_854qv"]
+[ext_resource type="Script" uid="uid://ca1nrildowxw0" path="res://SCRIPTS/UI/SettingsUI.gd" id="1_reig4"]
+[ext_resource type="Script" uid="uid://cl4cbss8587oo" path="res://SCRIPTS/AudioBusSliderUI.gd" id="3_d82c1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_reig4"]
+font = ExtResource("1_6nhan")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_854qv"]
+font = ExtResource("1_6nhan")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_d82c1"]
+font = ExtResource("1_6nhan")
+font_size = 24
+
+[node name="SettingsUI" type="Control" unique_id=1281247939]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_854qv")
+script = ExtResource("1_reig4")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1638901573]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 32
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=1492360978]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=1427946174]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=1085063408]
+layout_mode = 2
+
+[node name="settings_header" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1150787084]
+layout_mode = 2
+text = "ui_settings_header"
+label_settings = SubResource("LabelSettings_reig4")
+horizontal_alignment = 1
+
+[node name="volume_section" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=458718835]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/volume_section" unique_id=1250719185]
+layout_mode = 2
+text = "ui_volume_header"
+label_settings = SubResource("LabelSettings_854qv")
+
+[node name="slider_master" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1804998907 node_paths=PackedStringArray("e_valueText", "e_slider", "e_exampleAudio")]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+script = ExtResource("3_d82c1")
+e_valueText = NodePath("Value/value_label")
+e_slider = NodePath("VBoxContainer/HSlider")
+e_exampleAudio = NodePath("FmodEventEmitter2D")
+
+[node name="Label" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master" unique_id=322535903]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master/Label" unique_id=1355817290]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ui_volume_master_label"
+label_settings = SubResource("LabelSettings_d82c1")
+clip_text = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master" unique_id=221492193]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master/VBoxContainer" unique_id=1089248674]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+tick_count = 10
+ticks_position = 2
+
+[node name="Value" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master" unique_id=642436610]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="value_label" type="LineEdit" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master/Value" unique_id=1988776934]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "100"
+max_length = 3
+virtual_keyboard_type = 2
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master" unique_id=2068734975]
+event_name = "event:/SFX/Rocket/Rocket_Explosion"
+event_guid = "{21908e5a-b3dd-4614-adab-8649116d2e5b}"
+
+[node name="slider_music" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1285170817 node_paths=PackedStringArray("e_valueText", "e_slider", "e_exampleAudio")]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+script = ExtResource("3_d82c1")
+e_busType = 1
+e_valueText = NodePath("Value/value_label")
+e_slider = NodePath("VBoxContainer/HSlider")
+e_exampleAudio = NodePath("")
+
+[node name="Label" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_music" unique_id=1233829574]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_music/Label" unique_id=1287092652]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ui_volume_music_label"
+label_settings = SubResource("LabelSettings_d82c1")
+clip_text = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_music" unique_id=698570100]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_music/VBoxContainer" unique_id=1399888897]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+tick_count = 10
+ticks_position = 2
+
+[node name="Value" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_music" unique_id=583870798]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="value_label" type="LineEdit" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_music/Value" unique_id=480436495]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "100"
+max_length = 3
+virtual_keyboard_type = 2
+
+[node name="slider_sfx" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=461261218 node_paths=PackedStringArray("e_valueText", "e_slider", "e_exampleAudio")]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+script = ExtResource("3_d82c1")
+e_busType = 2
+e_valueText = NodePath("Value/value_label")
+e_slider = NodePath("VBoxContainer/HSlider")
+e_exampleAudio = NodePath("FmodEventEmitter2D")
+
+[node name="Label" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx" unique_id=751609883]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx/Label" unique_id=712908279]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ui_volume_sfx_label"
+label_settings = SubResource("LabelSettings_d82c1")
+clip_text = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx" unique_id=619002226]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx/VBoxContainer" unique_id=1441119021]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+tick_count = 10
+ticks_position = 2
+
+[node name="Value" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx" unique_id=761933081]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="value_label" type="LineEdit" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx/Value" unique_id=260904909]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "100"
+max_length = 3
+virtual_keyboard_type = 2
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx" unique_id=25744076]
+event_name = "event:/SFX/Rocket/Rocket_Explosion"
+event_guid = "{21908e5a-b3dd-4614-adab-8649116d2e5b}"
+
+[node name="slider_ui" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=605370185 node_paths=PackedStringArray("e_valueText", "e_slider", "e_exampleAudio")]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+script = ExtResource("3_d82c1")
+e_busType = 2
+e_valueText = NodePath("Value/value_label")
+e_slider = NodePath("VBoxContainer/HSlider")
+e_exampleAudio = NodePath("FmodEventEmitter2D")
+
+[node name="Label" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui" unique_id=464809750]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui/Label" unique_id=945046797]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ui_volume_ui_label"
+label_settings = SubResource("LabelSettings_d82c1")
+clip_text = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui" unique_id=1739112612]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui/VBoxContainer" unique_id=530284959]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+tick_count = 10
+ticks_position = 2
+
+[node name="Value" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui" unique_id=252835029]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="value_label" type="LineEdit" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui/Value" unique_id=1337708863]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "100"
+max_length = 3
+virtual_keyboard_type = 2
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui" unique_id=446188395]
+event_name = "event:/SFX/Rocket/Rocket_Explosion"
+event_guid = "{21908e5a-b3dd-4614-adab-8649116d2e5b}"
+
+[node name="Bumper" type="Control" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=765669308]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=2020105218]
+layout_mode = 2
+alignment = 1
+
+[node name="close_button_2" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=518125651]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "ui_close_button"
+
+[connection signal="value_changed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master/VBoxContainer/HSlider" to="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master" method="OnSliderChanged"]
+[connection signal="text_changed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master/Value/value_label" to="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_master" method="OnTextChanged"]
+[connection signal="value_changed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_music/VBoxContainer/HSlider" to="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_music" method="OnSliderChanged"]
+[connection signal="text_changed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_music/Value/value_label" to="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_music" method="OnTextChanged"]
+[connection signal="value_changed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx/VBoxContainer/HSlider" to="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx" method="OnSliderChanged"]
+[connection signal="text_changed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx/Value/value_label" to="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_sfx" method="OnTextChanged"]
+[connection signal="value_changed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui/VBoxContainer/HSlider" to="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui" method="OnSliderChanged"]
+[connection signal="text_changed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui/Value/value_label" to="MarginContainer/Panel/MarginContainer/VBoxContainer/slider_ui" method="OnTextChanged"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/close_button_2" to="." method="CloseUI"]

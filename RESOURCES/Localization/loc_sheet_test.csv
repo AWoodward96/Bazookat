@@ -31,3 +31,10 @@ ui_hes_armed,"Lord help us now he's armed"
 ui_challenge_button,I want a challenge!
 ui_deaths,Deaths: {0}
 ui_feedback_button,Feedback
+ui_settings_header,Settings
+ui_volume_header,Volume Settings
+ui_volume_master_label,Master
+ui_volume_music_label,Music
+ui_volume_sfx_label,SFX
+ui_volume_ui_label,UI
+ui_close_button,Close
