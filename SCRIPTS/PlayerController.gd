@@ -266,43 +266,6 @@ func HandleAudio():
 			m_slidingSFXLoopPlaying = false
 			e_slidingLoop.stop()
 
-	#var playFootsteps = abs(velocity.x) > 10 && m_onFloor
-	#if e_hasBazooka:
-		#if !m_inSprintAnimState:
-			#if m_footsteps4PPlaying:
-				#m_footsteps4PPlaying = false
-				#e_footsteps4P.stop()
-			#
-			#if !m_footsteps2PPlaying && playFootsteps:
-				#m_footsteps2PPlaying = true
-				#e_footsteps2P.play()
-			#
-			#if m_footsteps2PPlaying && !playFootsteps:
-				#m_footsteps2PPlaying = false
-				#e_footsteps2P.stop()
-		#else:
-			#if m_footsteps2PPlaying:
-				#m_footsteps2PPlaying = false
-				#e_footsteps2P.stop()
-			#
-			#if !m_footsteps4PPlaying && playFootsteps:
-				#m_footsteps4PPlaying = true
-				#e_footsteps4P.play()
-			#
-			#if m_footsteps4PPlaying && !playFootsteps:
-				#m_footsteps4PPlaying = false
-				#e_footsteps4P.stop()
-		#pass
-	#else:
-		#if !m_footsteps4PPlaying && playFootsteps:
-			#m_footsteps4PPlaying = true
-			#e_footsteps4P.play()
-			#
-		#if m_footsteps4PPlaying && !playFootsteps:
-			#m_footsteps4PPlaying = false
-			#e_footsteps4P.stop()
-			#
-
 
 	pass
 
@@ -516,6 +479,9 @@ func GetHorizontalSpeed():
 
 func Die(_normal : Vector2):
 	if e_state == EState.Normal:
+		m_sliding = false
+		m_climbing = false
+		
 		if Level.Current != null:
 			Level.Current.m_deathCount += 1
 
