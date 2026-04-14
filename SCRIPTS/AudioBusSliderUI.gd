@@ -24,7 +24,7 @@ func OnSliderChanged(value: float) -> void:
 
 	if e_valueText != null:
 		e_valueText.text = "%d" % value
-		
+
 	ChangeAudioStrength(value)
 	TryPlayAudio()
 
@@ -53,7 +53,7 @@ func ChangeAudioStrength(_strength : int):
 func TryPlayAudio():
 	if m_audioCDTimer > 0:
 		return
-	
+
 	m_audioCDTimer = e_audioLockout
 	if e_exampleAudio != null:
 		e_exampleAudio.play_one_shot()

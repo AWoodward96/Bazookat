@@ -156,6 +156,10 @@ func _physics_process(_delta: float):
 	HandleParticles()
 
 func HandleInput(_delta : float):
+	if Input.is_action_just_pressed("pause") && !PauseUI.IsOpen:
+		UIManager.OpenUI(UIManager.e_pausedUI)
+		return
+
 	# Horizontal Movement
 	m_horizontal = 0
 	if Input.is_action_pressed("left"):
@@ -481,7 +485,7 @@ func Die(_normal : Vector2):
 	if e_state == EState.Normal:
 		m_sliding = false
 		m_climbing = false
-		
+
 		if Level.Current != null:
 			Level.Current.m_deathCount += 1
 

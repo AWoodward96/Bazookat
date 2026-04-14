@@ -8,6 +8,8 @@ signal OnFadeComplete
 @export var e_settingsUI : PackedScene
 @export var e_resultsUI : PackedScene
 @export var e_bazookaGetUI : PackedScene
+@export var e_pausedUI : PackedScene
+@export var e_genericConfirmationUI : PackedScene
 
 var m_fadeTween : Tween
 
@@ -28,6 +30,7 @@ func Fade(_duration : float, _delay : float = 0):
 
 	e_obscureMask.material.set_shader_parameter("cutoff", 0)
 	m_fadeTween = get_tree().create_tween()
+	m_fadeTween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	m_fadeTween.tween_interval(_delay)
 
 	# You're not halucinating. Go to 1.25. Yes, the cutoff should be at 1. No that doesn't work.

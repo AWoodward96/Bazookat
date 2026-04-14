@@ -114,7 +114,7 @@ font_size = 32
 font_color = Color(0, 0, 0, 1)
 outline_size = 10
 
-[node name="MainMenuUI" type="Control" unique_id=1986911149 node_paths=PackedStringArray("e_harassSettings", "e_buttonSFX")]
+[node name="MainMenuUI" type="Control" unique_id=1986911149 node_paths=PackedStringArray("e_harassSettings")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -125,7 +125,6 @@ theme = ExtResource("1_efy3b")
 script = ExtResource("2_3xgrp")
 e_harassSettings = NodePath("VBoxContainer2/Settings/Label")
 e_harassSettingsOptions = Array[String](["ui_settings_joke_1", "ui_settings_joke_2", "ui_settings_joke_3", "ui_settings_joke_4", "ui_settings_joke_5", "ui_settings_joke_6", "ui_settings_joke_7", "ui_settings_joke_8", "ui_settings_joke_9", "ui_settings_joke_10", "ui_settings_joke_11", "ui_settings_joke_12", "ui_settings_joke_13", "ui_settings_joke_14", "ui_settings_joke_15", "ui_settings_joke_16", "ui_settings_joke_17", "ui_settings_joke_18"])
-e_buttonSFX = NodePath("SFX_ButtonPressed")
 
 [node name="BG" type="TextureRect" parent="." unique_id=206341713]
 layout_mode = 1
@@ -184,11 +183,19 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "ui_play_button"
 
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="VBoxContainer2/Play" unique_id=1287913201]
+event_name = "event:/UI/Slider_Click"
+event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
+
 [node name="Challenge" type="Button" parent="VBoxContainer2" unique_id=1414238377]
 self_modulate = Color(1, 0.39, 0.4001665, 1)
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "ui_challenge_button"
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="VBoxContainer2/Challenge" unique_id=953589313]
+event_name = "event:/UI/Slider_Click"
+event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
 
 [node name="Settings" type="Button" parent="VBoxContainer2" unique_id=1332025869]
 custom_minimum_size = Vector2(200, 0)
@@ -196,6 +203,7 @@ layout_mode = 2
 text = "ui_settings_button"
 
 [node name="Label" type="Label" parent="VBoxContainer2/Settings" unique_id=416119348]
+visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 206.0
@@ -206,10 +214,18 @@ text = "ui_settings_joke"
 label_settings = SubResource("LabelSettings_3xgrp")
 autowrap_mode = 2
 
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="VBoxContainer2/Settings" unique_id=1515846632]
+event_name = "event:/UI/Slider_Click"
+event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
+
 [node name="Quit" type="Button" parent="VBoxContainer2" unique_id=1278630194]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "ui_quit_button"
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="VBoxContainer2/Quit" unique_id=2111211163]
+event_name = "event:/UI/Slider_Click"
+event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=943000644]
 visible = false
@@ -256,11 +272,11 @@ offset_bottom = 100.0
 text = "(Link)"
 uri = "https://docs.google.com/forms/d/e/1FAIpQLSc66vzgX3Y7yeA02o66m-kVlvtEbtJIhtQjCLCzcbUuYZL0aA/viewform?usp=header"
 
-[node name="SFX_ButtonPressed" type="FmodEventEmitter2D" parent="." unique_id=912970469]
-event_name = "event:/UI/Button_Click"
-event_guid = "{2301d2c7-f14a-4284-8211-a5b267ee9ee9}"
-
+[connection signal="mouse_entered" from="VBoxContainer2/Play" to="VBoxContainer2/Play/FmodEventEmitter2D" method="play_one_shot"]
 [connection signal="pressed" from="VBoxContainer2/Play" to="." method="OnPlay"]
+[connection signal="mouse_entered" from="VBoxContainer2/Challenge" to="VBoxContainer2/Challenge/FmodEventEmitter2D" method="play_one_shot"]
 [connection signal="pressed" from="VBoxContainer2/Challenge" to="." method="Challenge"]
+[connection signal="mouse_entered" from="VBoxContainer2/Settings" to="VBoxContainer2/Settings/FmodEventEmitter2D" method="play_one_shot"]
 [connection signal="pressed" from="VBoxContainer2/Settings" to="." method="OnSettings"]
+[connection signal="mouse_entered" from="VBoxContainer2/Quit" to="VBoxContainer2/Quit/FmodEventEmitter2D" method="play_one_shot"]
 [connection signal="pressed" from="VBoxContainer2/Quit" to="." method="OnQuit"]

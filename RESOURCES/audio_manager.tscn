@@ -2,9 +2,14 @@
 
 [ext_resource type="Script" uid="uid://c7gt55l1we7m0" path="res://SCRIPTS/AudioManager.gd" id="1_kxoec"]
 
-[node name="AudioManager" type="Node2D" unique_id=1266939428 node_paths=PackedStringArray("e_fModBanks")]
+[node name="AudioManager" type="Node2D" unique_id=1266939428 node_paths=PackedStringArray("e_fModBanks", "e_genericButtonClick")]
 script = ExtResource("1_kxoec")
 e_fModBanks = NodePath("FmodBankLoader")
+e_genericButtonClick = NodePath("Generic_Button_Click")
 
 [node name="FmodBankLoader" type="FmodBankLoader" parent="." unique_id=622155625]
 bank_paths = ["res://AUDIO/Desktop/Master.bank", "res://AUDIO/Desktop/MUSIC.bank", "res://AUDIO/Desktop/SFX.bank", "res://AUDIO/Desktop/UI.bank"]
+
+[node name="Generic_Button_Click" type="FmodEventEmitter2D" parent="." unique_id=239714498]
+event_name = "event:/UI/Button_Click"
+event_guid = "{2301d2c7-f14a-4284-8211-a5b267ee9ee9}"

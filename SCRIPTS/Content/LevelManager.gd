@@ -52,12 +52,15 @@ func LevelSectionComplete():
 			pass
 
 	else:
-		if Level.Current != null:
-			UIManager.FadeOut(1, 0)
-			await UIManager.OnFadeComplete
-			var level = Level.Current
-			Level.Current.CleanUp()
-			level.queue_free()
-			GameManager.ReturnToMainMenu()
+		ForceReturnToTitle()
 
 	pass
+
+func ForceReturnToTitle():
+	if Level.Current != null:
+		UIManager.FadeOut(1, 0)
+		await UIManager.OnFadeComplete
+		var level = Level.Current
+		Level.Current.CleanUp()
+		level.queue_free()
+		GameManager.ReturnToMainMenu()

@@ -27,7 +27,7 @@ ui_level_complete_title,Level Complete!
 ui_mcguffins_found_title,McGuffins Found: {NUM}/{NUM2}
 ui_press_jump,Press Jump to continue
 ui_bazooka_get,Bazooka   Get
-ui_hes_armed,"Lord help us now he's armed"
+ui_hes_armed,"Oh no. . . Now he's armed."
 ui_challenge_button,I want a challenge!
 ui_deaths,Deaths: {0}
 ui_feedback_button,Feedback
@@ -38,3 +38,9 @@ ui_volume_music_label,Music
 ui_volume_sfx_label,SFX
 ui_volume_ui_label,UI
 ui_close_button,Close
+ui_pause_menu,Paused
+ui_return_to_title,Return to Title
+ui_confirm_returntotitle,Return to Title?
+ui_yes,Yes
+ui_no,No
+ui_confirm_quitgame,Are you sure you want to quit?

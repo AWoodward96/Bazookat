@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://dxpekeo10jh5i" path="res://RESOURCES/settings_ui.tscn" id="3_kgwo2"]
 [ext_resource type="PackedScene" uid="uid://4rht6obvo8nw" path="res://RESOURCES/results_ui.tscn" id="3_qsodu"]
 [ext_resource type="PackedScene" uid="uid://twidwxyf6ur5" path="res://RESOURCES/Prefabs/bazooka_get_ui.tscn" id="4_n4o3n"]
+[ext_resource type="PackedScene" uid="uid://n1gbnp361pgo" path="res://RESOURCES/pause_ui.tscn" id="6_6xkdv"]
+[ext_resource type="PackedScene" uid="uid://bff4nlv4r3d61" path="res://RESOURCES/generic_confirmation_ui.tscn" id="7_tpk7g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6t2p4"]
 shader = ExtResource("2_q7lhw")
@@ -20,6 +22,7 @@ gradient = SubResource("Gradient_q7lhw")
 fill_from = Vector2(0, 1)
 
 [node name="UIManager" type="Node2D" unique_id=1649814687 node_paths=PackedStringArray("e_mainCanvas", "e_obscureMask")]
+process_mode = 3
 script = ExtResource("1_wjyoi")
 e_mainCanvas = NodePath("MainCanvas")
 e_obscureMask = NodePath("MainCanvas/Obscure")
@@ -27,12 +30,15 @@ e_mainMenuUI = ExtResource("2_6t2p4")
 e_settingsUI = ExtResource("3_kgwo2")
 e_resultsUI = ExtResource("3_qsodu")
 e_bazookaGetUI = ExtResource("4_n4o3n")
+e_pausedUI = ExtResource("6_6xkdv")
+e_genericConfirmationUI = ExtResource("7_tpk7g")
 metadata/_custom_type_script = "uid://cuilt06rjkttd"
 
 [node name="MainCanvas" type="CanvasLayer" parent="." unique_id=1753056403]
 layer = 2
 
 [node name="Obscure" type="TextureRect" parent="MainCanvas" unique_id=835534229]
+process_mode = 3
 z_index = 10
 material = SubResource("ShaderMaterial_6t2p4")
 anchors_preset = 15

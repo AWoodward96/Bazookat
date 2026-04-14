@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://n1gbnp361pgo"]
+
+[ext_resource type="Theme" uid="uid://rjqdcaqr6lp6" path="res://ART/main_theme.tres" id="1_yinfv"]
+[ext_resource type="Script" uid="uid://s3o1ig5ln42k" path="res://SCRIPTS/UI/PauseUI.gd" id="2_gcdof"]
+[ext_resource type="FontFile" uid="uid://jrj7xiaovm84" path="res://ART/Fonts/c64esque.ttf" id="3_g3fyt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_reig4"]
+font = ExtResource("3_g3fyt")
+font_size = 32
+
+[node name="PauseUI" type="Control" unique_id=1281247939 node_paths=PackedStringArray("e_buttonSFX")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yinfv")
+script = ExtResource("2_gcdof")
+e_buttonSFX = NodePath("")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1638901573]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 48
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=1492360978]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=1427946174]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=1085063408]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="paused_header" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1150787084]
+layout_mode = 2
+text = "ui_pause_menu"
+label_settings = SubResource("LabelSettings_reig4")
+horizontal_alignment = 1
+
+[node name="settings_button" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=122930174]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "ui_settings_button"
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/settings_button" unique_id=1380342939]
+event_name = "event:/UI/Slider_Click"
+event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
+
+[node name="return_to_title" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=2102020205]
+process_mode = 3
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "ui_return_to_title"
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/return_to_title" unique_id=237789724]
+event_name = "event:/UI/Slider_Click"
+event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
+
+[node name="close_game" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1082643554]
+process_mode = 3
+self_modulate = Color(1, 0.3882353, 0.4, 1)
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "ui_quit_button"
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/close_game" unique_id=1454246275]
+event_name = "event:/UI/Slider_Click"
+event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
+
+[node name="Bumper" type="Control" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=765669308]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="close_button_2" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=518125651]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "ui_close_button"
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/close_button_2" unique_id=951422236]
+event_name = "event:/UI/Slider_Click"
+event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
+
+[connection signal="mouse_entered" from="MarginContainer/Panel/MarginContainer/VBoxContainer/settings_button" to="MarginContainer/Panel/MarginContainer/VBoxContainer/settings_button/FmodEventEmitter2D" method="play_one_shot"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/settings_button" to="." method="OnSettings"]
+[connection signal="mouse_entered" from="MarginContainer/Panel/MarginContainer/VBoxContainer/return_to_title" to="MarginContainer/Panel/MarginContainer/VBoxContainer/return_to_title/FmodEventEmitter2D" method="play_one_shot"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/return_to_title" to="." method="OnReturnToTitle"]
+[connection signal="mouse_entered" from="MarginContainer/Panel/MarginContainer/VBoxContainer/close_game" to="MarginContainer/Panel/MarginContainer/VBoxContainer/close_game/FmodEventEmitter2D" method="play_one_shot"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/close_game" to="." method="QuitGame"]
+[connection signal="mouse_entered" from="MarginContainer/Panel/MarginContainer/VBoxContainer/close_button_2" to="MarginContainer/Panel/MarginContainer/VBoxContainer/close_button_2/FmodEventEmitter2D" method="play_one_shot"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/close_button_2" to="." method="CloseUI"]

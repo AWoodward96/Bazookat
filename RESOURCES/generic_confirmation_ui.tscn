@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://bff4nlv4r3d61"]
+
+[ext_resource type="Theme" uid="uid://rjqdcaqr6lp6" path="res://ART/main_theme.tres" id="1_e0sip"]
+[ext_resource type="Script" uid="uid://c3fjavolwuvpg" path="res://SCRIPTS/UI/GenericConfirmationUI.gd" id="2_4nrnb"]
+[ext_resource type="FontFile" uid="uid://jrj7xiaovm84" path="res://ART/Fonts/c64esque.ttf" id="2_qq8bk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4nrnb"]
+font = ExtResource("2_qq8bk")
+font_size = 32
+
+[node name="GenericConfirmationUI" type="Control" unique_id=183020905 node_paths=PackedStringArray("e_confirmationTitle")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_e0sip")
+script = ExtResource("2_4nrnb")
+e_confirmationTitle = NodePath("MarginContainer/Panel/MarginContainer/VBoxContainer/ConfirmationTitle")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2053738099]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 128
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 128
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=1051211548]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel" unique_id=1175822676]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer" unique_id=675951759]
+layout_mode = 2
+
+[node name="ConfirmationTitle" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=212805611]
+layout_mode = 2
+text = "ui_confirm_returntotitle"
+label_settings = SubResource("LabelSettings_4nrnb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1168256355]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=441926120]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+alignment = 1
+
+[node name="NoButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=2036126267]
+self_modulate = Color(1, 0.3882353, 0.4, 1)
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "ui_no"
+
+[node name="YesButton" type="Button" parent="MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1418351923]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "ui_yes"
+
+[node name="Spacer2" type="Control" parent="MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=1673190446]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/NoButton" to="." method="OnNo"]
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/YesButton" to="." method="OnYes"]

@@ -9,6 +9,7 @@ const UI_BUS_GUID = "{cca63318-3343-47f1-9525-2ec1f3ef1ce6}"
 const MASTER_BUS_GUID = "{294db87e-5254-4e62-96fa-0ec36e195bdd}"
 
 @export var e_fModBanks : FmodBankLoader
+@export var e_genericButtonClick : FmodEventEmitter2D
 
 var m_musicBus : FmodBus
 var m_sfxBus : FmodBus
@@ -33,3 +34,6 @@ func SetMasterVolume(_volume : float):
 
 func SetUIVolume(_volume : float):
 	m_uiBus.volume = _volume
+
+func ButtonClick():
+	e_genericButtonClick.play_one_shot()
