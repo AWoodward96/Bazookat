@@ -1309,6 +1309,26 @@ tracks/1/keys = {
 "update": 1,
 "values": ["4pNB_dashing"]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SFX/SFX_Footsteps4P")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15898533, 0.18417113),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"play_one_shot"
+}, {
+"args": [],
+"method": &"play_one_shot"
+}, {
+"args": [],
+"method": &"play_one_shot"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_reeir"]
 length = 0.16666667
@@ -1372,9 +1392,15 @@ tracks/2/path = NodePath("SFX/SFX_Footsteps4P")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.3667),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.13333334, 0.43333334, 0.46666667),
+"transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
+"args": [],
+"method": &"play_one_shot"
+}, {
+"args": [],
+"method": &"play_one_shot"
+}, {
 "args": [],
 "method": &"play_one_shot"
 }]
@@ -1582,9 +1608,15 @@ tracks/2/path = NodePath("SFX/SFX_Footsteps4P")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.3667),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.10554297, 0.40554297, 0.43887627),
+"transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
+"args": [],
+"method": &"play_one_shot"
+}, {
+"args": [],
+"method": &"play_one_shot"
+}, {
 "args": [],
 "method": &"play_one_shot"
 }]
@@ -1920,7 +1952,7 @@ _data = {
 &"wallslide_in": SubResource("Animation_meuh2")
 }
 
-[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle", "e_footsteps2P", "e_footsteps4P", "e_jumpSFX", "e_landSFX", "e_climbingLoop", "e_slidingLoop", "e_perfectStaccatto")]
+[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle", "e_footsteps2P", "e_footsteps4P", "e_jumpSFX", "e_landSFX", "e_climbingLoop", "e_slidingLoop", "e_perfectStaccatto", "e_deathSFX", "e_respawnSFX")]
 collision_mask = 30
 floor_stop_on_slope = false
 platform_floor_layers = 4294967271
@@ -1960,6 +1992,8 @@ e_landSFX = NodePath("SFX/SFX_Land")
 e_climbingLoop = NodePath("SFX/SFX_Climbing")
 e_slidingLoop = NodePath("SFX/SFX_Sliding")
 e_perfectStaccatto = NodePath("SFX/SFX_PerfectStaccatto")
+e_deathSFX = NodePath("SFX/SFX_Death")
+e_respawnSFX = NodePath("SFX/SFX_Respawn")
 
 [node name="WallSlideOffset" type="Node2D" parent="." unique_id=1703827426]
 
@@ -2138,5 +2172,13 @@ event_guid = "{1f7dd84a-1ea0-4dae-9b74-71134a8b4677}"
 [node name="SFX_Footsteps4P" type="FmodEventEmitter2D" parent="SFX" unique_id=571197571]
 event_name = "event:/SFX/Player/Player_Walk_4P"
 event_guid = "{68be8d66-866f-4ed6-8113-0bedd9f30a13}"
+
+[node name="SFX_Death" type="FmodEventEmitter2D" parent="SFX" unique_id=1481269784]
+event_name = "event:/SFX/Player/Player_Death"
+event_guid = "{9f207808-f0da-4732-a65a-258a676b829a}"
+
+[node name="SFX_Respawn" type="FmodEventEmitter2D" parent="SFX" unique_id=1664942239]
+event_name = "event:/SFX/Player/Player_Respawn"
+event_guid = "{2ebdfde8-68e6-4238-a1f4-33f47deb8da4}"
 
 [node name="FmodListener2D" type="FmodListener2D" parent="." unique_id=1169763407]

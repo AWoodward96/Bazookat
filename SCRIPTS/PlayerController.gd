@@ -71,6 +71,8 @@ enum EState { Normal, Death, Respawn, LevelComplete, Cutscene }
 @export var e_climbingLoop :FmodEventEmitter2D
 @export var e_slidingLoop :FmodEventEmitter2D
 @export var e_perfectStaccatto :FmodEventEmitter2D
+@export var e_deathSFX : FmodEventEmitter2D
+@export var e_respawnSFX : FmodEventEmitter2D
 
 
 var Gravity : float :
@@ -485,10 +487,13 @@ func Die(_normal : Vector2):
 	if e_state == EState.Normal:
 		m_sliding = false
 		m_climbing = false
+		e_slidingLoop.stop()
+		e_climbingLoop.stop()
 
 		if Level.Current != null:
 			Level.Current.m_deathCount += 1
-
+		
+		e_deathSFX.play_one_shot()
 		velocity = _normal.normalized() * e_deathBounce
 		e_state = EState.Death
 		m_deathTimer = e_deathDuration
@@ -521,6 +526,7 @@ func SetColorOverrideParam(_value : float):
 	e_visual.material.set_shader_parameter("use_color_override", _value)
 
 func Respawn():
+	e_respawnSFX.play_one_shot()
 	e_state = EState.Respawn
 
 	e_visual.visible = true
