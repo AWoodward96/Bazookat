@@ -33,7 +33,7 @@ func UpdateBazookaVisibility(_visible : bool):
 	e_visual.visible = _visible
 
 func _physics_process(_delta: float) -> void:
-	if Camera == null || !e_owner.e_hasBazooka:
+	if Camera == null || !e_owner.e_hasBazooka || e_owner.e_state != PlayerController.EState.Normal:
 		return
 
 	if e_owner.e_state == PlayerController.EState.Cutscene:

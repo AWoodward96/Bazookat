@@ -163,6 +163,7 @@ offset_bottom = 141.0
 layout_mode = 2
 text = "ui_game_title"
 label_settings = SubResource("LabelSettings_6hrsw")
+horizontal_alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer" unique_id=44520040]
 layout_mode = 2
@@ -236,14 +237,14 @@ offset_right = 608.0
 offset_bottom = 456.0
 color = Color(0.019607844, 0.015686275, 0.011764706, 1)
 
-[node name="FeedbackSection" type="Control" parent="." unique_id=1829859206]
+[node name="Control" type="Control" parent="." unique_id=1829859206]
 anchors_preset = 0
 offset_left = 541.0
 offset_top = 389.0
 offset_right = 581.0
 offset_bottom = 429.0
 
-[node name="TextureRect" type="TextureRect" parent="FeedbackSection" unique_id=880514503]
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=880514503]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = -4.0
@@ -253,7 +254,7 @@ offset_bottom = 57.0
 texture = ExtResource("8_610dk")
 expand_mode = 2
 
-[node name="Label" type="Label" parent="FeedbackSection" unique_id=698933076]
+[node name="Label" type="Label" parent="Control" unique_id=698933076]
 layout_mode = 0
 offset_left = -91.0
 offset_top = -38.0
@@ -263,7 +264,7 @@ text = "ui_feedback_button"
 label_settings = SubResource("LabelSettings_610dk")
 horizontal_alignment = 1
 
-[node name="RichTextLabel" type="LinkButton" parent="FeedbackSection" unique_id=1154729872]
+[node name="RichTextLabel" type="LinkButton" parent="Control" unique_id=1154729872]
 layout_mode = 0
 offset_left = 3.0
 offset_top = 60.0

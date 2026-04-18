@@ -1952,7 +1952,7 @@ _data = {
 &"wallslide_in": SubResource("Animation_meuh2")
 }
 
-[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle", "e_footsteps2P", "e_footsteps4P", "e_jumpSFX", "e_landSFX", "e_climbingLoop", "e_slidingLoop", "e_perfectStaccatto", "e_deathSFX", "e_respawnSFX")]
+[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle", "e_jumpSFX", "e_landSFX", "e_climbingLoop", "e_slidingLoop", "e_perfectStaccatto", "e_deathSFX", "e_respawnSFX")]
 collision_mask = 30
 floor_stop_on_slope = false
 platform_floor_layers = 4294967271
@@ -1985,8 +1985,6 @@ e_perfectRocketJumpGravityDuration = 0.5
 e_deathCast = NodePath("Raycasts/DeathCast")
 e_deathBounce = 100.0
 e_deathParticle = NodePath("DeathParticle")
-e_footsteps2P = NodePath("SFX/SFX_Footsteps2P")
-e_footsteps4P = NodePath("SFX/SFX_Footsteps4P")
 e_jumpSFX = NodePath("SFX/SFX_Jump")
 e_landSFX = NodePath("SFX/SFX_Land")
 e_climbingLoop = NodePath("SFX/SFX_Climbing")
@@ -2174,11 +2172,9 @@ event_name = "event:/SFX/Player/Player_Walk_4P"
 event_guid = "{68be8d66-866f-4ed6-8113-0bedd9f30a13}"
 
 [node name="SFX_Death" type="FmodEventEmitter2D" parent="SFX" unique_id=1481269784]
-event_name = "event:/SFX/Player/Player_Death"
 event_guid = "{9f207808-f0da-4732-a65a-258a676b829a}"
 
 [node name="SFX_Respawn" type="FmodEventEmitter2D" parent="SFX" unique_id=1664942239]
-event_name = "event:/SFX/Player/Player_Respawn"
 event_guid = "{2ebdfde8-68e6-4238-a1f4-33f47deb8da4}"
 
 [node name="FmodListener2D" type="FmodListener2D" parent="." unique_id=1169763407]

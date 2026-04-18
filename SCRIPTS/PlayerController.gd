@@ -63,8 +63,6 @@ enum EState { Normal, Death, Respawn, LevelComplete, Cutscene }
 
 
 @export_category("SFX")
-@export var e_footsteps2P :FmodEventEmitter2D
-@export var e_footsteps4P :FmodEventEmitter2D
 @export var e_jumpSFX : FmodEventEmitter2D
 @export var e_landSFXThreshold : float = 100 # What the y velocity has to be greater than in order for the land sfx to be played
 @export var e_landSFX : FmodEventEmitter2D
@@ -492,7 +490,7 @@ func Die(_normal : Vector2):
 
 		if Level.Current != null:
 			Level.Current.m_deathCount += 1
-		
+
 		e_deathSFX.play_one_shot()
 		velocity = _normal.normalized() * e_deathBounce
 		e_state = EState.Death
@@ -556,6 +554,7 @@ func Respawn():
 
 func OnLevelComplete():
 	e_state = EState.LevelComplete
+	EnterCutscene()
 	e_bazooka.UpdateBazookaVisibility(false)
 
 	var tween = get_tree().create_tween()
@@ -627,17 +626,11 @@ func Launch(e_launchData : LaunchData, _reload : bool = false):
 
 func EnterCutscene(_defaultAnimation : String = "2p_idle"):
 	e_state = EState.Cutscene
-	StopFootsteps()
 	e_animationTree.active = false
 	if Level.Camera != null:
 		Level.Camera.e_trackMouse = false
 	PlayAnimationWhileTreeIsDisabled(_defaultAnimation)
 
-func StopFootsteps():
-	m_footsteps2PPlaying = false
-	m_footsteps4PPlaying = false
-	e_footsteps2P.stop()
-	e_footsteps4P.stop()
 
 func PlayAnimationWhileTreeIsDisabled(_animationName : String):
 	e_visual.play(_animationName)
