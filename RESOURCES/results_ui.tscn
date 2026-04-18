@@ -87,3 +87,9 @@ layout_mode = 2
 text = "ui_press_jump"
 label_settings = SubResource("LabelSettings_b854g")
 horizontal_alignment = 1
+
+[node name="SFX_Fanfare" type="FmodEventEmitter2D" parent="." unique_id=1397085035]
+event_name = "event:/Music/Level_Complete_Fanfare"
+event_guid = "{7b029b78-71ee-4b63-a05f-6a5f1820ac8f}"
+autoplay = true
+auto_release = true

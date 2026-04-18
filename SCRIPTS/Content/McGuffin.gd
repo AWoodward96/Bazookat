@@ -6,6 +6,7 @@ class_name McGuffin
 @export var e_uid : float = 0
 @export var e_visual : Node2D
 @export var e_collectionVFX : CPUParticles2D
+@export var e_collectSFX : FmodEventEmitter2D
 
 var m_collected
 
@@ -26,6 +27,8 @@ func _on_collection_area_body_entered(_body: Node2D):
 		Collect()
 
 func Collect():
+	if e_collectSFX != null:
+		e_collectSFX.play_one_shot()
 	m_collected = true
 	e_visual.visible = false
 	e_collectionVFX.emitting = true

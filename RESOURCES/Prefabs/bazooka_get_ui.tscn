@@ -57,3 +57,9 @@ layout_mode = 2
 text = "ui_hes_armed"
 label_settings = SubResource("LabelSettings_rnpub")
 horizontal_alignment = 1
+
+[node name="SFX_Fanfare" type="FmodEventEmitter2D" parent="." unique_id=2052627502]
+event_name = "event:/Music/Pick_Up_Bazooka_Fanfare"
+event_guid = "{bd59f9f3-998e-4cdb-8bf8-7e80e25a7570}"
+autoplay = true
+auto_release = true

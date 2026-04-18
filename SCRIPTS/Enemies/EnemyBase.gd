@@ -7,6 +7,7 @@ const DEATHVECTORMULTIPLIER : float = 100
 @export var e_visual : AnimatedSprite2D
 @export var e_affectedByGravity : bool = true
 @export var e_collider : CollisionShape2D
+@export var e_deathSFX : FmodEventEmitter2D
 
 var m_startingPosition : Vector2
 var m_killed : bool
@@ -28,6 +29,9 @@ func Kill(_direction : Vector2):
 		DeathAnimation()
 
 func DeathAnimation():
+	if e_deathSFX != null:
+		e_deathSFX.play_one_shot()
+		
 	var tween = get_tree().create_tween()
 	e_visual.material.set_shader_parameter("color_override", Color.WHITE)
 	tween.tween_method(func(_val) : e_visual.material.set_shader_parameter("use_color_override", _val), 0, 1, 0.5)

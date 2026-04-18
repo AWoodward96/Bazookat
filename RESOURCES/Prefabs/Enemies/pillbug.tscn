@@ -7,6 +7,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y82g1"]
 resource_local_to_scene = true
 shader = ExtResource("2_hpgf6")
+shader_parameter/alpha_modulate = 1.0
 shader_parameter/use_color_override = 0.0
 shader_parameter/color_override = Color(1, 1, 1, 1)
 shader_parameter/perform_color_swap = false
@@ -223,7 +224,7 @@ _data = {
 &"walking": SubResource("Animation_hpgf6")
 }
 
-[node name="Pillbug" type="CharacterBody2D" unique_id=1297015022 node_paths=PackedStringArray("e_ledgeDetectorParent", "e_ledgeDetectorCast", "e_wallDetectorCast", "e_visual", "e_collider")]
+[node name="Pillbug" type="CharacterBody2D" unique_id=1297015022 node_paths=PackedStringArray("e_ledgeDetectorParent", "e_ledgeDetectorCast", "e_wallDetectorCast", "e_visual", "e_collider", "e_deathSFX")]
 collision_layer = 8
 collision_mask = 6
 platform_floor_layers = 4294967287
@@ -235,13 +236,15 @@ e_ledgeDetectorCast = NodePath("LedgeDetector/Ledge")
 e_wallDetectorCast = NodePath("LedgeDetector/Wall")
 e_visual = NodePath("AnimatedSprite2D")
 e_collider = NodePath("CollisionShape2D")
+e_deathSFX = NodePath("SFX_Death")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1911143269]
 material = SubResource("ShaderMaterial_y82g1")
 position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_trpdq")
-animation = &"turn"
+animation = &"walking"
 autoplay = "walking"
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1993568812]
 position = Vector2(0, -9)
@@ -269,3 +272,7 @@ anim_player = NodePath("../AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1454742303]
 libraries/ = SubResource("AnimationLibrary_6jhec")
+
+[node name="SFX_Death" type="FmodEventEmitter2D" parent="." unique_id=1309119961]
+event_name = "event:/SFX/Enemy_Hurt"
+event_guid = "{40ee36c8-09c5-41c5-a0f0-5dc7147dc684}"

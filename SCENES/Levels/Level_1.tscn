@@ -587,12 +587,13 @@ collision_layer = 0
 position = Vector2(40, 32)
 shape = SubResource("RectangleShape2D_33exs")
 
-[node name="McGuffin" type="Node2D" parent="Room5_GoingUp" unique_id=1619392562 node_paths=PackedStringArray("e_visual", "e_collectionVFX")]
+[node name="McGuffin" type="Node2D" parent="Room5_GoingUp" unique_id=1619392562 node_paths=PackedStringArray("e_visual", "e_collectionVFX", "e_collectSFX")]
 position = Vector2(320, 672)
 script = ExtResource("13_x5ija")
 e_uid = 1773424431.599
 e_visual = NodePath("DefinitelyNotAChaosEmerald")
 e_collectionVFX = NodePath("JustTheDeathParticleAgain")
+e_collectSFX = NodePath("SFX_Collect")
 
 [node name="DefinitelyNotAChaosEmerald" type="Sprite2D" parent="Room5_GoingUp/McGuffin" unique_id=1637264005]
 texture = ExtResource("14_x4pa3")
@@ -619,6 +620,10 @@ initial_velocity_max = 120.0
 damping_min = 76.622
 damping_max = 88.05
 color_ramp = SubResource("Gradient_33exs")
+
+[node name="SFX_Collect" type="FmodEventEmitter2D" parent="Room5_GoingUp/McGuffin" unique_id=260570191]
+event_name = "event:/SFX/Collect_McGuffin"
+event_guid = "{e2ae335f-bb75-400c-9b83-d3d63aebb42b}"
 
 [node name="WhatButtons" parent="." unique_id=455311945 instance=ExtResource("7_iulb5")]
 visible = false
@@ -872,12 +877,13 @@ collision_layer = 0
 position = Vector2(16, 24)
 shape = SubResource("RectangleShape2D_mwdpv")
 
-[node name="McGuffin" type="Node2D" parent="SideRoom_1" unique_id=279546250 node_paths=PackedStringArray("e_visual", "e_collectionVFX")]
+[node name="McGuffin" type="Node2D" parent="SideRoom_1" unique_id=279546250 node_paths=PackedStringArray("e_visual", "e_collectionVFX", "e_collectSFX")]
 position = Vector2(96, 368)
 script = ExtResource("13_x5ija")
 e_uid = 1773420358.325
 e_visual = NodePath("DefinitelyNotAChaosEmerald")
 e_collectionVFX = NodePath("JustTheDeathParticleAgain")
+e_collectSFX = NodePath("SFX_Collect")
 
 [node name="DefinitelyNotAChaosEmerald" type="Sprite2D" parent="SideRoom_1/McGuffin" unique_id=1521864014]
 texture = ExtResource("14_x4pa3")
@@ -904,6 +910,10 @@ initial_velocity_max = 120.0
 damping_min = 76.622
 damping_max = 88.05
 color_ramp = SubResource("Gradient_33exs")
+
+[node name="SFX_Collect" type="FmodEventEmitter2D" parent="SideRoom_1/McGuffin" unique_id=1964627583]
+event_name = "event:/SFX/Collect_McGuffin"
+event_guid = "{e2ae335f-bb75-400c-9b83-d3d63aebb42b}"
 
 [node name="SideRoom_0" type="Node2D" parent="." unique_id=645281780 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "e_mcGuffins", "m_editorParent", "m_editorLine")]
 position = Vector2(-1584, -864)
@@ -935,12 +945,13 @@ shape = SubResource("RectangleShape2D_xy0nf")
 position = Vector2(0, 16)
 texture = ExtResource("3_tpf8w")
 
-[node name="McGuffin" type="Node2D" parent="SideRoom_0" unique_id=945951161 node_paths=PackedStringArray("e_visual", "e_collectionVFX")]
+[node name="McGuffin" type="Node2D" parent="SideRoom_0" unique_id=945951161 node_paths=PackedStringArray("e_visual", "e_collectionVFX", "e_collectSFX")]
 position = Vector2(336, 144)
 script = ExtResource("13_x5ija")
 e_uid = 1773424837.128
 e_visual = NodePath("DefinitelyNotAChaosEmerald")
 e_collectionVFX = NodePath("JustTheDeathParticleAgain")
+e_collectSFX = NodePath("SFX_Collect")
 
 [node name="DefinitelyNotAChaosEmerald" type="Sprite2D" parent="SideRoom_0/McGuffin" unique_id=1343972940]
 texture = ExtResource("14_x4pa3")
@@ -967,6 +978,10 @@ initial_velocity_max = 120.0
 damping_min = 76.622
 damping_max = 88.05
 color_ramp = SubResource("Gradient_33exs")
+
+[node name="SFX_Collect" type="FmodEventEmitter2D" parent="SideRoom_0/McGuffin" unique_id=994062027]
+event_name = "event:/SFX/Collect_McGuffin"
+event_guid = "{e2ae335f-bb75-400c-9b83-d3d63aebb42b}"
 
 [node name="RespawnPoint" type="Area2D" parent="SideRoom_0" unique_id=1059536327 node_paths=PackedStringArray("e_shape", "e_respawnPoint")]
 position = Vector2(48, 176)
@@ -1073,12 +1088,13 @@ shape = SubResource("RectangleShape2D_sxjm5")
 position = Vector2(8, 16)
 texture = ExtResource("3_tpf8w")
 
-[node name="McGuffin2" type="Node2D" parent="Room_Warehouse1" unique_id=475656550 node_paths=PackedStringArray("e_visual", "e_collectionVFX")]
+[node name="McGuffin2" type="Node2D" parent="Room_Warehouse1" unique_id=475656550 node_paths=PackedStringArray("e_visual", "e_collectionVFX", "e_collectSFX")]
 position = Vector2(608, 256)
 script = ExtResource("13_x5ija")
 e_uid = 1776526866.89
 e_visual = NodePath("DefinitelyNotAChaosEmerald")
 e_collectionVFX = NodePath("JustTheDeathParticleAgain")
+e_collectSFX = NodePath("SFX_Collect")
 
 [node name="DefinitelyNotAChaosEmerald" type="Sprite2D" parent="Room_Warehouse1/McGuffin2" unique_id=932103238]
 texture = ExtResource("14_x4pa3")
@@ -1105,6 +1121,10 @@ initial_velocity_max = 120.0
 damping_min = 76.622
 damping_max = 88.05
 color_ramp = SubResource("Gradient_33exs")
+
+[node name="SFX_Collect" type="FmodEventEmitter2D" parent="Room_Warehouse1/McGuffin2" unique_id=432285060]
+event_name = "event:/SFX/Collect_McGuffin"
+event_guid = "{e2ae335f-bb75-400c-9b83-d3d63aebb42b}"
 
 [node name="RespawnPoint" type="Area2D" parent="Room_Warehouse1" unique_id=1345842109 node_paths=PackedStringArray("e_shape", "e_respawnPoint")]
 position = Vector2(416, 192)
@@ -1206,12 +1226,13 @@ shape = SubResource("RectangleShape2D_omnxs")
 position = Vector2(8, 16)
 texture = ExtResource("3_tpf8w")
 
-[node name="McGuffin2" type="Node2D" parent="Room_Warehouse_2" unique_id=2067070247 node_paths=PackedStringArray("e_visual", "e_collectionVFX")]
+[node name="McGuffin2" type="Node2D" parent="Room_Warehouse_2" unique_id=2067070247 node_paths=PackedStringArray("e_visual", "e_collectionVFX", "e_collectSFX")]
 position = Vector2(576, 224)
 script = ExtResource("13_x5ija")
 e_uid = 1776526859.632
 e_visual = NodePath("DefinitelyNotAChaosEmerald")
 e_collectionVFX = NodePath("JustTheDeathParticleAgain")
+e_collectSFX = NodePath("SFX_Collect")
 
 [node name="DefinitelyNotAChaosEmerald" type="Sprite2D" parent="Room_Warehouse_2/McGuffin2" unique_id=1202647603]
 texture = ExtResource("14_x4pa3")
@@ -1238,6 +1259,10 @@ initial_velocity_max = 120.0
 damping_min = 76.622
 damping_max = 88.05
 color_ramp = SubResource("Gradient_33exs")
+
+[node name="SFX_Collect" type="FmodEventEmitter2D" parent="Room_Warehouse_2/McGuffin2" unique_id=1057396910]
+event_name = "event:/SFX/Collect_McGuffin"
+event_guid = "{e2ae335f-bb75-400c-9b83-d3d63aebb42b}"
 
 [connection signal="body_entered" from="Room5_GoingUp/Offset/OneWay/PlayerDetector" to="Room5_GoingUp/Offset/OneWay" method="_on_player_detector_body_entered"]
 [connection signal="body_exited" from="Room5_GoingUp/Offset/OneWay/PlayerDetector" to="Room5_GoingUp/Offset/OneWay" method="_on_player_detector_body_exited"]

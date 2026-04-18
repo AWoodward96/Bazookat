@@ -30,4 +30,10 @@ color_ramp = SubResource("Gradient_yqqkn")
 [node name="Timer" type="Timer" parent="." unique_id=1526014846]
 wait_time = 2.0
 
+[node name="SFX_Generic_Explosion" type="FmodEventEmitter2D" parent="." unique_id=212899298]
+event_name = "event:/SFX/Generic_Explosion_Soft"
+event_guid = "{bebed133-79dd-44fe-9dee-d7faaee22c26}"
+autoplay = true
+auto_release = true
+
 [connection signal="timeout" from="Timer" to="." method="queue_free"]
