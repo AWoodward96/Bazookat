@@ -826,6 +826,9 @@ texture = ExtResource("1_eyulv")
 14:12/size_in_atlas = Vector2i(4, 2)
 14:12/0 = 0
 14:12/0/texture_origin = Vector2i(-24, -8)
+0:8/0 = 0
+0:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:8/0 = 0
 
 [resource]
 occlusion_layer_0/light_mask = 1

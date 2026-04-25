@@ -45,9 +45,11 @@ func _physics_process(_delta: float):
 			if m_facingLeft:
 				horizontal = Vector2.LEFT
 
+			# Move foward depending on which direction you're facing
 			velocity.x = move_toward(velocity.x, horizontal.x * e_crawlSpeed, e_crawlAcceleration * _delta)
 			move_and_slide()
 
+			# Check for walls and ledges using the raycast2Ds
 			e_wallDetectorCast.force_raycast_update()
 			e_ledgeDetectorCast.force_raycast_update()
 			var detectedWall = e_wallDetectorCast.get_collider() != null
@@ -56,6 +58,7 @@ func _physics_process(_delta: float):
 				StartTurn()
 
 		EWalkState.Turning:
+			# Turning is basically just an animation, so wait till the timer is done and then keep walking
 			velocity.x = 0
 			if m_turningTimer > 0:
 				m_turningTimer -= _delta
