@@ -31,9 +31,8 @@ AudioManager="*uid://c2qdtvd2rynak"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=480
-window/size/mode=3
+window/size/viewport_width=800
+window/size/viewport_height=450
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
 mouse_cursor/custom_image="uid://d1yrvmlx3w4d1"

@@ -244,7 +244,7 @@ position = Vector2(0, -15)
 sprite_frames = SubResource("SpriteFrames_trpdq")
 animation = &"walking"
 autoplay = "walking"
-frame = 1
+frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1993568812]
 position = Vector2(0, -9)
