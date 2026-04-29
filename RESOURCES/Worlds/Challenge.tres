@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="WorldTemplate" format=3 uid="uid://dp0klmywuerv7"]
 
 [ext_resource type="Script" uid="uid://di6xt467jwpcs" path="res://SCRIPTS/Content/WorldTemplate.gd" id="1_74epo"]
-[ext_resource type="PackedScene" uid="uid://cbr5bmpjp4il2" path="res://SCENES/Levels/Limit_Testing.tscn" id="1_qbgm3"]
+[ext_resource type="PackedScene" uid="uid://cbr5bmpjp4il2" path="res://SCENES/Levels/Prototype/Limit_Testing.tscn" id="1_qbgm3"]
 
 [resource]
 script = ExtResource("1_74epo")

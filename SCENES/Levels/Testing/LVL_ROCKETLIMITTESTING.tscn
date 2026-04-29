@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://t73qtb078he0"]
+
+[ext_resource type="Script" uid="uid://cjugdejpk17fm" path="res://SCRIPTS/Content/Level.gd" id="1_u61fs"]
+[ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="3_rmow8"]
+[ext_resource type="Texture2D" uid="uid://de5xhkm1ndfbc" path="res://ART/Characters/Main/normal_cat.png" id="4_hxyb6"]
+[ext_resource type="PackedScene" uid="uid://rt3i48a6d2o0" path="res://SCENES/Levels/Testing/SPEED.tscn" id="4_u61fs"]
+[ext_resource type="PackedScene" uid="uid://dilee5tlwetad" path="res://RESOURCES/Prefabs/what_buttons.tscn" id="5_1v377"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ua45"]
+shader = ExtResource("3_rmow8")
+shader_parameter/clr = Color(0.61, 1, 0.67499995, 1)
+shader_parameter/type = 2
+shader_parameter/thickness = 2.0
+
+[node name="CONCAT" type="Node2D" unique_id=473351549 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
+script = ExtResource("1_u61fs")
+e_rooms = [NodePath("SPEED")]
+e_forceBazooka = true
+e_startingPosition = NodePath("StartingPositionHelper")
+
+[node name="StartingPositionHelper" type="Sprite2D" parent="." unique_id=1681053262]
+material = SubResource("ShaderMaterial_8ua45")
+position = Vector2(624, 512)
+texture = ExtResource("4_hxyb6")
+
+[node name="SPEED" parent="." unique_id=475729827 instance=ExtResource("4_u61fs")]
+position = Vector2(336, 176)
+
+[node name="WhatButtons" parent="." unique_id=455311945 instance=ExtResource("5_1v377")]

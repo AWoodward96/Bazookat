@@ -40,6 +40,14 @@ func _ready() -> void:
 		if m_editorParent != null:
 			m_editorParent.visible = false
 
+		# check if root then initialize a player if there's no root
+		if get_parent() == get_tree().root:
+			# create the player, set them up with the rocket, and initialize at the root
+			var player = GameManager.e_playerPrefab.instantiate()
+			add_child(player)
+			player.position = e_defaultRespawnPoint.global_position
+			player.SetBazookaState(true)
+
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		EDIT_UpdateEditor()

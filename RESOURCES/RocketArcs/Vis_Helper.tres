@@ -1,0 +1,51 @@
+[gd_resource type="Resource" script_class="RocketArcWrapper" format=3 uid="uid://dmb8ve2symljk"]
+
+[ext_resource type="Script" uid="uid://b20bb84wd4ibf" path="res://SCRIPTS/RocketForceHelper.gd" id="1_etoiq"]
+[ext_resource type="Script" uid="uid://osptgwuf0hh5" path="res://SCRIPTS/RocketArcWrapper.gd" id="2_ncm37"]
+
+[sub_resource type="Resource" id="Resource_bmxi4"]
+resource_name = "E"
+script = ExtResource("1_etoiq")
+e_degrees = 10.0
+e_debugColor = Color(0.41000003, 1, 0.90166664, 1)
+e_direction = 2
+e_HasXForce = true
+e_XDirection = -420.0
+e_YForceMultiplier = -0.65
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_7asai"]
+resource_name = "S"
+script = ExtResource("1_etoiq")
+e_degrees = 170.0
+e_debugColor = Color(4.1151793e-06, 0.5783555, 0.29460013, 1)
+e_direction = 4
+e_YForceMultiplier = -1.4
+e_horizontalLockoutDuration = 0.25
+e_perfectModifier = 1.1
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_m3dc8"]
+resource_name = "W"
+script = ExtResource("1_etoiq")
+e_degrees = 110.0
+e_debugColor = Color(0.41000003, 1, 0.90166664, 1)
+e_direction = 6
+e_HasXForce = true
+e_XDirection = 420.0
+e_YForceMultiplier = -0.65
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_llfxf"]
+resource_name = "N"
+script = ExtResource("1_etoiq")
+e_degrees = 70.0
+e_debugColor = Color(1, 0.25, 0.25, 1)
+e_horizontalLockoutDuration = 0.0
+e_upwardCutLockoutDuration = 0.0
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[resource]
+script = ExtResource("2_ncm37")
+e_data = Array[ExtResource("1_etoiq")]([SubResource("Resource_bmxi4"), SubResource("Resource_7asai"), SubResource("Resource_m3dc8"), SubResource("Resource_llfxf")])
+metadata/_custom_type_script = "uid://osptgwuf0hh5"

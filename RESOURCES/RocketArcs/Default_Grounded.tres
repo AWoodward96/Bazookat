@@ -1,0 +1,121 @@
+[gd_resource type="Resource" script_class="RocketArcWrapper" format=3 uid="uid://ctbs7djchlblp"]
+
+[ext_resource type="Script" uid="uid://osptgwuf0hh5" path="res://SCRIPTS/RocketArcWrapper.gd" id="1_3h2m2"]
+[ext_resource type="Script" uid="uid://b20bb84wd4ibf" path="res://SCRIPTS/RocketForceHelper.gd" id="1_hx8vg"]
+
+[sub_resource type="Resource" id="Resource_nh5kv"]
+resource_name = "se"
+script = ExtResource("1_hx8vg")
+e_degrees = 47.5
+e_debugColor = Color(0.94, 0.92370665, 0.4512, 1)
+e_direction = 3
+e_HasXForce = true
+e_XDirection = -450.0
+e_YForceMultiplier = -1.0
+e_upwardCutLockoutDuration = 0.75
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_y3fgl"]
+resource_name = "sse"
+script = ExtResource("1_hx8vg")
+e_degrees = 20.0
+e_debugColor = Color(1, 1, 1, 1)
+e_direction = 8
+e_HasXForce = true
+e_XDirection = -150.0
+e_YForceMultiplier = -1.4
+e_horizontalLockoutDuration = 0.15
+e_upwardCutLockoutDuration = 0.75
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_7asai"]
+resource_name = "S"
+script = ExtResource("1_hx8vg")
+e_degrees = 45.0
+e_debugColor = Color(4.1151793e-06, 0.5783555, 0.29460013, 1)
+e_direction = 4
+e_YForceMultiplier = -1.4
+e_horizontalLockoutDuration = 0.25
+e_perfectModifier = 1.1
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_7ey2p"]
+resource_name = "ssw"
+script = ExtResource("1_hx8vg")
+e_degrees = 20.0
+e_debugColor = Color(1, 1, 1, 1)
+e_direction = 9
+e_HasXForce = true
+e_XDirection = 150.0
+e_YForceMultiplier = -1.4
+e_horizontalLockoutDuration = 0.15
+e_upwardCutLockoutDuration = 0.75
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_l3moj"]
+resource_name = "sw"
+script = ExtResource("1_hx8vg")
+e_degrees = 47.5
+e_debugColor = Color(0.94, 0.92370665, 0.4512, 1)
+e_direction = 5
+e_HasXForce = true
+e_XDirection = 450.0
+e_YForceMultiplier = -1.0
+e_upwardCutLockoutDuration = 0.75
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_m3dc8"]
+resource_name = "W"
+script = ExtResource("1_hx8vg")
+e_degrees = 50.0
+e_debugColor = Color(0.41000003, 1, 0.90166664, 1)
+e_direction = 6
+e_HasXForce = true
+e_XDirection = 420.0
+e_YForceMultiplier = -0.65
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_g336n"]
+resource_name = "nw"
+script = ExtResource("1_hx8vg")
+e_degrees = 30.0
+e_debugColor = Color(1, 0.58000004, 0.58000004, 1)
+e_direction = 7
+e_HasXForce = true
+e_XDirection = 300.0
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_llfxf"]
+resource_name = "N"
+script = ExtResource("1_hx8vg")
+e_degrees = 20.0
+e_debugColor = Color(1, 0.25, 0.25, 1)
+e_horizontalLockoutDuration = 0.0
+e_upwardCutLockoutDuration = 0.0
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_2f1oo"]
+resource_name = "ne"
+script = ExtResource("1_hx8vg")
+e_degrees = 30.0
+e_debugColor = Color(1, 0.58000004, 0.58000004, 1)
+e_direction = 1
+e_HasXForce = true
+e_XDirection = -300.0
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_bmxi4"]
+resource_name = "E"
+script = ExtResource("1_hx8vg")
+e_degrees = 50.0
+e_debugColor = Color(0.41000003, 1, 0.90166664, 1)
+e_direction = 2
+e_HasXForce = true
+e_XDirection = -420.0
+e_YForceMultiplier = -0.65
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[resource]
+script = ExtResource("1_3h2m2")
+e_data = Array[ExtResource("1_hx8vg")]([SubResource("Resource_nh5kv"), SubResource("Resource_y3fgl"), SubResource("Resource_7asai"), SubResource("Resource_7ey2p"), SubResource("Resource_l3moj"), SubResource("Resource_m3dc8"), SubResource("Resource_g336n"), SubResource("Resource_llfxf"), SubResource("Resource_2f1oo"), SubResource("Resource_bmxi4")])
+metadata/_custom_type_script = "uid://osptgwuf0hh5"

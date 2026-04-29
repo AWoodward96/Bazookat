@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dkmve6oukvrwl"]
+
+[ext_resource type="Script" uid="uid://cjugdejpk17fm" path="res://SCRIPTS/Content/Level.gd" id="1_pwfe0"]
+[ext_resource type="PackedScene" uid="uid://dp2rm5aosr5ek" path="res://SCENES/Levels/Testing/PREFAB.tscn" id="2_ciuh0"]
+[ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="3_s71vp"]
+[ext_resource type="Texture2D" uid="uid://de5xhkm1ndfbc" path="res://ART/Characters/Main/normal_cat.png" id="4_6g3bd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ua45"]
+shader = ExtResource("3_s71vp")
+shader_parameter/clr = Color(0.61, 1, 0.67499995, 1)
+shader_parameter/type = 2
+shader_parameter/thickness = 2.0
+
+[node name="CONCAT" type="Node2D" unique_id=473351549 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
+script = ExtResource("1_pwfe0")
+e_rooms = [NodePath("TST0"), NodePath("TST1"), NodePath("TST2")]
+e_forceBazooka = true
+e_startingPosition = NodePath("StartingPositionHelper")
+
+[node name="TST0" parent="." unique_id=475729827 instance=ExtResource("2_ciuh0")]
+position = Vector2(400, 144)
+
+[node name="TST1" parent="." unique_id=1711070114 instance=ExtResource("2_ciuh0")]
+position = Vector2(1040, 144)
+
+[node name="TST2" parent="." unique_id=960146572 instance=ExtResource("2_ciuh0")]
+position = Vector2(1680, 144)
+
+[node name="StartingPositionHelper" type="Sprite2D" parent="." unique_id=1681053262]
+material = SubResource("ShaderMaterial_8ua45")
+position = Vector2(624, 512)
+texture = ExtResource("4_6g3bd")

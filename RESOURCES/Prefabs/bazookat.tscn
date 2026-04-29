@@ -6,6 +6,7 @@
 [ext_resource type="AnimationNodeStateMachine" uid="uid://drwexi5vky4c0" path="res://ART/AnimationStates/Bazookat_NoBazooka.tres" id="3_gxwok"]
 [ext_resource type="Shader" uid="uid://c01bxacddng50" path="res://ART/Shaders/combatant_shader.gdshader" id="4_yqqkn"]
 [ext_resource type="Texture2D" uid="uid://bf37qqy65vav" path="res://ART/Characters/Main/normal_cat_aerial.png" id="5_8dus5"]
+[ext_resource type="Resource" uid="uid://ctbs7djchlblp" path="res://RESOURCES/RocketArcs/Default_Grounded.tres" id="5_tyxxk"]
 [ext_resource type="Texture2D" uid="uid://bpyi0f5e03rfd" path="res://ART/Characters/Main/bazooka_climb.png" id="6_aeidu"]
 [ext_resource type="Texture2D" uid="uid://ckjayx1e1anm" path="res://ART/Characters/Main/bazookat_run1.png" id="6_o0q0n"]
 [ext_resource type="Script" uid="uid://dtmqo260lgcj3" path="res://SCRIPTS/BazookaBehavior.gd" id="6_tyrya"]
@@ -36,6 +37,7 @@ point_count = 2
 [sub_resource type="Resource" id="Resource_7asai"]
 resource_name = "S"
 script = ExtResource("2_o0q0n")
+e_degrees = 45.0
 e_direction = 4
 e_YForceMultiplier = -1.4
 e_horizontalLockoutDuration = 0.25
@@ -45,6 +47,7 @@ metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 [sub_resource type="Resource" id="Resource_y3fgl"]
 resource_name = "sse"
 script = ExtResource("2_o0q0n")
+e_degrees = 30.0
 e_direction = 8
 e_HasXForce = true
 e_XDirection = -150.0
@@ -56,6 +59,7 @@ metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 [sub_resource type="Resource" id="Resource_nh5kv"]
 resource_name = "se"
 script = ExtResource("2_o0q0n")
+e_degrees = 37.5
 e_direction = 3
 e_HasXForce = true
 e_XDirection = -450.0
@@ -66,6 +70,7 @@ metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 [sub_resource type="Resource" id="Resource_7ey2p"]
 resource_name = "ssw"
 script = ExtResource("2_o0q0n")
+e_degrees = 30.0
 e_direction = 9
 e_HasXForce = true
 e_XDirection = 150.0
@@ -77,6 +82,7 @@ metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 [sub_resource type="Resource" id="Resource_l3moj"]
 resource_name = "sw"
 script = ExtResource("2_o0q0n")
+e_degrees = 37.5
 e_direction = 5
 e_HasXForce = true
 e_XDirection = 450.0
@@ -87,6 +93,7 @@ metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 [sub_resource type="Resource" id="Resource_bmxi4"]
 resource_name = "E"
 script = ExtResource("2_o0q0n")
+e_degrees = 50.0
 e_direction = 2
 e_HasXForce = true
 e_XDirection = -420.0
@@ -96,6 +103,7 @@ metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 [sub_resource type="Resource" id="Resource_m3dc8"]
 resource_name = "W"
 script = ExtResource("2_o0q0n")
+e_degrees = 50.0
 e_direction = 6
 e_HasXForce = true
 e_XDirection = 420.0
@@ -105,6 +113,7 @@ metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 [sub_resource type="Resource" id="Resource_llfxf"]
 resource_name = "N"
 script = ExtResource("2_o0q0n")
+e_degrees = 20.0
 e_horizontalLockoutDuration = 0.0
 e_upwardCutLockoutDuration = 0.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
@@ -112,6 +121,7 @@ metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 [sub_resource type="Resource" id="Resource_2f1oo"]
 resource_name = "ne"
 script = ExtResource("2_o0q0n")
+e_degrees = 30.0
 e_direction = 1
 e_HasXForce = true
 e_XDirection = -300.0
@@ -120,6 +130,7 @@ metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 [sub_resource type="Resource" id="Resource_g336n"]
 resource_name = "nw"
 script = ExtResource("2_o0q0n")
+e_degrees = 30.0
 e_direction = 7
 e_HasXForce = true
 e_XDirection = 300.0
@@ -1979,9 +1990,11 @@ e_wallslideParticle = NodePath("WallSlideOffset/WallSlideParticle")
 e_climbParticleParent = NodePath("ClimbPartOffset")
 e_climbParticle = NodePath("ClimbPartOffset/ClimbParticle")
 e_rocketJumpDirectionData = Array[ExtResource("2_o0q0n")]([SubResource("Resource_7asai"), SubResource("Resource_y3fgl"), SubResource("Resource_nh5kv"), SubResource("Resource_7ey2p"), SubResource("Resource_l3moj"), SubResource("Resource_bmxi4"), SubResource("Resource_m3dc8"), SubResource("Resource_llfxf"), SubResource("Resource_2f1oo"), SubResource("Resource_g336n")])
+e_defaultJumpArcs = ExtResource("5_tyxxk")
 e_perfectRocketJumpWindow = 0.097
 e_perfectRocketJumpGravityMultiplier = 0.85
 e_perfectRocketJumpGravityDuration = 0.5
+e_extraSpeedPerRocketJump = 125.0
 e_deathCast = NodePath("Raycasts/DeathCast")
 e_deathBounce = 100.0
 e_deathParticle = NodePath("DeathParticle")
@@ -2172,9 +2185,11 @@ event_name = "event:/SFX/Player/Player_Walk_4P"
 event_guid = "{68be8d66-866f-4ed6-8113-0bedd9f30a13}"
 
 [node name="SFX_Death" type="FmodEventEmitter2D" parent="SFX" unique_id=1481269784]
+event_name = "event:/SFX/Player/Player_Death"
 event_guid = "{9f207808-f0da-4732-a65a-258a676b829a}"
 
 [node name="SFX_Respawn" type="FmodEventEmitter2D" parent="SFX" unique_id=1664942239]
+event_name = "event:/SFX/Player/Player_Respawn"
 event_guid = "{2ebdfde8-68e6-4238-a1f4-33f47deb8da4}"
 
 [node name="FmodListener2D" type="FmodListener2D" parent="." unique_id=1169763407]

@@ -50,9 +50,12 @@ enum EState { Normal, Death, Respawn, LevelComplete, Cutscene }
 
 @export_category("Rocket Jump Information")
 @export var e_rocketJumpDirectionData : Array[RocketForceHelper]
+@export var e_defaultJumpArcs : RocketArcWrapper
 @export var e_perfectRocketJumpWindow : float = 0.125
 @export var e_perfectRocketJumpGravityMultiplier : float = 0.5
 @export var e_perfectRocketJumpGravityDuration : float = 1
+@export var e_extraSpeedPerRocketJump : float = 75 # Whenever you rocket jump, this is set to
+@export var e_rocketJumpExtraSpeedTimer : float = 0.5
 
 @export_category("Death")
 @export var e_deathCast : ShapeCast2D
@@ -118,6 +121,8 @@ var m_deathTween : Tween
 
 var m_perfectRocketJumpTimer : float
 var m_perfectRocketJumpSuccessTimer : float
+var m_rocketJumpExtraBoost : float
+var m_rocketJumpExtraBoostTimer : float
 
 var m_prevVelocity : Vector2
 
@@ -249,6 +254,11 @@ func HandleInput(_delta : float):
 	if m_endSprintAnimTimer > 0:
 		m_endSprintAnimTimer -= _delta
 
+	if m_rocketJumpExtraBoostTimer > 0 && m_onFloor:
+		m_rocketJumpExtraBoostTimer -= _delta
+		if m_rocketJumpExtraBoostTimer <= 0:
+			m_rocketJumpExtraBoost = 0
+
 	pass
 
 func HandleAudio():
@@ -360,7 +370,6 @@ func HandleParticles():
 	e_climbParticle.emitting = m_climbing && e_state == EState.Normal
 
 
-
 func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float, _useRaycast : bool):
 	# Get the rotation of the rocket relative to the player
 	var dstFromRocket
@@ -384,14 +393,8 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float, _useRayc
 
 	db_lastAngleShot = angle
 	# THIS FEELS AMAZING YESSSSSSSSSSS
-	var direction = GetDirectionFromRocketJumpAngle(angle)
-	var index = e_rocketJumpDirectionData.find_custom(func(x : RocketForceHelper) : return x.e_direction == direction)
-	if index == -1:
-		# This should literally never happen but:
-		push_error("Could not find rocket jump information. Angle: ", str(angle), " Direction: ", PlayerController.ERocketJumpDirections.find_key(direction))
-		return
 
-	var data = e_rocketJumpDirectionData[index]
+	var data = GetDirectionFromRocketJumpAngle(angle)
 	var perfectMult : float = 1
 	if m_perfectRocketJumpTimer > 0:
 		# Perfect rocket jump
@@ -400,6 +403,8 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float, _useRayc
 		m_perfectRocketJumpSuccessTimer = e_perfectRocketJumpGravityDuration
 		e_bazooka.ForceReload()
 
+	m_rocketJumpExtraBoostTimer = e_rocketJumpExtraSpeedTimer
+	m_rocketJumpExtraBoost += e_extraSpeedPerRocketJump
 
 	var desiredVelocity = velocity
 	if data.e_HasXForce:
@@ -415,60 +420,61 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float, _useRayc
 	m_horizontalLockoutTimer = data.e_horizontalLockoutDuration
 	m_verticalCutLockoutTimer = data.e_upwardCutLockoutDuration
 
-	db_lastRocketJumpDirection = direction
+	db_lastRocketJumpDirection = data.e_direction
 	db_lastRocketJumpPerfect = perfectMult != 1
 	db_jumpedWithLastRocket = true
 
 	pass
 
 func GetDirectionFromRocketJumpAngle(_angle : float):
-	## This is complicated
-
-	## It's so complicated, I've rewritten this comment like 100 times
-	## Basically, if you use an evenly divided arc (say, each angle is the same size 360/8)\
-	## then the player will move in ways they're not expecting
-	## so you have to lie to them.
-	## Unless you aim above the horizontal, you will be hitting SW's or SE's
-	## The lower arc even has SSW and SSE to help you go up in upward jumps
-	## The angle's listed below are always changing as I get a feel for how the jumps should behave
-
-
-	## S is a 45 degree arc
-	## SE and SW are a 37.5 degree arcs
-	## There's an extra SSW and SSE definition, each at 30 degrees.
-	## W and E are both 50 degree's and are skewed above the horizontal (IE if they're below the horizontal, they're SW and SE)
-	## N is 20, while the NE and NW are both at 30
-	## I think in the future, NE and NW might want to be smaller, and W and E might want to be bigger but...
-
-	var ewAngle : float = 50
-	var sAngle : float = 45
-	var nAngle : float = 20
-	var halfS = sAngle / 2
-	var halfN = nAngle / 2
-
-	# We kinda need this. Going up is too hard
-	var sswAngle : float = 30
-
-	if _angle > 360 - (ewAngle):
-		return ERocketJumpDirections.E 							# 50
-	elif _angle > 0 && _angle <= 90 - (halfS + sswAngle):
-		return ERocketJumpDirections.se 						# 37.5
-	elif _angle > 90 - (halfS + sswAngle) && _angle <= 90 - (halfS):
-		return ERocketJumpDirections.sse						# 30
-	elif _angle > 90 - halfS && _angle <= 90 + halfS:
-		return ERocketJumpDirections.S 							# 45
-	elif _angle > 90 + halfS && _angle <= 90 + halfS + sswAngle:
-		return ERocketJumpDirections.ssw						# 30
-	elif _angle > 90 + halfS + sswAngle && _angle <= 180:
-		return ERocketJumpDirections.sw 						# 37.5
-	elif _angle > 180 && _angle <= 180 + (ewAngle):
-		return ERocketJumpDirections.W 							# 50
-	elif _angle > 180 + (ewAngle) && _angle <= 270 - halfN:
-		return ERocketJumpDirections.nw 						# 30
-	elif _angle > 270 - halfN && _angle <= 270 + halfN:
-		return ERocketJumpDirections.N 							# 20
-	else:
-		return ERocketJumpDirections.ne 						# 30
+	### This is complicated
+#
+	### It's so complicated, I've rewritten this comment like 100 times
+	### Basically, if you use an evenly divided arc (say, each angle is the same size 360/8)\
+	### then the player will move in ways they're not expecting
+	### so you have to lie to them.
+	### Unless you aim above the horizontal, you will be hitting SW's or SE's
+	### The lower arc even has SSW and SSE to help you go up in upward jumps
+	### The angle's listed below are always changing as I get a feel for how the jumps should behave
+#
+#
+	### S is a 45 degree arc
+	### SE and SW are a 37.5 degree arcs
+	### There's an extra SSW and SSE definition, each at 30 degrees.
+	### W and E are both 50 degree's and are skewed above the horizontal (IE if they're below the horizontal, they're SW and SE)
+	### N is 20, while the NE and NW are both at 30
+	### I think in the future, NE and NW might want to be smaller, and W and E might want to be bigger but...
+#
+	#var ewAngle : float = 50
+	#var sAngle : float = 45
+	#var nAngle : float = 20
+	#var halfS = sAngle / 2
+	#var halfN = nAngle / 2
+#
+	## We kinda need this. Going up is too hard
+	#var sswAngle : float = 30
+#
+	#if _angle > 360 - (ewAngle):
+		#return ERocketJumpDirections.E 							# 50
+	#elif _angle > 0 && _angle <= 90 - (halfS + sswAngle):
+		#return ERocketJumpDirections.se 						# 37.5
+	#elif _angle > 90 - (halfS + sswAngle) && _angle <= 90 - (halfS):
+		#return ERocketJumpDirections.sse						# 30
+	#elif _angle > 90 - halfS && _angle <= 90 + halfS:
+		#return ERocketJumpDirections.S 							# 45
+	#elif _angle > 90 + halfS && _angle <= 90 + halfS + sswAngle:
+		#return ERocketJumpDirections.ssw						# 30
+	#elif _angle > 90 + halfS + sswAngle && _angle <= 180:
+		#return ERocketJumpDirections.sw 						# 37.5
+	#elif _angle > 180 && _angle <= 180 + (ewAngle):
+		#return ERocketJumpDirections.W 							# 50
+	#elif _angle > 180 + (ewAngle) && _angle <= 270 - halfN:
+		#return ERocketJumpDirections.nw 						# 30
+	#elif _angle > 270 - halfN && _angle <= 270 + halfN:
+		#return ERocketJumpDirections.N 							# 20
+	#else:
+		#return ERocketJumpDirections.ne 						# 30
+	return e_defaultJumpArcs.Evaluate(_angle)
 
 func GetHorizontalSpeed():
 	var speed = e_horizontalSpeed
@@ -478,6 +484,8 @@ func GetHorizontalSpeed():
 
 	if !m_onFloor:
 		speed += e_aerialExtraHorizontal
+
+	speed += m_rocketJumpExtraBoost
 
 	return speed
 

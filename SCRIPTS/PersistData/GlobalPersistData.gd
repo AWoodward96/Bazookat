@@ -6,7 +6,7 @@ static var NODENAME = "GlobalPersistData"
 var m_levelPersistData : Array[LevelPersistData]
 
 func RegisterMcGuffinCollected(_level : Level, _mcGuffin : McGuffin):
-	if _mcGuffin == null:
+	if _mcGuffin == null || _level == null:
 		return
 
 	var level = GetLevelPersistData(_level)
@@ -21,6 +21,9 @@ func GetMcGuffinColected(_level : Level, _mcGuffin : McGuffin):
 	return false
 
 func GetLevelPersistData(_level : Level):
+	if _level == null:
+		return null
+
 	for l : LevelPersistData in m_levelPersistData:
 		if l.m_levelID == _level.scene_file_path:
 			return l
