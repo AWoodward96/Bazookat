@@ -42,11 +42,13 @@ func _ready() -> void:
 
 		# check if root then initialize a player if there's no root
 		if get_parent() == get_tree().root:
-			# create the player, set them up with the rocket, and initialize at the root
-			var player = GameManager.e_playerPrefab.instantiate()
-			add_child(player)
-			player.position = e_defaultRespawnPoint.global_position
-			player.SetBazookaState(true)
+			## create the player, set them up with the rocket, and initialize at the root
+			var level = Level.new()
+			level.e_rooms.append(self)
+			level.e_forceBazooka = true
+			level.e_startingPosition = e_defaultRespawnPoint
+			get_tree().root.add_child.call_deferred(level)
+
 
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():

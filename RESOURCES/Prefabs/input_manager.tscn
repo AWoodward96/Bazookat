@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bcxyv0sbpm13a"]
+
+[ext_resource type="Script" uid="uid://bcubxmxesgqs2" path="res://SCRIPTS/InputManager.gd" id="1_7jdv4"]
+[ext_resource type="Texture2D" uid="uid://d1yrvmlx3w4d1" path="res://ART/reticle_cursor.png" id="2_lubam"]
+
+[node name="InputManager" type="Node2D" unique_id=1762431298 node_paths=PackedStringArray("faux_cursor")]
+process_mode = 3
+script = ExtResource("1_7jdv4")
+faux_cursor = NodePath("faux_cursor")
+
+[node name="faux_cursor" type="Sprite2D" parent="." unique_id=1255721449]
+z_index = 20
+scale = Vector2(0.334, 0.334)
+texture = ExtResource("2_lubam")

@@ -3,7 +3,7 @@ extends CharacterBody2D
 class_name PlayerController
 
 enum ERocketJumpDirections { N, ne, E, se, S, sw, W, nw, sse, ssw }
-enum EState { Normal, Death, Respawn, LevelComplete, Cutscene }
+enum EState { Normal, Death, Respawn, LevelComplete, Cutscene, Bubbled }
 
 @export var e_visual : AnimatedSprite2D
 @export var e_bazooka : BazookaBehavior
@@ -126,6 +126,8 @@ var m_rocketJumpExtraBoostTimer : float
 
 var m_prevVelocity : Vector2
 
+var m_bubbled : Bubble
+
 # DEBUG
 var db_jumpedWithLastRocket : bool = false
 var db_lastRocketJumpDirection : ERocketJumpDirections
@@ -157,29 +159,31 @@ func _physics_process(_delta: float):
 		EState.Cutscene:
 			e_animationTree.active = false
 			pass
+		EState.Bubbled:
+			if m_bubbled != null:
+				position = m_bubbled.e_playerHoldRoot.global_position
+			HandleAudio()
+			pass
 
 	HandleParticles()
 
 func HandleInput(_delta : float):
-	if Input.is_action_just_pressed("pause") && !PauseUI.IsOpen:
+	if InputManager.pauseDown && !PauseUI.IsOpen:
+		InputManager.ReleasePause()
 		UIManager.OpenUI(UIManager.e_pausedUI)
 		return
 
 	# Horizontal Movement
-	m_horizontal = 0
-	if Input.is_action_pressed("left"):
-		m_horizontal += -1
-	if Input.is_action_pressed("right"):
-		m_horizontal += 1
+	m_horizontal = InputManager.move_horizontal
 
-	if Input.is_action_pressed("sprint"):
+	if InputManager.sprintHeld:
 		m_sprinting = true
 		m_endSprintAnimTimer = e_exitSprintStateDuration
 	else:
 		m_sprinting = false
 
-	m_downHeld = Input.is_action_pressed("down")
-	m_upHeld = Input.is_action_pressed("up")
+	m_downHeld = InputManager.inputHeld[2]
+	m_upHeld = InputManager.inputHeld[0]
 
 	# Wall and floor checks
 	var localOnFloor = is_on_floor() # only here to check for landing
@@ -199,12 +203,12 @@ func HandleInput(_delta : float):
 		m_onWall = false
 
 	# Standard jumping & Input
-	var jumpDown = Input.is_action_just_pressed("jump")
+	var jumpDown = InputManager.jumpInputDown
 	if jumpDown:
 		m_jumpBuffer = e_jumpBufferWindow
 	m_jumpInput = jumpDown || m_jumpBuffer > 0
 
-	m_jumpHeld = Input.is_action_pressed("jump")
+	m_jumpHeld = InputManager.jumpInputHeld
 	m_jump = m_jumpInput && m_onFloor
 
 	# Coyote time
@@ -230,7 +234,7 @@ func HandleInput(_delta : float):
 		e_bazooka.ForceReload()
 
 	if Level.Current != null && Level.Camera != null:
-		m_backpedaling = (Level.Camera.m_mouseWorldPosition.x < global_position.x && !m_facingLeft) || (Level.Camera.m_mouseWorldPosition.x > global_position.x && m_facingLeft)
+		m_backpedaling = (InputManager.mouseWorldPosition.x < global_position.x && !m_facingLeft) || (InputManager.mouseWorldPosition.x > global_position.x && m_facingLeft)
 
 	# Jump buffer deprecation
 	if m_jumpBuffer > 0:
@@ -374,11 +378,19 @@ func HandleParticles():
 
 
 func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float, _useRaycast : bool):
+	if e_state == EState.Bubbled:
+		e_state = EState.Normal
+		if m_bubbled != null:
+			# just so that if you S jump, you get to carry the velocity over
+			velocity = m_bubbled.velocity
+			m_bubbled.Pop()
+			m_bubbled = null
+
 	# Get the rotation of the rocket relative to the player
 	var dstFromRocket
 	if _useRaycast:
 		# 90% of the time, this is gonna be true
-		dstFromRocket = Level.Camera.m_mouseWorldPosition - global_position
+		dstFromRocket = InputManager.mouseWorldPosition - global_position
 	else:
 		dstFromRocket = _rocketPosition - global_position
 
@@ -430,60 +442,12 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float, _useRayc
 	pass
 
 func GetDirectionFromRocketJumpAngle(_angle : float):
-	### This is complicated
-#
-	### It's so complicated, I've rewritten this comment like 100 times
-	### Basically, if you use an evenly divided arc (say, each angle is the same size 360/8)\
-	### then the player will move in ways they're not expecting
-	### so you have to lie to them.
-	### Unless you aim above the horizontal, you will be hitting SW's or SE's
-	### The lower arc even has SSW and SSE to help you go up in upward jumps
-	### The angle's listed below are always changing as I get a feel for how the jumps should behave
-#
-#
-	### S is a 45 degree arc
-	### SE and SW are a 37.5 degree arcs
-	### There's an extra SSW and SSE definition, each at 30 degrees.
-	### W and E are both 50 degree's and are skewed above the horizontal (IE if they're below the horizontal, they're SW and SE)
-	### N is 20, while the NE and NW are both at 30
-	### I think in the future, NE and NW might want to be smaller, and W and E might want to be bigger but...
-#
-	#var ewAngle : float = 50
-	#var sAngle : float = 45
-	#var nAngle : float = 20
-	#var halfS = sAngle / 2
-	#var halfN = nAngle / 2
-#
-	## We kinda need this. Going up is too hard
-	#var sswAngle : float = 30
-#
-	#if _angle > 360 - (ewAngle):
-		#return ERocketJumpDirections.E 							# 50
-	#elif _angle > 0 && _angle <= 90 - (halfS + sswAngle):
-		#return ERocketJumpDirections.se 						# 37.5
-	#elif _angle > 90 - (halfS + sswAngle) && _angle <= 90 - (halfS):
-		#return ERocketJumpDirections.sse						# 30
-	#elif _angle > 90 - halfS && _angle <= 90 + halfS:
-		#return ERocketJumpDirections.S 							# 45
-	#elif _angle > 90 + halfS && _angle <= 90 + halfS + sswAngle:
-		#return ERocketJumpDirections.ssw						# 30
-	#elif _angle > 90 + halfS + sswAngle && _angle <= 180:
-		#return ERocketJumpDirections.sw 						# 37.5
-	#elif _angle > 180 && _angle <= 180 + (ewAngle):
-		#return ERocketJumpDirections.W 							# 50
-	#elif _angle > 180 + (ewAngle) && _angle <= 270 - halfN:
-		#return ERocketJumpDirections.nw 						# 30
-	#elif _angle > 270 - halfN && _angle <= 270 + halfN:
-		#return ERocketJumpDirections.N 							# 20
-	#else:
-		#return ERocketJumpDirections.ne 						# 30
-	
 	if (!m_onFloor || (m_onFloor && m_rocketJumpExtraBoostTimer > 0)):
 		if velocity.x > e_highSpeedThreshold:
 			return e_highSpeedEastArcs.Evaluate(_angle)
 		elif velocity.x < -e_highSpeedThreshold:
 			return e_highSpeedWestArcs.Evaluate(_angle)
-	
+
 	return e_defaultJumpArcs.Evaluate(_angle)
 
 func GetHorizontalSpeed():
@@ -661,3 +625,11 @@ func ExitCutscene():
 	if Level.Camera != null:
 		Level.Camera.e_trackMouse = true
 	e_animationTree.active = true
+
+func Bubbled(_bubble : Bubble):
+	if m_bubbled == null:
+		e_state = EState.Bubbled
+		m_bubbled = _bubble
+
+func BubblePopped():
+	pass

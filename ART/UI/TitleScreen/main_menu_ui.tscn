@@ -199,6 +199,7 @@ event_name = "event:/UI/Slider_Click"
 event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
 
 [node name="Challenge2" type="Button" parent="VBoxContainer2" unique_id=515823721]
+visible = false
 self_modulate = Color(1, 0.39, 0.4001665, 1)
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2

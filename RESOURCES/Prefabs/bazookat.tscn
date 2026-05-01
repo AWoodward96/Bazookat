@@ -1999,7 +1999,6 @@ e_highSpeedWestArcs = ExtResource("7_oo50v")
 e_perfectRocketJumpWindow = 0.097
 e_perfectRocketJumpGravityMultiplier = 0.85
 e_perfectRocketJumpGravityDuration = 0.5
-e_extraSpeedPerRocketJump = 0.0
 e_rocketJumpExtraSpeedTimer = 1.0
 e_deathCast = NodePath("Raycasts/DeathCast")
 e_deathBounce = 100.0

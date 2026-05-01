@@ -8,7 +8,7 @@
 font = ExtResource("3_g3fyt")
 font_size = 32
 
-[node name="PauseUI" type="Control" unique_id=1281247939 node_paths=PackedStringArray("e_buttonSFX")]
+[node name="PauseUI" type="Control" unique_id=1281247939]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +17,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_yinfv")
 script = ExtResource("2_gcdof")
-e_buttonSFX = NodePath("")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1638901573]
 layout_mode = 1
