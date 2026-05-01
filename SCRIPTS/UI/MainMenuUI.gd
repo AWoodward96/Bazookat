@@ -18,6 +18,15 @@ func OnPlay():
 
 	pass
 
+func OnDebugButton():
+	# double press protection
+	if !m_playSelected && !m_quitting:
+		m_playSelected = true
+		AudioManager.ButtonClick()
+		StartWorld(GameManager.e_gameData.e_internalTestingWorld)
+
+	pass
+
 func Challenge():
 	# double press protection
 	if !m_playSelected && !m_quitting:

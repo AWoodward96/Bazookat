@@ -59,11 +59,12 @@ font_size = 12
 [node name="LimitTesting" type="Node2D" unique_id=607547518 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
 script = ExtResource("1_3gj3e")
 e_rooms = [NodePath("Room"), NodePath("Room2"), NodePath("Room3"), NodePath("FallingWithStyle")]
+e_forceBazooka = true
 e_startingPosition = NodePath("StartingPosition")
 
 [node name="StartingPosition" type="Sprite2D" parent="." unique_id=237606703]
 material = SubResource("ShaderMaterial_m3dc8")
-position = Vector2(-240, 48)
+position = Vector2(2755, 1364)
 texture = ExtResource("3_072qe")
 
 [node name="FG" type="TileMapLayer" parent="." unique_id=89506019]

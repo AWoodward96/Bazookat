@@ -12,3 +12,4 @@ class_name RocketForceHelper
 @export var e_horizontalLockoutDuration : float = 0.5
 @export var e_upwardCutLockoutDuration : float = 0.5
 @export var e_perfectModifier : float = 1.25
+@export var e_maxSpeedGain : float = 0

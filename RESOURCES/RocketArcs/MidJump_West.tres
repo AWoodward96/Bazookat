@@ -1,18 +1,19 @@
-[gd_resource type="Resource" script_class="RocketArcWrapper" format=3 uid="uid://bkihvdi4xhkr5"]
+[gd_resource type="Resource" script_class="RocketArcWrapper" format=3 uid="uid://d1gkxj4kfpoet"]
 
 [ext_resource type="Script" uid="uid://b20bb84wd4ibf" path="res://SCRIPTS/RocketForceHelper.gd" id="1_m3yi1"]
 [ext_resource type="Script" uid="uid://osptgwuf0hh5" path="res://SCRIPTS/RocketArcWrapper.gd" id="2_vqyy1"]
 
-[sub_resource type="Resource" id="Resource_ih8wp"]
-resource_name = "E"
+[sub_resource type="Resource" id="Resource_l3moj"]
+resource_name = "sw"
 script = ExtResource("1_m3yi1")
-e_degrees = 15.0
-e_debugColor = Color(0.41000003, 1, 0.90166664, 1)
-e_direction = 2
+e_degrees = 85.0
+e_debugColor = Color(0.94, 0.92370665, 0.4512, 1)
+e_direction = 3
 e_HasXForce = true
-e_XDirection = -100.0
-e_YForceMultiplier = -1.4
-e_horizontalLockoutDuration = 0.25
+e_XDirection = -550.0
+e_YForceMultiplier = -1.0
+e_upwardCutLockoutDuration = 0.75
+e_maxSpeedGain = 100.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
 [sub_resource type="Resource" id="Resource_7asai"]
@@ -27,28 +28,16 @@ e_perfectModifier = 1.1
 e_maxSpeedGain = 50.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
-[sub_resource type="Resource" id="Resource_l3moj"]
-resource_name = "sw"
+[sub_resource type="Resource" id="Resource_ih8wp"]
+resource_name = "E"
 script = ExtResource("1_m3yi1")
-e_degrees = 85.0
-e_debugColor = Color(0.94, 0.92370665, 0.4512, 1)
-e_direction = 5
-e_HasXForce = true
-e_XDirection = 550.0
-e_YForceMultiplier = -1.0
-e_upwardCutLockoutDuration = 0.75
-e_maxSpeedGain = 100.0
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="Resource" id="Resource_m3dc8"]
-resource_name = "W"
-script = ExtResource("1_m3yi1")
-e_degrees = 75.0
+e_degrees = 40.0
 e_debugColor = Color(0.41000003, 1, 0.90166664, 1)
 e_direction = 6
 e_HasXForce = true
-e_XDirection = 420.0
-e_YForceMultiplier = -0.65
+e_XDirection = 100.0
+e_YForceMultiplier = -1.4
+e_horizontalLockoutDuration = 0.25
 e_maxSpeedGain = 100.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
@@ -61,19 +50,18 @@ e_horizontalLockoutDuration = 0.0
 e_upwardCutLockoutDuration = 0.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
-[sub_resource type="Resource" id="Resource_aueyj"]
-resource_name = "E"
+[sub_resource type="Resource" id="Resource_m3dc8"]
+resource_name = "W"
 script = ExtResource("1_m3yi1")
-e_degrees = 25.0
+e_degrees = 75.0
 e_debugColor = Color(0.41000003, 1, 0.90166664, 1)
 e_direction = 2
 e_HasXForce = true
-e_XDirection = -100.0
-e_YForceMultiplier = -1.4
-e_horizontalLockoutDuration = 0.25
+e_XDirection = -420.0
+e_YForceMultiplier = -0.65
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
 [resource]
 script = ExtResource("2_vqyy1")
-e_data = Array[ExtResource("1_m3yi1")]([SubResource("Resource_ih8wp"), SubResource("Resource_7asai"), SubResource("Resource_l3moj"), SubResource("Resource_m3dc8"), SubResource("Resource_llfxf"), SubResource("Resource_aueyj")])
+e_data = Array[ExtResource("1_m3yi1")]([SubResource("Resource_l3moj"), SubResource("Resource_7asai"), SubResource("Resource_ih8wp"), SubResource("Resource_llfxf"), SubResource("Resource_m3dc8")])
 metadata/_custom_type_script = "uid://osptgwuf0hh5"

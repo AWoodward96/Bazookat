@@ -198,6 +198,16 @@ text = "ui_challenge_button"
 event_name = "event:/UI/Slider_Click"
 event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
 
+[node name="Challenge2" type="Button" parent="VBoxContainer2" unique_id=515823721]
+self_modulate = Color(1, 0.39, 0.4001665, 1)
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "for zander :3"
+
+[node name="FmodEventEmitter2D" type="FmodEventEmitter2D" parent="VBoxContainer2/Challenge2" unique_id=812340174]
+event_name = "event:/UI/Slider_Click"
+event_guid = "{2ab55c1d-08e7-4709-b701-d19218ed627a}"
+
 [node name="Settings" type="Button" parent="VBoxContainer2" unique_id=1332025869]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
@@ -277,6 +287,8 @@ uri = "https://docs.google.com/forms/d/e/1FAIpQLSc66vzgX3Y7yeA02o66m-kVlvtEbtJIh
 [connection signal="pressed" from="VBoxContainer2/Play" to="." method="OnPlay"]
 [connection signal="mouse_entered" from="VBoxContainer2/Challenge" to="VBoxContainer2/Challenge/FmodEventEmitter2D" method="play_one_shot"]
 [connection signal="pressed" from="VBoxContainer2/Challenge" to="." method="Challenge"]
+[connection signal="mouse_entered" from="VBoxContainer2/Challenge2" to="VBoxContainer2/Challenge2/FmodEventEmitter2D" method="play_one_shot"]
+[connection signal="pressed" from="VBoxContainer2/Challenge2" to="." method="OnDebugButton"]
 [connection signal="mouse_entered" from="VBoxContainer2/Settings" to="VBoxContainer2/Settings/FmodEventEmitter2D" method="play_one_shot"]
 [connection signal="pressed" from="VBoxContainer2/Settings" to="." method="OnSettings"]
 [connection signal="mouse_entered" from="VBoxContainer2/Quit" to="VBoxContainer2/Quit/FmodEventEmitter2D" method="play_one_shot"]

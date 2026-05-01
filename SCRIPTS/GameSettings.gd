@@ -6,6 +6,7 @@ class_name GameSettings
 @export var e_genericDeathParticle : PackedScene
 @export var e_defaultWorld : WorldTemplate
 @export var e_challengeWorld : WorldTemplate
+@export var e_internalTestingWorld : WorldTemplate
 
 @export_category("Screen Shakes")
 @export var e_rocketJumpScreenShake : CameraShakeData

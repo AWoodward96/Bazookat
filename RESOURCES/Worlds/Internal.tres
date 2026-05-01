@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WorldTemplate" format=3 uid="uid://dvor2fciyggik"]
+
+[ext_resource type="PackedScene" uid="uid://t73qtb078he0" path="res://SCENES/Levels/Testing/LVL_ROCKETLIMITTESTING.tscn" id="1_54ouw"]
+[ext_resource type="Script" uid="uid://di6xt467jwpcs" path="res://SCRIPTS/Content/WorldTemplate.gd" id="1_ylvqj"]
+
+[resource]
+script = ExtResource("1_ylvqj")
+Levels = Array[PackedScene]([ExtResource("1_54ouw")])
+metadata/_custom_type_script = "uid://di6xt467jwpcs"

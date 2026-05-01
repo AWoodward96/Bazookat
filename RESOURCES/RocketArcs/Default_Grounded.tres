@@ -10,9 +10,11 @@ e_degrees = 47.5
 e_debugColor = Color(0.94, 0.92370665, 0.4512, 1)
 e_direction = 3
 e_HasXForce = true
-e_XDirection = -450.0
+e_XDirection = -400.0
 e_YForceMultiplier = -1.0
 e_upwardCutLockoutDuration = 0.75
+e_perfectModifier = 1.15
+e_maxSpeedGain = 50.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
 [sub_resource type="Resource" id="Resource_y3fgl"]
@@ -26,6 +28,7 @@ e_XDirection = -150.0
 e_YForceMultiplier = -1.4
 e_horizontalLockoutDuration = 0.15
 e_upwardCutLockoutDuration = 0.75
+e_maxSpeedGain = 25.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
 [sub_resource type="Resource" id="Resource_7asai"]
@@ -50,6 +53,7 @@ e_XDirection = 150.0
 e_YForceMultiplier = -1.4
 e_horizontalLockoutDuration = 0.15
 e_upwardCutLockoutDuration = 0.75
+e_maxSpeedGain = 25.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
 [sub_resource type="Resource" id="Resource_l3moj"]
@@ -59,9 +63,11 @@ e_degrees = 47.5
 e_debugColor = Color(0.94, 0.92370665, 0.4512, 1)
 e_direction = 5
 e_HasXForce = true
-e_XDirection = 450.0
+e_XDirection = 400.0
 e_YForceMultiplier = -1.0
 e_upwardCutLockoutDuration = 0.75
+e_perfectModifier = 1.15
+e_maxSpeedGain = 50.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
 [sub_resource type="Resource" id="Resource_m3dc8"]
@@ -73,6 +79,7 @@ e_direction = 6
 e_HasXForce = true
 e_XDirection = 420.0
 e_YForceMultiplier = -0.65
+e_maxSpeedGain = 50.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
 [sub_resource type="Resource" id="Resource_g336n"]
@@ -113,6 +120,7 @@ e_direction = 2
 e_HasXForce = true
 e_XDirection = -420.0
 e_YForceMultiplier = -0.65
+e_maxSpeedGain = 50.0
 metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
 [resource]

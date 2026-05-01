@@ -10,8 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://bpyi0f5e03rfd" path="res://ART/Characters/Main/bazooka_climb.png" id="6_aeidu"]
 [ext_resource type="Texture2D" uid="uid://ckjayx1e1anm" path="res://ART/Characters/Main/bazookat_run1.png" id="6_o0q0n"]
 [ext_resource type="Script" uid="uid://dtmqo260lgcj3" path="res://SCRIPTS/BazookaBehavior.gd" id="6_tyrya"]
+[ext_resource type="Resource" uid="uid://bkihvdi4xhkr5" path="res://RESOURCES/RocketArcs/MidJump_East.tres" id="6_xt5ao"]
 [ext_resource type="PackedScene" uid="uid://2e8464r2nb31" path="res://RESOURCES/Prefabs/Bullets/rocket.tscn" id="7_0hinh"]
 [ext_resource type="Texture2D" uid="uid://cued3423fs0ug" path="res://ART/Characters/Main/bazookat_death.png" id="7_meuh2"]
+[ext_resource type="Resource" uid="uid://d1gkxj4kfpoet" path="res://RESOURCES/RocketArcs/MidJump_West.tres" id="7_oo50v"]
 [ext_resource type="Texture2D" uid="uid://c0iep087nisdj" path="res://ART/Characters/Main/bzookat_wallslide.png" id="8_0334l"]
 [ext_resource type="Texture2D" uid="uid://brmdrsqmwspmw" path="res://ART/Particle/Circle_8px.png" id="8_vap7r"]
 [ext_resource type="Texture2D" uid="uid://ckus4tiouopto" path="res://ART/Characters/Main/bazookat_tall.png" id="9_0hinh"]
@@ -1991,10 +1993,14 @@ e_climbParticleParent = NodePath("ClimbPartOffset")
 e_climbParticle = NodePath("ClimbPartOffset/ClimbParticle")
 e_rocketJumpDirectionData = Array[ExtResource("2_o0q0n")]([SubResource("Resource_7asai"), SubResource("Resource_y3fgl"), SubResource("Resource_nh5kv"), SubResource("Resource_7ey2p"), SubResource("Resource_l3moj"), SubResource("Resource_bmxi4"), SubResource("Resource_m3dc8"), SubResource("Resource_llfxf"), SubResource("Resource_2f1oo"), SubResource("Resource_g336n")])
 e_defaultJumpArcs = ExtResource("5_tyxxk")
+e_highSpeedThreshold = 280.0
+e_highSpeedEastArcs = ExtResource("6_xt5ao")
+e_highSpeedWestArcs = ExtResource("7_oo50v")
 e_perfectRocketJumpWindow = 0.097
 e_perfectRocketJumpGravityMultiplier = 0.85
 e_perfectRocketJumpGravityDuration = 0.5
-e_extraSpeedPerRocketJump = 125.0
+e_extraSpeedPerRocketJump = 0.0
+e_rocketJumpExtraSpeedTimer = 1.0
 e_deathCast = NodePath("Raycasts/DeathCast")
 e_deathBounce = 100.0
 e_deathParticle = NodePath("DeathParticle")
@@ -2040,6 +2046,7 @@ e_bulletPrefab = ExtResource("7_0hinh")
 e_visualParent = NodePath("Offset")
 e_visual = NodePath("Offset/Bazooka_Visual")
 e_emitterParent = NodePath("Offset/Bazooka_Visual/RocketEmitter")
+e_infiniteAmmo = true
 e_reloadSpeed = 0.35
 e_shootRocketSFX = NodePath("SFX_ShootRocket")
 e_noAmmoSFX = NodePath("SFX_NoAmmo")

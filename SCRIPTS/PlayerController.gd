@@ -51,10 +51,12 @@ enum EState { Normal, Death, Respawn, LevelComplete, Cutscene }
 @export_category("Rocket Jump Information")
 @export var e_rocketJumpDirectionData : Array[RocketForceHelper]
 @export var e_defaultJumpArcs : RocketArcWrapper
+@export var e_highSpeedThreshold : float = 200
+@export var e_highSpeedEastArcs : RocketArcWrapper
+@export var e_highSpeedWestArcs : RocketArcWrapper
 @export var e_perfectRocketJumpWindow : float = 0.125
 @export var e_perfectRocketJumpGravityMultiplier : float = 0.5
 @export var e_perfectRocketJumpGravityDuration : float = 1
-@export var e_extraSpeedPerRocketJump : float = 75 # Whenever you rocket jump, this is set to
 @export var e_rocketJumpExtraSpeedTimer : float = 0.5
 
 @export_category("Death")
@@ -112,8 +114,6 @@ var m_climbingSFXLoopPlaying : bool = false # Fucking HATE that I have to do it 
 var m_climbingStamina : float
 var m_sliding : bool
 var m_slidingSFXLoopPlaying : bool = false
-var m_footsteps2PPlaying : bool = false
-var m_footsteps4PPlaying : bool = false
 
 var m_deathTimer : float
 var m_fallbackOriginalPosition : Vector2
@@ -254,10 +254,13 @@ func HandleInput(_delta : float):
 	if m_endSprintAnimTimer > 0:
 		m_endSprintAnimTimer -= _delta
 
-	if m_rocketJumpExtraBoostTimer > 0 && m_onFloor:
-		m_rocketJumpExtraBoostTimer -= _delta
-		if m_rocketJumpExtraBoostTimer <= 0:
-			m_rocketJumpExtraBoost = 0
+	if m_rocketJumpExtraBoostTimer > 0:
+		# if we tapped the floor then slowly depreciate the jump
+		if m_onFloor || m_sliding || m_climbing:
+			m_rocketJumpExtraBoost = lerpf(m_rocketJumpExtraBoost, 0,  (e_rocketJumpExtraSpeedTimer - m_rocketJumpExtraBoostTimer) / e_rocketJumpExtraSpeedTimer)
+			m_rocketJumpExtraBoostTimer -= _delta
+			if m_rocketJumpExtraBoostTimer <= 0:
+				m_rocketJumpExtraBoost = 0
 
 	pass
 
@@ -404,7 +407,7 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float, _useRayc
 		e_bazooka.ForceReload()
 
 	m_rocketJumpExtraBoostTimer = e_rocketJumpExtraSpeedTimer
-	m_rocketJumpExtraBoost += e_extraSpeedPerRocketJump
+	m_rocketJumpExtraBoost += data.e_maxSpeedGain
 
 	var desiredVelocity = velocity
 	if data.e_HasXForce:
@@ -474,6 +477,13 @@ func GetDirectionFromRocketJumpAngle(_angle : float):
 		#return ERocketJumpDirections.N 							# 20
 	#else:
 		#return ERocketJumpDirections.ne 						# 30
+	
+	if (!m_onFloor || (m_onFloor && m_rocketJumpExtraBoostTimer > 0)):
+		if velocity.x > e_highSpeedThreshold:
+			return e_highSpeedEastArcs.Evaluate(_angle)
+		elif velocity.x < -e_highSpeedThreshold:
+			return e_highSpeedWestArcs.Evaluate(_angle)
+	
 	return e_defaultJumpArcs.Evaluate(_angle)
 
 func GetHorizontalSpeed():
@@ -493,6 +503,8 @@ func Die(_normal : Vector2):
 	if e_state == EState.Normal:
 		m_sliding = false
 		m_climbing = false
+		m_rocketJumpExtraBoost = 0
+		m_rocketJumpExtraBoostTimer = 0
 		e_slidingLoop.stop()
 		e_climbingLoop.stop()
 

@@ -16,7 +16,7 @@
 [ext_resource type="Script" uid="uid://cdjbyh1rayb5d" path="res://SCRIPTS/Helpers/last_jump_direction_listener.gd" id="13_4pu5m"]
 [ext_resource type="Script" uid="uid://do48dx5ikjk1k" path="res://SCRIPTS/Helpers/last_jump_perfect_listener.gd" id="14_4bexm"]
 [ext_resource type="Script" uid="uid://cqkmdvmyebc71" path="res://RESOURCES/Prefabs/current_angle_listener.gd" id="15_51gp5"]
-[ext_resource type="Script" uid="uid://hldlhcyj14ae" path="res://RESOURCES/Prefabs/last_angle_shot.gd" id="16_0xxco"]
+[ext_resource type="Script" uid="uid://dce6lhuwytnnc" path="res://RESOURCES/Prefabs/extra_jump_velocity_listener.gd" id="17_smhhq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_llfxf"]
 
@@ -190,6 +190,18 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_7asai")
 layout_mode = 2
 script = ExtResource("14_4bexm")
 
+[node name="PanelContainer2" type="PanelContainer" parent="main" unique_id=1289088152]
+layout_mode = 0
+offset_left = 567.0
+offset_top = 428.0
+offset_right = 568.0
+offset_bottom = 468.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_7asai")
+
+[node name="ExtraJumpVelocity" type="Label" parent="main/PanelContainer2" unique_id=1981375730]
+layout_mode = 2
+script = ExtResource("17_smhhq")
+
 [node name="HBoxContainer4" type="HBoxContainer" parent="main" unique_id=2115870777]
 layout_mode = 0
 offset_left = 432.0
@@ -205,12 +217,3 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_llfxf")
 [node name="CurrentAngle" type="Label" parent="main/HBoxContainer4/PanelContainer" unique_id=27651144]
 layout_mode = 2
 script = ExtResource("15_51gp5")
-
-[node name="PanelContainer2" type="PanelContainer" parent="main/HBoxContainer4" unique_id=1289088152]
-visible = false
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_7asai")
-
-[node name="LastAngle" type="Label" parent="main/HBoxContainer4/PanelContainer2" unique_id=1981375730]
-layout_mode = 2
-script = ExtResource("16_0xxco")

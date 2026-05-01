@@ -7,6 +7,7 @@ class_name BazookaBehavior
 @export var e_visual : AnimatedSprite2D
 @export var e_emitterParent : Node2D
 
+@export var e_infiniteAmmo : bool = false
 @export var e_reloadSpeed : float = 1
 
 @export var e_shootRocketSFX : FmodEventEmitter2D
@@ -14,6 +15,8 @@ class_name BazookaBehavior
 
 var HasAmmo : bool :
 	get:
+		if e_infiniteAmmo:
+			return true
 		return m_hardCD <= 0 && m_hasAmmo
 
 var Camera : MainCamera :
