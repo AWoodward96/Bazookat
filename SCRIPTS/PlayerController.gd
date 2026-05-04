@@ -21,7 +21,8 @@ enum EState { Normal, Death, Respawn, LevelComplete, Cutscene, Bubbled }
 @export var e_aerialExtraHorizontal : float = 75
 @export var e_horizontalAcceleration : float = 1500
 @export var e_horizontalLockoutMultiplier : float = 0.5
-@export var e_movingPlatformCast : ShapeCast2D
+@export var e_waterCast : ShapeCast2D
+
 
 @export_category("Jump Information")
 @export var e_jumpCutRatio : float = 0.4
@@ -335,6 +336,8 @@ func HandlePhysics(_delta : float):
 		e_jumpSFX.play()
 
 
+	if e_waterCast.is_colliding():
+		velocity += Vector2(0, -Gravity * 0.04)
 
 	CheckDeath()
 
@@ -429,6 +432,7 @@ func RocketJump(_rocketPosition : Vector2, _disruptionDuration : float, _useRayc
 		desiredVelocity = Vector2(data.e_XDirection, data.e_YForceMultiplier * JumpForce * perfectMult)
 	else:
 		desiredVelocity = Vector2(velocity.x, data.e_YForceMultiplier * JumpForce * perfectMult)
+
 
 	velocity = desiredVelocity
 

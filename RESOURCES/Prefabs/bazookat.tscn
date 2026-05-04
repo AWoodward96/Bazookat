@@ -865,6 +865,9 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
 [sub_resource type="CircleShape2D" id="CircleShape2D_yqqkn"]
 radius = 8.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_oo50v"]
+radius = 1.0
+
 [sub_resource type="Gradient" id="Gradient_yqqkn"]
 offsets = PackedFloat32Array(0, 0.83728814, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
@@ -1965,7 +1968,7 @@ _data = {
 &"wallslide_in": SubResource("Animation_meuh2")
 }
 
-[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_movingPlatformCast", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle", "e_jumpSFX", "e_landSFX", "e_climbingLoop", "e_slidingLoop", "e_perfectStaccatto", "e_deathSFX", "e_respawnSFX")]
+[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_waterCast", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle", "e_jumpSFX", "e_landSFX", "e_climbingLoop", "e_slidingLoop", "e_perfectStaccatto", "e_deathSFX", "e_respawnSFX")]
 collision_mask = 94
 floor_stop_on_slope = false
 platform_on_leave = 1
@@ -1980,7 +1983,7 @@ e_noBazookaAnimationSet = ExtResource("3_gxwok")
 e_horizontalSpeed = 175.0
 e_sprintSpeed = 350.0
 e_horizontalLockoutMultiplier = 0.1
-e_movingPlatformCast = NodePath("")
+e_waterCast = NodePath("Raycasts/WaterCast")
 e_extraHangThreshold = 40.0
 e_extraHangMultiplier = 1.0
 e_pogoVerticalLockoutDuration = 0.25
@@ -2135,6 +2138,13 @@ shape = SubResource("CircleShape2D_yqqkn")
 target_position = Vector2(0, -10)
 margin = 5.65
 collision_mask = 24
+
+[node name="WaterCast" type="ShapeCast2D" parent="Raycasts" unique_id=87886317]
+shape = SubResource("CircleShape2D_oo50v")
+target_position = Vector2(0, 1)
+collision_mask = 64
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="DeathParticle" type="CPUParticles2D" parent="." unique_id=1999955551]
 emitting = false

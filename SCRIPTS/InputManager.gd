@@ -38,6 +38,7 @@ var lerpedControllerMousePosition : Vector2
 
 
 func _physics_process(_delta):
+	faux_cursor.visible = false
 	UpdateInputArrays(_delta)
 	UpdateControllerMouse(_delta)
 

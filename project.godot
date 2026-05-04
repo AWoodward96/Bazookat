@@ -162,7 +162,7 @@ locale/translations=PackedStringArray("res://RESOURCES/Localization/loc_sheet_te
 2d_physics/layer_4="Enemies"
 2d_physics/layer_5="Killbox"
 2d_physics/layer_6="InteractableObjects"
-2d_physics/layer_7="MovingPlatforms"
+2d_physics/layer_7="Water"
 
 [physics]
 

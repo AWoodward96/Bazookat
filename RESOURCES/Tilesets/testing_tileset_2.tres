@@ -1,6 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://cvb46mtb5adhe"]
 
 [ext_resource type="Texture2D" uid="uid://dn4qt50urcpo8" path="res://ART/Environment/Testing/better_testing_tileset.png" id="1_eyulv"]
+[ext_resource type="Material" uid="uid://bg8okg41id3cq" path="res://ART/Shaders/water_mat.tres" id="1_gfmf1"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_eyulv"]
 tile_data = PackedInt32Array(0, 0, 4, 65536, 0, 4, 131072, 65536, 4, 196608, 65536, 4, 1, 0, 4, 65537, 0, 4, 131073, 65536, 4, 196609, 65536, 4, 2, 65536, 4, 65538, 65536, 4, 131074, 0, 4, 196610, 0, 4, 3, 65536, 4, 65539, 65536, 4, 131075, 0, 4, 196611, 0, 4)
@@ -829,6 +830,8 @@ texture = ExtResource("1_eyulv")
 0:8/0 = 0
 0:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:8/0 = 0
+3:8/0 = 0
+3:8/0/material = ExtResource("1_gfmf1")
 
 [resource]
 occlusion_layer_0/light_mask = 1
