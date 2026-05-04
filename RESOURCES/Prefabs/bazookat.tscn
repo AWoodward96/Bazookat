@@ -1965,9 +1965,10 @@ _data = {
 &"wallslide_in": SubResource("Animation_meuh2")
 }
 
-[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle", "e_jumpSFX", "e_landSFX", "e_climbingLoop", "e_slidingLoop", "e_perfectStaccatto", "e_deathSFX", "e_respawnSFX")]
-collision_mask = 30
+[node name="Bazookat" type="CharacterBody2D" unique_id=2079552794 node_paths=PackedStringArray("e_visual", "e_bazooka", "e_animationTree", "e_animationPlayer", "e_movingPlatformCast", "e_wallslideParent", "e_wallslideParticle", "e_climbParticleParent", "e_climbParticle", "e_deathCast", "e_deathParticle", "e_jumpSFX", "e_landSFX", "e_climbingLoop", "e_slidingLoop", "e_perfectStaccatto", "e_deathSFX", "e_respawnSFX")]
+collision_mask = 94
 floor_stop_on_slope = false
+platform_on_leave = 1
 platform_floor_layers = 4294967271
 script = ExtResource("1_letql")
 e_visual = NodePath("Visual")
@@ -1979,6 +1980,7 @@ e_noBazookaAnimationSet = ExtResource("3_gxwok")
 e_horizontalSpeed = 175.0
 e_sprintSpeed = 350.0
 e_horizontalLockoutMultiplier = 0.1
+e_movingPlatformCast = NodePath("")
 e_extraHangThreshold = 40.0
 e_extraHangMultiplier = 1.0
 e_pogoVerticalLockoutDuration = 0.25

@@ -21,6 +21,7 @@ enum EState { Normal, Death, Respawn, LevelComplete, Cutscene, Bubbled }
 @export var e_aerialExtraHorizontal : float = 75
 @export var e_horizontalAcceleration : float = 1500
 @export var e_horizontalLockoutMultiplier : float = 0.5
+@export var e_movingPlatformCast : ShapeCast2D
 
 @export_category("Jump Information")
 @export var e_jumpCutRatio : float = 0.4
@@ -125,6 +126,7 @@ var m_rocketJumpExtraBoost : float
 var m_rocketJumpExtraBoostTimer : float
 
 var m_prevVelocity : Vector2
+
 
 var m_bubbled : Bubble
 
@@ -331,6 +333,7 @@ func HandlePhysics(_delta : float):
 		m_jumpBuffer = 0
 		m_perfectRocketJumpTimer = e_perfectRocketJumpWindow
 		e_jumpSFX.play()
+
 
 
 	CheckDeath()
