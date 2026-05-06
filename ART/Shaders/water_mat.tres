@@ -13,6 +13,7 @@ noise_type = 3
 frequency = 0.0224
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d3q2o"]
+height = 1240
 noise = SubResource("FastNoiseLite_lap3y")
 seamless = true
 

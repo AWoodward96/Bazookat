@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://b2v4froanhsbd"]
+
+[ext_resource type="Script" uid="uid://vbktcwtp7svx" path="res://SCRIPTS/RocketBehavior.gd" id="1_c5gbc"]
+[ext_resource type="PackedScene" uid="uid://dmtgtsv6v0nui" path="res://RESOURCES/Prefabs/VFX/vfx_bazooka_explosion.tscn" id="2_jkf1u"]
+[ext_resource type="PackedScene" uid="uid://bq8uflnilqu2i" path="res://RESOURCES/Prefabs/VFX/rocket_trail_vfx.tscn" id="3_0tiis"]
+[ext_resource type="Texture2D" uid="uid://odgddx6xom07" path="res://ART/Bullets/t1_rocket_sheet.png" id="4_c5gbc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7y4a1"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pt1gv"]
+radius = 56.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkf1u"]
+atlas = ExtResource("4_c5gbc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0tiis"]
+atlas = ExtResource("4_c5gbc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ei0mp"]
+atlas = ExtResource("4_c5gbc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75xt3"]
+atlas = ExtResource("4_c5gbc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6sqy2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkf1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0tiis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ei0mp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75xt3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Rocket" type="Node2D" unique_id=596765188 node_paths=PackedStringArray("e_explosionCaster", "e_raycaster", "e_visual", "e_autonomousParticleParent")]
+script = ExtResource("1_c5gbc")
+e_explosionCaster = NodePath("ShapeCast2D")
+e_lockoutDuration = 0.66
+e_explosionVFX = ExtResource("2_jkf1u")
+e_speed = 200.0
+e_direction = Vector2(0, 1)
+e_raycaster = NodePath("RayCast2D")
+e_visual = NodePath("Visual")
+e_autonomousParticleParent = NodePath("Visual/Autonomy")
+e_autonomousParticle = ExtResource("3_0tiis")
+metadata/_custom_type_script = "uid://vbktcwtp7svx"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1668657059]
+collision_layer = 4
+collision_mask = 43
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1207691705]
+shape = SubResource("CircleShape2D_7y4a1")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=614696891]
+enabled = false
+collision_mask = 2
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="." unique_id=214690678]
+enabled = false
+shape = SubResource("CircleShape2D_pt1gv")
+target_position = Vector2(0, 0)
+collision_mask = 9
+
+[node name="Visual" type="AnimatedSprite2D" parent="." unique_id=661412556]
+position = Vector2(-1, 0)
+sprite_frames = SubResource("SpriteFrames_6sqy2")
+autoplay = "default"
+frame_progress = 0.1340866
+
+[node name="Autonomy" type="Node2D" parent="Visual" unique_id=1786899178]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

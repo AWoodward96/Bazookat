@@ -23,7 +23,6 @@ func Instantiate(_direction : Vector2):
 	m_released = false
 	m_lifetime = 0
 
-	CleanupParticle()
 	if e_autonomousParticleParent != null && e_autonomousParticle:
 		m_createdParticle = e_autonomousParticle.instantiate()
 		e_autonomousParticleParent.add_child(m_createdParticle)
@@ -63,16 +62,16 @@ func Destroy():
 				# You can have the cleanupparticle go off after the object gets pooled and reinitialized
 				m_createdParticle.reparent(get_tree().root)
 				var cleanup = get_tree().create_timer(e_particleCleanup)
-				cleanup.timeout.connect(CleanupParticle)
+				cleanup.timeout.connect(CleanupParticle.bind(m_createdParticle))
 
 			GameManager.ReturnToPool(self)
 	else:
 		queue_free()
 	pass
 
-func CleanupParticle():
-	if m_createdParticle != null:
-		m_createdParticle.queue_free()
-		m_createdParticle = null
+func CleanupParticle(_ref : Node2D):
+	if _ref != null:
+		_ref.queue_free()
+		_ref = null
 
 	pass

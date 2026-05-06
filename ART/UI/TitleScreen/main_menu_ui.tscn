@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://db4ral8djicuk" path="res://ART/UI/TitleScreen/TitleScreen.png" id="2_fge4v"]
 [ext_resource type="FontFile" uid="uid://ckiuummr52qag" path="res://ART/Fonts/DisrespectfulTeenager.ttf" id="4_e00hp"]
 [ext_resource type="FontFile" uid="uid://jrj7xiaovm84" path="res://ART/Fonts/c64esque.ttf" id="5_6hrsw"]
-[ext_resource type="Texture2D" uid="uid://bubvascm3pc23" path="res://ART/even_more_qr.png" id="8_610dk"]
+[ext_resource type="Texture2D" uid="uid://bgg1g57swn76y" path="res://ART/i_cant_get_enough_qrs.png" id="8_610dk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6hrsw"]
 shader = ExtResource("2_e00hp")
