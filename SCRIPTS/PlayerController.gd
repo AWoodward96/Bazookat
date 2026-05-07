@@ -33,6 +33,9 @@ enum EState { Normal, Death, Respawn, LevelComplete, Cutscene, Bubbled }
 @export var e_extraHangThreshold : float = 1
 @export var e_extraHangMultiplier : float = 0.25
 @export var e_pogoVerticalLockoutDuration : float = 0.5
+@export var e_eastWallJumpForce : RocketForceHelper
+@export var e_westWallJumpForce : RocketForceHelper
+@export var e_superWallJumpWindow : float = 0.25
 
 @export_category("Climbing Information")
 @export var e_wallClingThreshold : float = 20
@@ -51,7 +54,6 @@ enum EState { Normal, Death, Respawn, LevelComplete, Cutscene, Bubbled }
 @export var e_rocketAngleParticles : CPUParticles2D
 
 @export_category("Rocket Jump Information")
-@export var e_rocketJumpDirectionData : Array[RocketForceHelper]
 @export var e_defaultJumpArcs : RocketArcWrapper
 @export var e_highSpeedThreshold : float = 200
 @export var e_highSpeedEastArcs : RocketArcWrapper
@@ -104,6 +106,8 @@ var m_jump : bool # If true, the player should do a normal jump
 var m_coyoteTimer : float # Timer for tracking if we can do a valid coyote time jump
 var m_coyoteJump : bool # Is true if we're coyote time jumping
 var m_jumpCount : int # To prevent abuse of coyote time, and to track how many times we've jumped
+var m_wallJump : bool
+
 
 var m_sprinting : bool
 var m_inSprintAnimState : bool
@@ -128,6 +132,9 @@ var m_rocketJumpExtraBoostTimer : float
 
 var m_prevVelocity : Vector2
 
+var m_canWallJump : bool
+var m_superWallJumpTimer : float
+var m_onWallPrev : bool
 
 var m_bubbled : Bubble
 
@@ -193,7 +200,11 @@ func HandleInput(_delta : float):
 	if localOnFloor && !m_onFloor && m_prevVelocity.y >= e_landSFXThreshold:
 		e_landSFX.play()
 
+
 	m_onFloor = localOnFloor
+	if m_onFloor:
+		m_canWallJump = true
+
 	if is_on_wall():
 		m_wallNormal = get_wall_normal()
 		if m_wallNormal.x < 0:
@@ -213,6 +224,13 @@ func HandleInput(_delta : float):
 
 	m_jumpHeld = InputManager.jumpInputHeld
 	m_jump = m_jumpInput && m_onFloor
+
+	if m_onWall && !m_onWallPrev:
+		m_superWallJumpTimer = e_superWallJumpWindow
+
+	# using is_on_wall instead because we don't want the directional button hold to come into play here
+	if is_on_wall() && m_jumpInput && m_canWallJump:
+		m_wallJump = true
 
 	# Coyote time
 	if !m_onFloor:
@@ -239,6 +257,8 @@ func HandleInput(_delta : float):
 	if Level.Current != null && Level.Camera != null:
 		m_backpedaling = (InputManager.mouseWorldPosition.x < global_position.x && !m_facingLeft) || (InputManager.mouseWorldPosition.x > global_position.x && m_facingLeft)
 
+	m_onWallPrev = m_onWall
+
 	# Jump buffer deprecation
 	if m_jumpBuffer > 0:
 		m_jumpBuffer -= _delta
@@ -260,6 +280,9 @@ func HandleInput(_delta : float):
 
 	if m_endSprintAnimTimer > 0:
 		m_endSprintAnimTimer -= _delta
+
+	if m_superWallJumpTimer > 0:
+		m_superWallJumpTimer -= _delta
 
 	if m_rocketJumpExtraBoostTimer > 0:
 		# if we tapped the floor then slowly depreciate the jump
@@ -333,6 +356,27 @@ func HandlePhysics(_delta : float):
 		m_jumpCount += 1
 		m_jumpBuffer = 0
 		m_perfectRocketJumpTimer = e_perfectRocketJumpWindow
+		e_jumpSFX.play()
+		m_wallJump = false # eat the input for this so that next frame we have to press the button again
+	elif m_wallJump && m_canWallJump:
+		m_wallJump = false
+		m_canWallJump = false
+
+		var mult = 1
+		# Wait this is fucking useless.
+
+		if m_wallNormal.x < 0:
+		 	# on the left wall
+			if m_superWallJumpTimer > 0:
+				mult = e_eastWallJumpForce.e_perfectModifier
+			velocity = Vector2(e_eastWallJumpForce.e_XDirection, -JumpForce * e_eastWallJumpForce.e_YForceMultiplier) * mult
+			m_horizontalLockoutTimer = e_eastWallJumpForce.e_horizontalLockoutDuration
+		elif m_wallNormal.x > 0:
+			# on the right wall
+			if m_superWallJumpTimer > 0:
+				mult = e_westWallJumpForce.e_perfectModifier
+			velocity = Vector2(e_westWallJumpForce.e_XDirection, -JumpForce * e_westWallJumpForce.e_YForceMultiplier) * mult
+			m_horizontalLockoutTimer = e_westWallJumpForce.e_horizontalLockoutDuration
 		e_jumpSFX.play()
 
 
