@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://b2v4froanhsbd" path="res://RESOURCES/Prefabs/Bullets/t1_turret_rocket.tscn" id="6_snnvj"]
 [ext_resource type="Texture2D" uid="uid://dklt4k81rqukt" path="res://ART/Characters/Turrets/t1_barrel.png" id="7_0npra"]
 [ext_resource type="Texture2D" uid="uid://bjg012onqp4u8" path="res://ART/Characters/Turrets/t1_arm.png" id="8_8mt17"]
+[ext_resource type="Texture2D" uid="uid://dgsl3cvl6hnmx" path="res://ART/Characters/Turrets/t0_barrel.png" id="11_jkiut"]
+[ext_resource type="Texture2D" uid="uid://cmly15hghxa8m" path="res://ART/Characters/Turrets/t0_chasis.png" id="11_xws7s"]
+[ext_resource type="Texture2D" uid="uid://d02ttavbpxn5e" path="res://ART/Characters/Turrets/t0_arm.png" id="13_1lvdc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t6i8m"]
 size = Vector2(48, 48)
@@ -46,6 +49,21 @@ shader = ExtResource("5_ycdyh")
 shader_parameter/clr = Color(1, 1, 1, 1)
 shader_parameter/type = 1
 shader_parameter/thickness = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18e1y"]
+atlas = ExtResource("11_jkiut")
+region = Rect2(0, 0, 44, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xws7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18e1y")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="TURRETS" type="Node2D" unique_id=475729827 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "m_editorParent", "m_editorLine")]
 script = ExtResource("1_fxelp")
@@ -105,5 +123,30 @@ sprite_frames = SubResource("SpriteFrames_jkiut")
 
 [node name="Arm" type="Sprite2D" parent="T1Turret" unique_id=1315594188]
 material = SubResource("ShaderMaterial_0npra")
-position = Vector2(0, -16)
+position = Vector2(-5, -15)
 texture = ExtResource("8_8mt17")
+
+[node name="T0Turret" type="Node2D" parent="." unique_id=194731324 node_paths=PackedStringArray("e_barrelVisual")]
+position = Vector2(468, 384)
+script = ExtResource("5_0npra")
+e_barrelVisual = NodePath("Barrel")
+e_direction = Vector2(-1, -1)
+e_shootBullets = true
+e_bulletPrefab = ExtResource("6_snnvj")
+
+[node name="Base" type="Sprite2D" parent="T0Turret" unique_id=1730735162]
+material = SubResource("ShaderMaterial_snnvj")
+position = Vector2(0, -16)
+texture = ExtResource("11_xws7s")
+
+[node name="Barrel" type="AnimatedSprite2D" parent="T0Turret" unique_id=1424735868]
+material = SubResource("ShaderMaterial_ycdyh")
+position = Vector2(0, -24)
+rotation = -2.3561945
+sprite_frames = SubResource("SpriteFrames_xws7s")
+flip_v = true
+
+[node name="Arm" type="Sprite2D" parent="T0Turret" unique_id=567236629]
+material = SubResource("ShaderMaterial_0npra")
+position = Vector2(4, -15)
+texture = ExtResource("13_1lvdc")

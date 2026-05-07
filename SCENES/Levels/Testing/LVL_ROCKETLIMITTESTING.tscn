@@ -19,7 +19,6 @@ script = ExtResource("1_u61fs")
 e_rooms = [NodePath("SPEED"), NodePath("PREFAB"), NodePath("TURRETS")]
 e_forceBazooka = true
 e_startingPosition = NodePath("StartingPositionHelper")
-e_numMcGuffins = 1
 
 [node name="StartingPositionHelper" type="Sprite2D" parent="." unique_id=1681053262]
 material = SubResource("ShaderMaterial_8ua45")

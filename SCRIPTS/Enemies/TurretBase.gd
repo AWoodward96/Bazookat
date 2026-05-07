@@ -1,3 +1,4 @@
+@tool
 extends Node2D
 class_name TurretBase
 
@@ -13,9 +14,14 @@ const AIM_OFFSET : Vector2 = Vector2(0, -16)
 
 var m_internalCD : float = 0
 
+
 func _physics_process(_delta: float):
-	TrackPlayer()
-	Fire(_delta)
+	if !Engine.is_editor_hint():
+		TrackPlayer()
+		Fire(_delta)
+	else:
+		RotateBarrel(e_direction.angle())
+		
 	pass
 
 func Fire(_delta : float):
@@ -34,14 +40,18 @@ func Fire(_delta : float):
 func TrackPlayer():
 	if Level.Player != null && e_trackPlayer:
 		var dst = (Level.Player.global_position  + AIM_OFFSET) - e_barrelVisual.global_position
-		var angle = dst.angle()
-		e_barrelVisual.rotation = angle
+		RotateBarrel(dst.angle())
+		e_direction = Vector2.RIGHT.rotated(dst.angle())
+	else:
+		RotateBarrel(e_direction.angle())
+		
 
-		var inDeg = rad_to_deg(angle)
-		if inDeg < 0:
-			inDeg += 360
-		elif inDeg > 360:
-			inDeg -= 360
-
-		e_barrelVisual.flip_v = inDeg > 90 && inDeg < 270
-		e_direction = Vector2.RIGHT.rotated(angle)
+func RotateBarrel(_angle : float):
+	e_barrelVisual.rotation = _angle
+	var inDeg = rad_to_deg(_angle)
+	if inDeg < 0:
+		inDeg += 360
+	elif inDeg > 360:
+		inDeg -= 360
+		
+	e_barrelVisual.flip_v = inDeg > 90 && inDeg < 270
