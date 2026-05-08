@@ -363,7 +363,6 @@ func HandlePhysics(_delta : float):
 		m_canWallJump = false
 
 		var mult = 1
-		# Wait this is fucking useless.
 
 		if m_wallNormal.x < 0:
 		 	# on the left wall
@@ -371,6 +370,7 @@ func HandlePhysics(_delta : float):
 				mult = e_eastWallJumpForce.e_perfectModifier
 			velocity = Vector2(e_eastWallJumpForce.e_XDirection, -JumpForce * e_eastWallJumpForce.e_YForceMultiplier) * mult
 			m_horizontalLockoutTimer = e_eastWallJumpForce.e_horizontalLockoutDuration
+
 		elif m_wallNormal.x > 0:
 			# on the right wall
 			if m_superWallJumpTimer > 0:

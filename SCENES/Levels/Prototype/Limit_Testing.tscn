@@ -64,7 +64,7 @@ e_startingPosition = NodePath("StartingPosition")
 
 [node name="StartingPosition" type="Sprite2D" parent="." unique_id=237606703]
 material = SubResource("ShaderMaterial_m3dc8")
-position = Vector2(2755, 1364)
+position = Vector2(-232, 48)
 texture = ExtResource("3_072qe")
 
 [node name="FG" type="TileMapLayer" parent="." unique_id=89506019]
