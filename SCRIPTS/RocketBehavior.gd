@@ -5,6 +5,7 @@ class_name RocketBehavior
 @export var e_lockoutDuration : float = 1
 @export var e_explosionVFX : PackedScene
 @export var e_lifetimeRaycastThreshold : float = 0.1
+@export var e_shakeScreen : bool = true
 
 var exploded : bool = false
 
@@ -35,7 +36,7 @@ func Explode():
 					hit = true
 
 
-		if !hit:
+		if !hit && e_shakeScreen:
 			Level.Camera.QueueScreenShake(GameManager.e_gameData.e_rocketExplosionScreenShake)
 
 		var fx = e_explosionVFX.instantiate()

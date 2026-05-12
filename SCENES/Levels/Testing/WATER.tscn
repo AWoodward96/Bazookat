@@ -5,7 +5,6 @@
 [ext_resource type="Material" uid="uid://bg8okg41id3cq" path="res://ART/Shaders/water_mat.tres" id="3_31kd8"]
 [ext_resource type="Script" uid="uid://bnfar5mme0uoc" path="res://SCRIPTS/RespawnPoint.gd" id="3_qb5kh"]
 [ext_resource type="Texture2D" uid="uid://dn2o8lidofkq4" path="res://ART/Characters/Main/bazookat_idle.png" id="4_31kd8"]
-[ext_resource type="PackedScene" uid="uid://c4eowap3sxo62" path="res://RESOURCES/Prefabs/mc_guffin.tscn" id="5_lap3y"]
 [ext_resource type="Script" uid="uid://vtvkx6uleqy8" path="res://SCRIPTS/BubbleBehavior.gd" id="6_d3q2o"]
 [ext_resource type="Texture2D" uid="uid://byh2l7c8uo40u" path="res://ART/Objects/Bubble.png" id="7_kthkg"]
 [ext_resource type="Texture2D" uid="uid://b1v25geaxigyi" path="res://icon.svg" id="9_31kd8"]
@@ -88,11 +87,10 @@ size = Vector2(387, 249)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lap3y"]
 size = Vector2(288, 64)
 
-[node name="WATER" type="Node2D" unique_id=475729827 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "e_mcGuffins", "m_editorParent", "m_editorLine")]
+[node name="WATER" type="Node2D" unique_id=475729827 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "m_editorParent", "m_editorLine")]
 script = ExtResource("1_hjg0b")
 e_respawnPoints = [NodePath("DefaultRespawnPoint")]
 e_defaultRespawnPoint = NodePath("DefaultRespawnPoint")
-e_mcGuffins = [NodePath("McGuffin")]
 m_editorParent = NodePath("EDITOR")
 m_editorLine = NodePath("EDITOR/ROOMEXTENTS")
 metadata/_custom_type_script = "uid://dtgfmwdl8ikaw"
@@ -149,10 +147,6 @@ shape = SubResource("RectangleShape2D_t6i8m")
 position = Vector2(8, 16)
 texture = ExtResource("4_31kd8")
 
-[node name="McGuffin" parent="." unique_id=475793433 instance=ExtResource("5_lap3y")]
-position = Vector2(496, 336)
-e_uid = 1777917164.763
-
 [node name="BubbleObject" type="CharacterBody2D" parent="." unique_id=1800879926 node_paths=PackedStringArray("e_visual", "e_resetTimer", "e_playerCollider", "e_playerHoldRoot")]
 position = Vector2(224, 352)
 collision_layer = 32
@@ -206,7 +200,7 @@ e_waterAreaSize = Vector2(288, 64)
 e_surfaceRenderer = NodePath("Line2D")
 e_renderingPolygon = NodePath("Polygon2D")
 e_wavelength = 4.0
-e_surfaceLine = Array[Vector2]([Vector2(0, 0.09234445), Vector2(9, -0.99907064), Vector2(18, -1.1719447), Vector2(27, -0.2673383), Vector2(36, 0.8830578), Vector2(45, 1.2215747), Vector2(54, 0.43698138), Vector2(63, -0.7493705), Vector2(72, -1.2467546), Vector2(81, -0.5978783), Vector2(90, 0.6006846), Vector2(99, 1.2469808), Vector2(108, 0.74680865), Vector2(117, -0.43997598), Vector2(126, -1.2222487), Vector2(135, -0.8807916), Vector2(144, 0.27046123), Vector2(153, 1.1730533), Vector2(162, 0.99714553), Vector2(171, -0.0955332), Vector2(180, -1.1003791), Vector2(189, -1.0935416), Vector2(198, -0.08130693), Vector2(207, 1.0056809), Vector2(216, 1.1680504), Vector2(225, 0.2565197), Vector2(234, -0.890854), Vector2(243, -1.2191807), Vector2(252, -0.42659822), Vector2(261, 0.75819665), Vector2(270, 1.245909), Vector2(279, 0.5881384), Vector2(288, 0)])
+e_surfaceLine = Array[Vector2]([Vector2(0, -0.38886556), Vector2(9, -1.2097511), Vector2(18, -0.91839707), Vector2(27, 0.217327), Vector2(36, 1.1532416), Vector2(45, 1.0288712), Vector2(54, -0.041438647), Vector2(63, -1.07365), Vector2(72, -1.1187525), Vector2(81, -0.1352791), Vector2(90, 0.9725693), Vector2(99, 1.186242), Vector2(108, 0.30928925), Vector2(117, -0.8520225), Vector2(126, -1.2299887), Vector2(135, -0.47710896), Vector2(144, 0.7144226), Vector2(153, 1.2491174), Vector2(162, 0.6353793), Vector2(171, -0.5625235), Vector2(180, -1.2432448), Vector2(189, -0.7809326), Vector2(198, 0.39936545), Vector2(207, 1.2124888), Vector2(216, 0.9108555), Vector2(225, -0.22821411), Vector2(234, -1.1574647), Vector2(243, -1.0225476), Vector2(252, 0.052495077), Vector2(261, 1.0792739), Vector2(270, 1.1137733), Vector2(279, 0.124274656), Vector2(288, 0)])
 e_disruptionPoint = Vector2(50, 0)
 e_disruptFalloff = 50.0
 e_disruptStrength = 20.0
@@ -217,11 +211,11 @@ z_index = 1
 texture_repeat = 2
 material = ExtResource("3_31kd8")
 texture = ExtResource("9_31kd8")
-polygon = PackedVector2Array(0, 0.09234445, 9, -0.99907064, 18, -1.1719447, 27, -0.2673383, 36, 0.8830578, 45, 1.2215747, 54, 0.43698138, 63, -0.7493705, 72, -1.2467546, 81, -0.5978783, 90, 0.6006846, 99, 1.2469808, 108, 0.74680865, 117, -0.43997598, 126, -1.2222487, 135, -0.8807916, 144, 0.27046123, 153, 1.1730533, 162, 0.99714553, 171, -0.0955332, 180, -1.1003791, 189, -1.0935416, 198, -0.08130693, 207, 1.0056809, 216, 1.1680504, 225, 0.2565197, 234, -0.890854, 243, -1.2191807, 252, -0.42659822, 261, 0.75819665, 270, 1.245909, 279, 0.5881384, 288, 0, 288, 64, 0, 64)
+polygon = PackedVector2Array(0, -0.38886556, 9, -1.2097511, 18, -0.91839707, 27, 0.217327, 36, 1.1532416, 45, 1.0288712, 54, -0.041438647, 63, -1.07365, 72, -1.1187525, 81, -0.1352791, 90, 0.9725693, 99, 1.186242, 108, 0.30928925, 117, -0.8520225, 126, -1.2299887, 135, -0.47710896, 144, 0.7144226, 153, 1.2491174, 162, 0.6353793, 171, -0.5625235, 180, -1.2432448, 189, -0.7809326, 198, 0.39936545, 207, 1.2124888, 216, 0.9108555, 225, -0.22821411, 234, -1.1574647, 243, -1.0225476, 252, 0.052495077, 261, 1.0792739, 270, 1.1137733, 279, 0.124274656, 288, 0, 288, 64, 0, 64)
 
 [node name="Line2D" type="Line2D" parent="WaterHelper" unique_id=1932875621]
 z_index = 1
-points = PackedVector2Array(0, 0.09234445, 9, -0.99907064, 18, -1.1719447, 27, -0.2673383, 36, 0.8830578, 45, 1.2215747, 54, 0.43698138, 63, -0.7493705, 72, -1.2467546, 81, -0.5978783, 90, 0.6006846, 99, 1.2469808, 108, 0.74680865, 117, -0.43997598, 126, -1.2222487, 135, -0.8807916, 144, 0.27046123, 153, 1.1730533, 162, 0.99714553, 171, -0.0955332, 180, -1.1003791, 189, -1.0935416, 198, -0.08130693, 207, 1.0056809, 216, 1.1680504, 225, 0.2565197, 234, -0.890854, 243, -1.2191807, 252, -0.42659822, 261, 0.75819665, 270, 1.245909, 279, 0.5881384, 288, 0)
+points = PackedVector2Array(0, -0.38886556, 9, -1.2097511, 18, -0.91839707, 27, 0.217327, 36, 1.1532416, 45, 1.0288712, 54, -0.041438647, 63, -1.07365, 72, -1.1187525, 81, -0.1352791, 90, 0.9725693, 99, 1.186242, 108, 0.30928925, 117, -0.8520225, 126, -1.2299887, 135, -0.47710896, 144, 0.7144226, 153, 1.2491174, 162, 0.6353793, 171, -0.5625235, 180, -1.2432448, 189, -0.7809326, 198, 0.39936545, 207, 1.2124888, 216, 0.9108555, 225, -0.22821411, 234, -1.1574647, 243, -1.0225476, 252, 0.052495077, 261, 1.0792739, 270, 1.1137733, 279, 0.124274656, 288, 0)
 width = 1.0
 
 [node name="Area2D" type="Area2D" parent="WaterHelper" unique_id=737230209]

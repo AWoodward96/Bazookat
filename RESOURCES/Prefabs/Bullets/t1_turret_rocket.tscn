@@ -4,12 +4,19 @@
 [ext_resource type="PackedScene" uid="uid://dmtgtsv6v0nui" path="res://RESOURCES/Prefabs/VFX/vfx_bazooka_explosion.tscn" id="2_jkf1u"]
 [ext_resource type="PackedScene" uid="uid://bq8uflnilqu2i" path="res://RESOURCES/Prefabs/VFX/rocket_trail_vfx.tscn" id="3_0tiis"]
 [ext_resource type="Texture2D" uid="uid://odgddx6xom07" path="res://ART/Bullets/t1_rocket_sheet.png" id="4_c5gbc"]
+[ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="4_jkf1u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7y4a1"]
 radius = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pt1gv"]
 radius = 56.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0tiis"]
+shader = ExtResource("4_jkf1u")
+shader_parameter/clr = Color(1, 1, 1, 1)
+shader_parameter/type = 1
+shader_parameter/thickness = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jkf1u"]
 atlas = ExtResource("4_c5gbc")
@@ -52,6 +59,7 @@ script = ExtResource("1_c5gbc")
 e_explosionCaster = NodePath("ShapeCast2D")
 e_lockoutDuration = 0.66
 e_explosionVFX = ExtResource("2_jkf1u")
+e_shakeScreen = false
 e_speed = 200.0
 e_direction = Vector2(0, 1)
 e_raycaster = NodePath("RayCast2D")
@@ -78,7 +86,9 @@ target_position = Vector2(0, 0)
 collision_mask = 9
 
 [node name="Visual" type="AnimatedSprite2D" parent="." unique_id=661412556]
+material = SubResource("ShaderMaterial_0tiis")
 position = Vector2(-1, 0)
+scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_6sqy2")
 autoplay = "default"
 frame_progress = 0.1340866
