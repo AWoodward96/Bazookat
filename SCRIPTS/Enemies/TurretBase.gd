@@ -21,7 +21,7 @@ func _physics_process(_delta: float):
 		Fire(_delta)
 	else:
 		RotateBarrel(e_direction.angle())
-		
+
 	pass
 
 func Fire(_delta : float):
@@ -44,7 +44,7 @@ func TrackPlayer():
 		e_direction = Vector2.RIGHT.rotated(dst.angle())
 	else:
 		RotateBarrel(e_direction.angle())
-		
+
 
 func RotateBarrel(_angle : float):
 	e_barrelVisual.rotation = _angle
@@ -53,5 +53,5 @@ func RotateBarrel(_angle : float):
 		inDeg += 360
 	elif inDeg > 360:
 		inDeg -= 360
-		
+
 	e_barrelVisual.flip_v = inDeg > 90 && inDeg < 270

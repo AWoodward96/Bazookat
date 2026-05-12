@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://rt3i48a6d2o0" path="res://SCENES/Levels/Testing/SPEED.tscn" id="4_u61fs"]
 [ext_resource type="PackedScene" uid="uid://dilee5tlwetad" path="res://RESOURCES/Prefabs/what_buttons.tscn" id="5_1v377"]
 [ext_resource type="PackedScene" uid="uid://ce1xv5iil1drb" path="res://SCENES/Levels/Testing/MOVING_PLATFORMS.tscn" id="6_rmow8"]
-[ext_resource type="PackedScene" uid="uid://5diknqt5qpap" path="res://SCENES/Levels/Testing/TURRETS.tscn" id="7_hxyb6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ua45"]
 shader = ExtResource("3_rmow8")
@@ -16,13 +15,13 @@ shader_parameter/thickness = 2.0
 
 [node name="CONCAT" type="Node2D" unique_id=473351549 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
 script = ExtResource("1_u61fs")
-e_rooms = [NodePath("SPEED"), NodePath("PREFAB"), NodePath("TURRETS")]
+e_rooms = [NodePath("SPEED"), NodePath("PREFAB")]
 e_forceBazooka = true
 e_startingPosition = NodePath("StartingPositionHelper")
 
 [node name="StartingPositionHelper" type="Sprite2D" parent="." unique_id=1681053262]
 material = SubResource("ShaderMaterial_8ua45")
-position = Vector2(-576, 496)
+position = Vector2(720, 424)
 texture = ExtResource("4_hxyb6")
 
 [node name="SPEED" parent="." unique_id=475729827 instance=ExtResource("4_u61fs")]
@@ -32,6 +31,3 @@ position = Vector2(336, 176)
 
 [node name="PREFAB" parent="." unique_id=2021739187 instance=ExtResource("6_rmow8")]
 position = Vector2(-304, 176)
-
-[node name="TURRETS" parent="." unique_id=215020081 instance=ExtResource("7_hxyb6")]
-position = Vector2(-944, 176)

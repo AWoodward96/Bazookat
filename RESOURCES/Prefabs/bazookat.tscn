@@ -32,111 +32,24 @@
 [ext_resource type="AnimationNodeStateMachine" uid="uid://0uktacj84ajs" path="res://ART/AnimationStates/Bazookat_Standard.tres" id="21_meuh2"]
 [ext_resource type="Texture2D" uid="uid://6k0y0iackcpt" path="res://ART/Characters/Main/bzookat_wallslide_with_bazooka.png" id="22_7ey2p"]
 
+[sub_resource type="Resource" id="Resource_oo50v"]
+script = ExtResource("2_o0q0n")
+e_direction = 2
+e_HasXForce = true
+e_XDirection = -120.0
+e_YForceMultiplier = 0.75
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
+[sub_resource type="Resource" id="Resource_4ou7c"]
+script = ExtResource("2_o0q0n")
+e_direction = 6
+e_XDirection = 120.0
+e_YForceMultiplier = 0.75
+metadata/_custom_type_script = "uid://b20bb84wd4ibf"
+
 [sub_resource type="Curve" id="Curve_npf5m"]
 _data = [Vector2(0, 1), 0.0, -2.3897083, 0, 0, Vector2(0.9793104, 0.03476405), -3.8139155, 0.0, 0, 0]
 point_count = 2
-
-[sub_resource type="Resource" id="Resource_7asai"]
-resource_name = "S"
-script = ExtResource("2_o0q0n")
-e_degrees = 45.0
-e_direction = 4
-e_YForceMultiplier = -1.4
-e_horizontalLockoutDuration = 0.25
-e_perfectModifier = 1.1
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="Resource" id="Resource_y3fgl"]
-resource_name = "sse"
-script = ExtResource("2_o0q0n")
-e_degrees = 30.0
-e_direction = 8
-e_HasXForce = true
-e_XDirection = -150.0
-e_YForceMultiplier = -1.4
-e_horizontalLockoutDuration = 0.15
-e_upwardCutLockoutDuration = 0.75
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="Resource" id="Resource_nh5kv"]
-resource_name = "se"
-script = ExtResource("2_o0q0n")
-e_degrees = 37.5
-e_direction = 3
-e_HasXForce = true
-e_XDirection = -450.0
-e_YForceMultiplier = -1.0
-e_upwardCutLockoutDuration = 0.75
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="Resource" id="Resource_7ey2p"]
-resource_name = "ssw"
-script = ExtResource("2_o0q0n")
-e_degrees = 30.0
-e_direction = 9
-e_HasXForce = true
-e_XDirection = 150.0
-e_YForceMultiplier = -1.4
-e_horizontalLockoutDuration = 0.15
-e_upwardCutLockoutDuration = 0.75
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="Resource" id="Resource_l3moj"]
-resource_name = "sw"
-script = ExtResource("2_o0q0n")
-e_degrees = 37.5
-e_direction = 5
-e_HasXForce = true
-e_XDirection = 450.0
-e_YForceMultiplier = -1.0
-e_upwardCutLockoutDuration = 0.75
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="Resource" id="Resource_bmxi4"]
-resource_name = "E"
-script = ExtResource("2_o0q0n")
-e_degrees = 50.0
-e_direction = 2
-e_HasXForce = true
-e_XDirection = -420.0
-e_YForceMultiplier = -0.65
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="Resource" id="Resource_m3dc8"]
-resource_name = "W"
-script = ExtResource("2_o0q0n")
-e_degrees = 50.0
-e_direction = 6
-e_HasXForce = true
-e_XDirection = 420.0
-e_YForceMultiplier = -0.65
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="Resource" id="Resource_llfxf"]
-resource_name = "N"
-script = ExtResource("2_o0q0n")
-e_degrees = 20.0
-e_horizontalLockoutDuration = 0.0
-e_upwardCutLockoutDuration = 0.0
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="Resource" id="Resource_2f1oo"]
-resource_name = "ne"
-script = ExtResource("2_o0q0n")
-e_degrees = 30.0
-e_direction = 1
-e_HasXForce = true
-e_XDirection = -300.0
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
-
-[sub_resource type="Resource" id="Resource_g336n"]
-resource_name = "nw"
-script = ExtResource("2_o0q0n")
-e_degrees = 30.0
-e_direction = 7
-e_HasXForce = true
-e_XDirection = 300.0
-metadata/_custom_type_script = "uid://b20bb84wd4ibf"
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7y4a1"]
 particles_animation = true
@@ -1987,6 +1900,8 @@ e_waterCast = NodePath("Raycasts/WaterCast")
 e_extraHangThreshold = 40.0
 e_extraHangMultiplier = 1.0
 e_pogoVerticalLockoutDuration = 0.25
+e_eastWallJumpForce = SubResource("Resource_oo50v")
+e_westWallJumpForce = SubResource("Resource_4ou7c")
 e_wallClingThreshold = 30.0
 e_climbingForce = 64.0
 e_climbingCurve = SubResource("Curve_npf5m")
@@ -1996,7 +1911,6 @@ e_wallslideParent = NodePath("WallSlideOffset")
 e_wallslideParticle = NodePath("WallSlideOffset/WallSlideParticle")
 e_climbParticleParent = NodePath("ClimbPartOffset")
 e_climbParticle = NodePath("ClimbPartOffset/ClimbParticle")
-e_rocketJumpDirectionData = Array[ExtResource("2_o0q0n")]([SubResource("Resource_7asai"), SubResource("Resource_y3fgl"), SubResource("Resource_nh5kv"), SubResource("Resource_7ey2p"), SubResource("Resource_l3moj"), SubResource("Resource_bmxi4"), SubResource("Resource_m3dc8"), SubResource("Resource_llfxf"), SubResource("Resource_2f1oo"), SubResource("Resource_g336n")])
 e_defaultJumpArcs = ExtResource("5_tyxxk")
 e_highSpeedThreshold = 280.0
 e_highSpeedEastArcs = ExtResource("6_xt5ao")
@@ -2050,7 +1964,6 @@ e_bulletPrefab = ExtResource("7_0hinh")
 e_visualParent = NodePath("Offset")
 e_visual = NodePath("Offset/Bazooka_Visual")
 e_emitterParent = NodePath("Offset/Bazooka_Visual/RocketEmitter")
-e_infiniteAmmo = true
 e_reloadSpeed = 0.35
 e_shootRocketSFX = NodePath("SFX_ShootRocket")
 e_noAmmoSFX = NodePath("SFX_NoAmmo")
