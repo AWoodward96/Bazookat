@@ -3,8 +3,12 @@
 [ext_resource type="Script" uid="uid://cjugdejpk17fm" path="res://SCRIPTS/Content/Level.gd" id="1_k172g"]
 [ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="2_kpm2k"]
 [ext_resource type="Texture2D" uid="uid://de5xhkm1ndfbc" path="res://ART/Characters/Main/normal_cat.png" id="3_4qpsb"]
+[ext_resource type="Script" uid="uid://c46tthbbarv5l" path="res://SCRIPTS/Teleporter.gd" id="4_jsr0m"]
 [ext_resource type="PackedScene" uid="uid://dd7t2417vyh5w" path="res://SCENES/Levels/Level_0/00_lvl0.tscn" id="4_kwwp4"]
 [ext_resource type="PackedScene" uid="uid://08aep1028r5w" path="res://SCENES/Levels/Level_0/01_lvl0.tscn" id="5_4qpsb"]
+[ext_resource type="Texture2D" uid="uid://ccd2s5nr42smw" path="res://ART/UI/up_arrow.png" id="5_iy3cl"]
+[ext_resource type="Texture2D" uid="uid://ckus4tiouopto" path="res://ART/Characters/Main/bazookat_tall.png" id="5_rmi1d"]
+[ext_resource type="PackedScene" uid="uid://dgn2nhyx1wbw0" path="res://SCENES/Levels/Level_0/02_lvl0.tscn" id="6_kwwp4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jsr0m"]
 shader = ExtResource("2_kpm2k")
@@ -12,9 +16,15 @@ shader_parameter/clr = Color(0.61, 1, 0.67499995, 1)
 shader_parameter/type = 2
 shader_parameter/thickness = 2.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iy3cl"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_418il"]
+size = Vector2(48, 48)
+
 [node name="Level0" type="Node2D" unique_id=1921815993 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
 script = ExtResource("1_k172g")
-e_rooms = [NodePath("00_lvl0"), NodePath("00_lvl1")]
+e_rooms = [NodePath("00_lvl0"), NodePath("00_lvl1"), NodePath("02_lvl0")]
 e_startingPosition = NodePath("StartingPosition")
 
 [node name="StartingPosition" type="Sprite2D" parent="." unique_id=94761094]
@@ -22,7 +32,66 @@ material = SubResource("ShaderMaterial_jsr0m")
 position = Vector2(552, 240)
 texture = ExtResource("3_4qpsb")
 
+[node name="LevelObjects" type="Node2D" parent="." unique_id=1952927341]
+
+[node name="TeleporterOne" type="Node2D" parent="LevelObjects" unique_id=609619538]
+
+[node name="Teleporter" type="Node2D" parent="LevelObjects" unique_id=1040816064 node_paths=PackedStringArray("e_startArea", "e_endArea", "e_startPosition", "e_endPosition", "e_startUpArrowVisual", "e_endUpArrowVisual")]
+position = Vector2(2216, 336)
+script = ExtResource("4_jsr0m")
+e_startArea = NodePath("Start")
+e_endArea = NodePath("End")
+e_startPosition = NodePath("StartDropOff")
+e_endPosition = NodePath("EndDropOff")
+e_startUpArrowVisual = NodePath("Start/StartArrow")
+e_endUpArrowVisual = NodePath("End/EndArrow")
+e_arrowAmp = null
+e_arrowFrequency = null
+metadata/_custom_type_script = "uid://c46tthbbarv5l"
+
+[node name="Start" type="Area2D" parent="LevelObjects/Teleporter" unique_id=1764907944]
+
+[node name="StartShape" type="CollisionShape2D" parent="LevelObjects/Teleporter/Start" unique_id=905874144]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_iy3cl")
+
+[node name="StartArrow" type="Sprite2D" parent="LevelObjects/Teleporter/Start" unique_id=1776141635]
+position = Vector2(8, -32)
+texture = ExtResource("5_iy3cl")
+
+[node name="End" type="Area2D" parent="LevelObjects/Teleporter" unique_id=134439344]
+position = Vector2(-952, 0)
+
+[node name="EndShape" type="CollisionShape2D" parent="LevelObjects/Teleporter/End" unique_id=643072317]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_418il")
+
+[node name="EndArrow" type="Sprite2D" parent="LevelObjects/Teleporter/End" unique_id=442428556]
+position = Vector2(8, -8)
+texture = ExtResource("5_iy3cl")
+
+[node name="StartDropOff" type="Sprite2D" parent="LevelObjects/Teleporter" unique_id=598175536]
+position = Vector2(8, 24)
+texture = ExtResource("5_rmi1d")
+offset = Vector2(0, -9)
+
+[node name="EndDropOff" type="Sprite2D" parent="LevelObjects/Teleporter" unique_id=2019049487]
+position = Vector2(-944, 24)
+texture = ExtResource("5_rmi1d")
+offset = Vector2(0, -9)
+
 [node name="00_lvl0" parent="." unique_id=475729827 instance=ExtResource("4_kwwp4")]
 
 [node name="00_lvl1" parent="." unique_id=2047010896 instance=ExtResource("5_4qpsb")]
 position = Vector2(944, 0)
+
+[node name="Parallax" parent="00_lvl1" index="0" unique_id=1256223660]
+visible = false
+
+[node name="Pipes" parent="00_lvl1/Parallax" index="0" unique_id=278211839]
+scroll_offset = Vector2(472, 0)
+
+[node name="02_lvl0" parent="." unique_id=206514255 instance=ExtResource("6_kwwp4")]
+position = Vector2(1616, 0)
+
+[editable path="00_lvl1"]

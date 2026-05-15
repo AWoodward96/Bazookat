@@ -10,24 +10,34 @@
 size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r3u7b"]
-size = Vector2(258, 34)
+size = Vector2(258, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ya8bp"]
-size = Vector2(306, 34)
+size = Vector2(210, 32)
 
-[node name="00_lvl0" type="Node2D" unique_id=475729827 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "m_editorParent", "m_editorLine")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2rfhl"]
+size = Vector2(64, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8j7bq"]
+size = Vector2(304, 32)
+
+[node name="00_lvl0" type="Node2D" unique_id=475729827 node_paths=PackedStringArray("e_respawnPoints", "e_defaultRespawnPoint", "e_parallaxParent", "e_parallaxLayers", "m_editorParent", "m_editorLine")]
 script = ExtResource("1_mcsfn")
 e_roomSize = Vector2i(59, 30)
 e_respawnPoints = [NodePath("DefaultRespawnPoint")]
 e_defaultRespawnPoint = NodePath("DefaultRespawnPoint")
+e_parallaxParent = NodePath("Parallax")
+e_parallaxLayers = [NodePath("Parallax/Pipes")]
 m_editorParent = NodePath("EDITOR")
 m_editorLine = NodePath("EDITOR/ROOMEXTENTS")
 metadata/_custom_type_script = "uid://dtgfmwdl8ikaw"
 
-[node name="Pipes" type="Parallax2D" parent="." unique_id=278211839]
+[node name="Parallax" type="Node2D" parent="." unique_id=1331268727]
+
+[node name="Pipes" type="Parallax2D" parent="Parallax" unique_id=278211839]
 scroll_scale = Vector2(1.25, 1.25)
 
-[node name="Pipes" type="TileMapLayer" parent="Pipes" unique_id=101109616]
+[node name="Pipes" type="TileMapLayer" parent="Parallax/Pipes" unique_id=101109616]
 z_index = 10
 scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAAZAA0AAQANAAsAAAAaAA0AAQANAAsAAAAbAA0AAQANAAsAAAAYAA0AAQAQAAkAAAAYAA4AAQAOAAsAAAARAA4AAQANAAsAAAASAA4AAQANAAsAAAATAA4AAQANAAsAAAAUAA4AAQANAAsAAAAVAA4AAQANAAsAAAAWAA4AAQANAAsAAAAXAA4AAQANAAsAAAAQAA4AAQAQAAkAAAAQAA8AAQAOAAoAAAAcAA0AAQANAAsAAAAMAAAAAQAPAAoAAAAMAP//AQAOAAoAAAAMAAEAAQAOAAsAAAAJAAEAAQANAAsAAAAKAAEAAQANAAsAAAALAAEAAQANAAsAAAAIAAEAAQAQAAsAAAAIAP//AQAOAAoAAAAIAAAAAQAOAAoAAAAdAA0AAQANAAsAAAAeAA0AAQANAAsAAAAfAA0AAQANAAsAAAA=")
@@ -67,19 +77,19 @@ texture = ExtResource("4_6u5nu")
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1811184266]
 position = Vector2(72, 280)
 collision_layer = 2
-constant_linear_velocity = Vector2(250, 0)
+constant_linear_velocity = Vector2(125, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1208802795]
-position = Vector2(119, 7)
+position = Vector2(119, 8)
 shape = SubResource("RectangleShape2D_r3u7b")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=671083675]
 position = Vector2(328, 312)
 collision_layer = 2
-constant_linear_velocity = Vector2(250, 0)
+constant_linear_velocity = Vector2(125, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1491311841]
-position = Vector2(143, 7)
+position = Vector2(95, 8)
 shape = SubResource("RectangleShape2D_ya8bp")
 
 [node name="Label" type="Label" parent="." unique_id=1532247025]
@@ -89,3 +99,21 @@ offset_right = 396.0
 offset_bottom = 257.0
 text = "put a sick parallax here
 "
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=1793037898]
+position = Vector2(584, 312)
+collision_layer = 2
+constant_linear_velocity = Vector2(125, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=1220790801]
+position = Vector2(24, 8)
+shape = SubResource("RectangleShape2D_2rfhl")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=1570305380]
+position = Vector2(648, 360)
+collision_layer = 2
+constant_linear_velocity = Vector2(125, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4" unique_id=215588023]
+position = Vector2(144, 8)
+shape = SubResource("RectangleShape2D_8j7bq")

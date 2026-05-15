@@ -16,6 +16,8 @@ static var Current : Room
 @export var e_defaultRespawnPoint : RespawnPoint
 @export var e_enemies : Array[EnemyBase]
 @export var e_mcGuffins : Array[McGuffin]
+@export var e_parallaxParent : Node2D
+@export var e_parallaxLayers : Array[Parallax2D]
 
 @export_category("Editor")
 @export var EditorColor : Color = Color.WHITE
@@ -50,6 +52,10 @@ func _ready() -> void:
 			get_tree().root.add_child.call_deferred(level)
 
 
+	if e_parallaxParent != null:
+		e_parallaxParent.visible = false
+
+
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		EDIT_UpdateEditor()
@@ -65,12 +71,22 @@ func EnterRoom():
 
 	for m in e_mcGuffins:
 		m.CheckCollected()
-	pass
+
+
+	if e_parallaxParent != null:
+		e_parallaxParent.visible = true
+
+		for p in e_parallaxLayers:
+			p.scroll_offset = Vector2(global_position.x * (p.scroll_scale.x - 1), global_position.y * (p.scroll_scale.y - 1))
+
 
 func ExitRoom():
 	for e in e_enemies:
 		if e != null:
 			e.Activate(false)
+
+	if e_parallaxParent != null:
+		e_parallaxParent.visible = false
 	pass
 
 
@@ -96,6 +112,12 @@ func EDIT_UpdateEditor():
 
 		if c is McGuffin:
 			e_mcGuffins.append(c)
+
+	e_parallaxLayers.clear()
+	if e_parallaxParent != null:
+		for p in e_parallaxParent.get_children():
+			if p is Parallax2D:
+				e_parallaxLayers.append(p)
 
 
 	pass

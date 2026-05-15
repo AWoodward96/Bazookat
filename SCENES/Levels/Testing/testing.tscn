@@ -10,7 +10,8 @@
 [ext_resource type="Script" uid="uid://c85ycjpsqrwl0" path="res://SCRIPTS/Helpers/LaunchData.gd" id="11_8xtfd"]
 [ext_resource type="Texture2D" uid="uid://d1docfk43tr8x" path="res://ART/Characters/GenericNPCs/NPC_0.png" id="12_mbh5a"]
 [ext_resource type="Script" uid="uid://dl5glmse40wrh" path="res://SCRIPTS/Helpers/DialogueTrigger.gd" id="13_4v45l"]
-[ext_resource type="Script" uid="uid://s260q8xdvq3t" path="res://SCRIPTS/Dialogue/DialogueEntry.gd" id="14_chhx7"]
+[ext_resource type="Script" uid="uid://s260q8xdvq3t" path="res://SCRIPTS/Dialogue/DialogueEvent.gd" id="14_chhx7"]
+[ext_resource type="Script" uid="uid://b6koiv8n6xeo" path="res://SCRIPTS/Dialogue/CutsceneEventBase.gd" id="14_vrrkp"]
 [ext_resource type="Texture2D" uid="uid://ccd2s5nr42smw" path="res://ART/UI/up_arrow.png" id="14_vt5v8"]
 [ext_resource type="Script" uid="uid://btojcm21v6e1i" path="res://SCRIPTS/Dialogue/DialogueSequence.gd" id="15_5a37n"]
 [ext_resource type="Texture2D" uid="uid://ckus4tiouopto" path="res://ART/Characters/Main/bazookat_tall.png" id="20_iudyv"]
@@ -62,7 +63,7 @@ metadata/_custom_type_script = "uid://s260q8xdvq3t"
 
 [sub_resource type="Resource" id="Resource_5a37n"]
 script = ExtResource("15_5a37n")
-e_stack = Array[ExtResource("14_chhx7")]([SubResource("Resource_chhx7"), SubResource("Resource_vrrkp")])
+e_stack = Array[ExtResource("14_vrrkp")]([SubResource("Resource_chhx7"), SubResource("Resource_vrrkp")])
 metadata/_custom_type_script = "uid://btojcm21v6e1i"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrrkp"]

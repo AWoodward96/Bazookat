@@ -13,6 +13,7 @@ static var Camera : MainCamera
 @export var db_rebuildTree : bool = false
 
 var m_deathCount : int = 0
+var m_teleportingPlayer : bool = false
 
 func _ready():
 	if !Engine.is_editor_hint():
@@ -37,8 +38,8 @@ func _ready():
 			Camera.e_target = Player
 			Camera.global_position = Player.position
 
-		if e_startingPosition != null:
-			e_startingPosition.visible = false
+			if e_startingPosition != null:
+				e_startingPosition.visible = false
 
 func _process(_delta: float):
 	if Engine.is_editor_hint():
@@ -59,6 +60,22 @@ func _process(_delta: float):
 func EDITOR_OnChildEntered(_node : Node):
 	db_rebuildTree = true
 
+func TeleportPlayer(_start : Node2D, _end : Node2D):
+	if m_teleportingPlayer:
+		return
+
+	m_teleportingPlayer = true
+	Player.EnterCutscene()
+	UIManager.FadeOut(1, 0)
+	await UIManager.OnFadeComplete
+	Player.global_position = _end.global_position
+
+	UIManager.FadeIn(1, 0.25)
+	await UIManager.OnFadeComplete
+	Player.ExitCutscene()
+	m_teleportingPlayer = false
+
+	pass
 
 func EnterRoom(_newRoom : Room):
 	if Room.Current != null:

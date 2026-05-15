@@ -9,7 +9,7 @@ const DEFAULT_FONT_FILE = "res://ART/Fonts/c64esque.ttf"
 @export var e_dialoguePip : FmodEventEmitter2D
 @export var e_dongle : DialogeDongleHelper
 
-@export var e_tester : DialogueEntry
+@export var e_tester : DialogueEvent
 @export var e_debug : bool = false
 
 var m_revealTween : Tween
@@ -21,7 +21,7 @@ func _process(_delta : float):
 		ShowDialogue(e_tester, null)
 		e_debug = false
 
-func ShowDialogue(_dialogueEntry : DialogueEntry, _anchor : Node2D):
+func ShowDialogue(_dialogueEntry : DialogueEvent, _anchor : Node2D):
 	if _dialogueEntry == null:
 		e_textLabel.clear()
 		e_textLabel.append_text("N/A")

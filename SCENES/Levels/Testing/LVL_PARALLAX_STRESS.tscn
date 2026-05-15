@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://c2b5g2m16tfwk"]
+
+[ext_resource type="Script" uid="uid://cjugdejpk17fm" path="res://SCRIPTS/Content/Level.gd" id="1_n6ga3"]
+[ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="3_oc5jo"]
+[ext_resource type="Texture2D" uid="uid://de5xhkm1ndfbc" path="res://ART/Characters/Main/normal_cat.png" id="4_1iluc"]
+[ext_resource type="PackedScene" uid="uid://ypc8bgiebnq" path="res://SCENES/Levels/Testing/PARALLAX.tscn" id="4_n6ga3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ua45"]
+shader = ExtResource("3_oc5jo")
+shader_parameter/clr = Color(0.61, 1, 0.67499995, 1)
+shader_parameter/type = 2
+shader_parameter/thickness = 2.0
+
+[node name="CONCAT" type="Node2D" unique_id=473351549 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
+script = ExtResource("1_n6ga3")
+e_rooms = [NodePath("PREFAB"), NodePath("PREFAB2"), NodePath("PREFAB3"), NodePath("PREFAB4"), NodePath("PREFAB5"), NodePath("PREFAB6"), NodePath("PREFAB7"), NodePath("PREFAB8")]
+e_forceBazooka = true
+e_startingPosition = NodePath("StartingPositionHelper")
+
+[node name="StartingPositionHelper" type="Sprite2D" parent="." unique_id=1681053262]
+material = SubResource("ShaderMaterial_8ua45")
+position = Vector2(176, 424)
+texture = ExtResource("4_1iluc")
+
+[node name="PREFAB" parent="." unique_id=475729827 instance=ExtResource("4_n6ga3")]
+
+[node name="PREFAB2" parent="." unique_id=953903154 instance=ExtResource("4_n6ga3")]
+position = Vector2(0, 480)
+
+[node name="PREFAB3" parent="." unique_id=1753958576 instance=ExtResource("4_n6ga3")]
+position = Vector2(960, 0)
+
+[node name="PREFAB4" parent="." unique_id=1736457960 instance=ExtResource("4_n6ga3")]
+position = Vector2(960, 480)
+
+[node name="PREFAB5" parent="." unique_id=1452225965 instance=ExtResource("4_n6ga3")]
+position = Vector2(1920, 0)
+
+[node name="PREFAB6" parent="." unique_id=739412430 instance=ExtResource("4_n6ga3")]
+position = Vector2(2880, 0)
+
+[node name="PREFAB7" parent="." unique_id=1367615185 instance=ExtResource("4_n6ga3")]
+position = Vector2(3840, 0)
+
+[node name="PREFAB8" parent="." unique_id=1892335603 instance=ExtResource("4_n6ga3")]
+position = Vector2(4800, 0)

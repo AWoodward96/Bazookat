@@ -64,4 +64,5 @@ e_panel = NodePath("../PanelParent")
 e_xPadding = 8
 
 [node name="Pip" type="FmodEventEmitter2D" parent="." unique_id=1715851497]
-event_guid = "{0000005f-006e-0000-6f00-000064000000}"
+event_name = "event:/SFX/Player/Player_Land"
+event_guid = "{9946788e-3586-4399-bdf3-e0a9e2a51dd2}"
