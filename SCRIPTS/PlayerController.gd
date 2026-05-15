@@ -131,6 +131,7 @@ var m_rocketJumpExtraBoost : float
 var m_rocketJumpExtraBoostTimer : float
 
 var m_prevVelocity : Vector2
+var m_cutsceneLookAt : Vector2
 
 var m_canWallJump : bool
 var m_superWallJumpTimer : float
@@ -168,6 +169,8 @@ func _physics_process(_delta: float):
 			move_and_slide()
 		EState.Cutscene:
 			e_animationTree.active = false
+			m_facingLeft = (m_cutsceneLookAt - position).x < 0
+			e_visual.flip_h = m_facingLeft
 			pass
 		EState.Bubbled:
 			if m_bubbled != null:

@@ -113,3 +113,9 @@ func UpdateControllerMouse(_delta):
 
 func ReleasePause():
 	pauseDown = false
+
+func ReleaseDirectionalInput():
+	inputDown = [false, false, false, false]
+
+func ReleaseJump():
+	jumpInputDown = false

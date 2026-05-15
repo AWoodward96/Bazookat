@@ -39,31 +39,18 @@ func _physics_process(_delta: float) -> void:
 	if Camera == null || !e_owner.e_hasBazooka:
 		return
 
+	if e_owner.e_state == PlayerController.EState.Cutscene:
+		RotateLauncher( e_owner.m_cutsceneLookAt)
+		return
+
 	if !(e_owner.e_state == PlayerController.EState.Normal || e_owner.e_state == PlayerController.EState.Bubbled):
 		return
 
-	if e_owner.e_state == PlayerController.EState.Cutscene:
-		e_visualParent.rotation = 0
-		e_visual.flip_v = false
-		return
-
-	var dst = InputManager.mouseWorldPosition - e_owner.global_position
-	if e_visualParent != null && e_visual != null:
-		var angle = dst.angle()
-		e_visualParent.rotation = angle
-
-		var inDeg = rad_to_deg(angle)
-		if inDeg < 0:
-			inDeg += 360
-		elif inDeg > 360:
-			inDeg -= 360
-
-		db_currentAngle = inDeg
-		e_visual.flip_v = inDeg > 90 && inDeg < 270
+	RotateLauncher(InputManager.mouseWorldPosition)
 
 	if Input.is_action_just_pressed("fire"):
 		if HasAmmo:
-			Fire(e_emitterParent.global_position, dst)
+			Fire(e_emitterParent.global_position, InputManager.mouseWorldPosition - e_owner.global_position)
 		else:
 			e_noAmmoSFX.play()
 
@@ -71,6 +58,20 @@ func _physics_process(_delta: float) -> void:
 	if m_hardCD > 0:
 		m_hardCD -= _delta
 	pass
+
+func RotateLauncher(_point : Vector2):
+	var dst = _point - e_owner.global_position
+	var angle = dst.angle()
+	e_visualParent.rotation = angle
+
+	var inDeg = rad_to_deg(angle)
+	if inDeg < 0:
+		inDeg += 360
+	elif inDeg > 360:
+		inDeg -= 360
+
+	db_currentAngle = inDeg
+	e_visual.flip_v = inDeg > 90 && inDeg < 270
 
 func UpdateDisplay():
 	if Camera == null:

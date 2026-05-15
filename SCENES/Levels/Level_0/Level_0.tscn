@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c0qpisotewmuc"]
+
+[ext_resource type="Script" uid="uid://cjugdejpk17fm" path="res://SCRIPTS/Content/Level.gd" id="1_k172g"]
+[ext_resource type="Shader" uid="uid://c80umtx4jkmno" path="res://ART/Shaders/quick_outline.gdshader" id="2_kpm2k"]
+[ext_resource type="Texture2D" uid="uid://de5xhkm1ndfbc" path="res://ART/Characters/Main/normal_cat.png" id="3_4qpsb"]
+[ext_resource type="PackedScene" uid="uid://dd7t2417vyh5w" path="res://SCENES/Levels/Level_0/00_lvl0.tscn" id="4_kwwp4"]
+[ext_resource type="PackedScene" uid="uid://08aep1028r5w" path="res://SCENES/Levels/Level_0/01_lvl0.tscn" id="5_4qpsb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jsr0m"]
+shader = ExtResource("2_kpm2k")
+shader_parameter/clr = Color(0.61, 1, 0.67499995, 1)
+shader_parameter/type = 2
+shader_parameter/thickness = 2.0
+
+[node name="Level0" type="Node2D" unique_id=1921815993 node_paths=PackedStringArray("e_rooms", "e_startingPosition")]
+script = ExtResource("1_k172g")
+e_rooms = [NodePath("00_lvl0"), NodePath("00_lvl1")]
+e_startingPosition = NodePath("StartingPosition")
+
+[node name="StartingPosition" type="Sprite2D" parent="." unique_id=94761094]
+material = SubResource("ShaderMaterial_jsr0m")
+position = Vector2(552, 240)
+texture = ExtResource("3_4qpsb")
+
+[node name="00_lvl0" parent="." unique_id=475729827 instance=ExtResource("4_kwwp4")]
+
+[node name="00_lvl1" parent="." unique_id=2047010896 instance=ExtResource("5_4qpsb")]
+position = Vector2(944, 0)

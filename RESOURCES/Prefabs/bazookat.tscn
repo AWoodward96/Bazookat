@@ -1953,7 +1953,7 @@ anim_offset_max = 1.0
 material = SubResource("ShaderMaterial_2f1oo")
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_o0q0n")
-animation = &"4p_running"
+animation = &"2p_idle"
 autoplay = "4pNB_idle"
 
 [node name="Bazooka" type="Node2D" parent="." unique_id=1270862840 node_paths=PackedStringArray("e_owner", "e_visualParent", "e_visual", "e_emitterParent", "e_shootRocketSFX", "e_noAmmoSFX")]

@@ -12,11 +12,9 @@ func _ready() -> void:
 	get_tree().paused = true
 
 func _process(_delta):
-	if Input.is_action_just_pressed("pause") && m_releasedPause:
+	if InputManager.pauseDown:
 		CloseUI()
-
-	if !Input.is_action_pressed("pause") && !m_releasedPause:
-		m_releasedPause = true
+		InputManager.ReleasePause()
 
 func Close():
 	IsOpen = false

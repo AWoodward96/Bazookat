@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d1mtiiul4u5qv"]
+
+[ext_resource type="Script" uid="uid://d3uk24bumun0w" path="res://SCRIPTS/CutsceneManager.gd" id="1_2wnuq"]
+[ext_resource type="PackedScene" uid="uid://b86g7mem7fxgg" path="res://RESOURCES/Prefabs/UI/text_box_ui.tscn" id="2_mxxfn"]
+
+[node name="CutsceneManager" type="Node2D" unique_id=1268169680]
+script = ExtResource("1_2wnuq")
+e_dialogueWindow = ExtResource("2_mxxfn")
