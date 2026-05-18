@@ -77,10 +77,14 @@ func EnterRoom():
 		e_parallaxParent.visible = true
 
 		for p in e_parallaxLayers:
+			#if p.repeat_size == Vector2.ZERO:
 			p.scroll_offset = Vector2(global_position.x * (p.scroll_scale.x - 1), global_position.y * (p.scroll_scale.y - 1))
 
 
 func ExitRoom():
+	if Engine.is_editor_hint():
+		return
+		
 	for e in e_enemies:
 		if e != null:
 			e.Activate(false)
@@ -121,6 +125,7 @@ func EDIT_UpdateEditor():
 
 
 	pass
+
 
 func EDIT_CreateDebugParent():
 	if m_editorParent == null:

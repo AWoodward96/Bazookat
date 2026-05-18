@@ -5,10 +5,16 @@
 [ext_resource type="Texture2D" uid="uid://de5xhkm1ndfbc" path="res://ART/Characters/Main/normal_cat.png" id="3_4qpsb"]
 [ext_resource type="Script" uid="uid://c46tthbbarv5l" path="res://SCRIPTS/Teleporter.gd" id="4_jsr0m"]
 [ext_resource type="PackedScene" uid="uid://dd7t2417vyh5w" path="res://SCENES/Levels/Level_0/00_lvl0.tscn" id="4_kwwp4"]
+[ext_resource type="Texture2D" uid="uid://dl80j20s714t0" path="res://ART/Environment/Factory/para_factory_0.png" id="4_sp32c"]
 [ext_resource type="PackedScene" uid="uid://08aep1028r5w" path="res://SCENES/Levels/Level_0/01_lvl0.tscn" id="5_4qpsb"]
+[ext_resource type="Texture2D" uid="uid://ouqce2qmt5ms" path="res://ART/Environment/Factory/para_factory_3.png" id="5_44xok"]
 [ext_resource type="Texture2D" uid="uid://ccd2s5nr42smw" path="res://ART/UI/up_arrow.png" id="5_iy3cl"]
 [ext_resource type="Texture2D" uid="uid://ckus4tiouopto" path="res://ART/Characters/Main/bazookat_tall.png" id="5_rmi1d"]
 [ext_resource type="PackedScene" uid="uid://dgn2nhyx1wbw0" path="res://SCENES/Levels/Level_0/02_lvl0.tscn" id="6_kwwp4"]
+[ext_resource type="Texture2D" uid="uid://b18u2d6dusxm6" path="res://ART/Environment/Factory/para_factory_2.png" id="6_v5qpf"]
+[ext_resource type="Texture2D" uid="uid://dk7jjecubdxeg" path="res://ART/Environment/Factory/para_factory_1.png" id="7_udodu"]
+[ext_resource type="Texture2D" uid="uid://b1jjjdy4235pc" path="res://ART/Environment/Factory/para_factory_5.png" id="8_xaf8m"]
+[ext_resource type="Texture2D" uid="uid://bmwcrrgfcberd" path="res://ART/Environment/Factory/para_factory_4.png" id="9_us7rf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jsr0m"]
 shader = ExtResource("2_kpm2k")
@@ -32,6 +38,66 @@ material = SubResource("ShaderMaterial_jsr0m")
 position = Vector2(552, 240)
 texture = ExtResource("3_4qpsb")
 
+[node name="LocalParallax" type="Node2D" parent="." unique_id=260031377]
+
+[node name="ParaFactory0" type="Sprite2D" parent="LocalParallax" unique_id=86295624]
+z_index = -1
+position = Vector2(2223, 353)
+texture = ExtResource("4_sp32c")
+
+[node name="BoxFactory_3" type="Parallax2D" parent="LocalParallax" unique_id=977065199]
+scroll_scale = Vector2(0.35, 0.35)
+repeat_size = Vector2(416, 0)
+autoscroll = Vector2(4, 0)
+repeat_times = 2
+
+[node name="ParaFactory0" type="Sprite2D" parent="LocalParallax/BoxFactory_3" unique_id=380394383]
+z_index = -1
+position = Vector2(2227, 281)
+texture = ExtResource("5_44xok")
+
+[node name="BoxFactory_2" type="Parallax2D" parent="LocalParallax" unique_id=977691580]
+scroll_scale = Vector2(0.5, 0.5)
+scroll_offset = Vector2(-465, 41)
+repeat_size = Vector2(416, 0)
+autoscroll = Vector2(8, 0)
+repeat_times = 2
+
+[node name="ParaFactory0" type="Sprite2D" parent="LocalParallax/BoxFactory_2" unique_id=1870442355]
+z_index = -1
+position = Vector2(2265, 304)
+texture = ExtResource("6_v5qpf")
+
+[node name="BoxFactory_1" type="Parallax2D" parent="LocalParallax" unique_id=394570816]
+scroll_scale = Vector2(0.75, 0.75)
+scroll_offset = Vector2(-465, 41)
+repeat_size = Vector2(416, 0)
+autoscroll = Vector2(16, 0)
+repeat_times = 2
+
+[node name="ParaFactory0" type="Sprite2D" parent="LocalParallax/BoxFactory_1" unique_id=1807629560]
+z_index = -1
+position = Vector2(2206, 362)
+texture = ExtResource("7_udodu")
+
+[node name="Ceiling_2" type="Parallax2D" parent="LocalParallax" unique_id=1143092990]
+scroll_scale = Vector2(0.5, 0.5)
+scroll_offset = Vector2(1615, 41)
+
+[node name="Sprite2D" type="Sprite2D" parent="LocalParallax/Ceiling_2" unique_id=634801896]
+z_index = -1
+position = Vector2(600, 304)
+texture = ExtResource("8_xaf8m")
+
+[node name="Ceiling_1" type="Parallax2D" parent="LocalParallax" unique_id=1239530752]
+scroll_scale = Vector2(0.75, 0.75)
+scroll_offset = Vector2(1615, 41)
+
+[node name="Sprite2D" type="Sprite2D" parent="LocalParallax/Ceiling_1" unique_id=1993880623]
+z_index = -1
+position = Vector2(592, 312)
+texture = ExtResource("9_us7rf")
+
 [node name="LevelObjects" type="Node2D" parent="." unique_id=1952927341]
 
 [node name="TeleporterOne" type="Node2D" parent="LevelObjects" unique_id=609619538]
@@ -45,8 +111,6 @@ e_startPosition = NodePath("StartDropOff")
 e_endPosition = NodePath("EndDropOff")
 e_startUpArrowVisual = NodePath("Start/StartArrow")
 e_endUpArrowVisual = NodePath("End/EndArrow")
-e_arrowAmp = null
-e_arrowFrequency = null
 metadata/_custom_type_script = "uid://c46tthbbarv5l"
 
 [node name="Start" type="Area2D" parent="LevelObjects/Teleporter" unique_id=1764907944]
@@ -85,13 +149,5 @@ offset = Vector2(0, -9)
 [node name="00_lvl1" parent="." unique_id=2047010896 instance=ExtResource("5_4qpsb")]
 position = Vector2(944, 0)
 
-[node name="Parallax" parent="00_lvl1" index="0" unique_id=1256223660]
-visible = false
-
-[node name="Pipes" parent="00_lvl1/Parallax" index="0" unique_id=278211839]
-scroll_offset = Vector2(472, 0)
-
 [node name="02_lvl0" parent="." unique_id=206514255 instance=ExtResource("6_kwwp4")]
 position = Vector2(1616, 0)
-
-[editable path="00_lvl1"]
